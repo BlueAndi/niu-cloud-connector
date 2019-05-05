@@ -1,0 +1,14 @@
+{
+  "name": "niu-cloud-connector",
+  "version": "1.0.0",
+  "description": "Javascript function API to access the NIU cloud.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./test/test.js"
+  },
+  "author": "Andreas Merkle <web@blue-andi.de>",
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}
