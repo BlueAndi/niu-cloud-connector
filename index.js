@@ -49,9 +49,9 @@ niuCloudConnector.Client = function() {
 };
 
 /**
- * Utility function which returns the current time in the following format: hh:mm:ss.us
+ * Utility function which returns the current time in the format hh:mm:ss.us.
  *
- * @return {string} Current time in the format hh:mm:ss.us
+ * @returns {string} Current time in the format hh:mm:ss.us.
  */
 niuCloudConnector.Client.prototype._getTime = function() {
 
@@ -86,10 +86,10 @@ niuCloudConnector.Client.prototype._getTime = function() {
 /**
  * Build error object.
  * 
- * @param {string | object} errorInfo   Error information.
- * @param {string}          funcName    Name of the function, in which the error happened.
+ * @param {string | Object} errorInfo   - Error information.
+ * @param {string}          funcName    - Name of the function, in which the error happened.
  * 
- * @return {object} Error object
+ * @returns {Object} Error object.
  */
 niuCloudConnector.Client.prototype._error = function(errorInfo, funcName) {
     var error = {
@@ -118,11 +118,12 @@ niuCloudConnector.Client.prototype._error = function(errorInfo, funcName) {
 /**
  * Create a session token, to get access to the cloud API.
  * 
- * @param {string}  options.account     EMail address or mobile phone number or username
- * @param {string}  options.password    Account password
- * @param {string}  options.countryCode Telephone country count without leading zeros or + sign, e.g. 49 instead of 0049 or +49
+ * @param {Object}  options             - Options.
+ * @param {string}  options.account     - EMail address or mobile phone number or username.
+ * @param {string}  options.password    - Account password.
+ * @param {string}  options.countryCode - Telephone country count without leading zeros or + sign, e.g. 49 instead of 0049 or +49.
  * 
- * @return {Promise} Session token
+ * @returns {Promise} Session token.
  */
 niuCloudConnector.Client.prototype.createSessionToken = function(options) {
     var funcName    = "createSessionToken()";
@@ -200,9 +201,10 @@ niuCloudConnector.Client.prototype.createSessionToken = function(options) {
 /**
  * Set a previous created session token, to get access to the cloud API.
  * 
- * @param {string}  options.token   Session token
+ * @param {Object}  options         - Options.
+ * @param {string}  options.token   - Session token.
  * 
- * @return {Promise}
+ * @returns {Promise} Nothing.
  */
 niuCloudConnector.Client.prototype.setSessionToken = function(options) {
     var funcName    = "setSessionToken()";
@@ -218,7 +220,8 @@ niuCloudConnector.Client.prototype.setSessionToken = function(options) {
     this._token = options.token;
 
     return Promise.resolve({
-        client: this
+        client: this,
+        result: null
     });
 };
 
@@ -226,9 +229,10 @@ niuCloudConnector.Client.prototype.setSessionToken = function(options) {
  * Make specific http/https request. Default is a GET request.
  * For a POST request, add postData to the options.
  * 
- * @param {object}  [options.postData]  If available, a POST request will be executed.
+ * @param {Object}  options             - Options.
+ * @param {Object}  [options.postData]  - If available, a POST request will be executed.
  * 
- * @return {Promise}
+ * @returns {Promise} Result object.
  */
 niuCloudConnector.Client.prototype._makeRequest = function(options) {
     var funcName    = "_makeRequest()";
@@ -299,7 +303,7 @@ niuCloudConnector.Client.prototype._makeRequest = function(options) {
 /**
  * Get vehicles.
  * 
- * @return {Promise} Data object
+ * @returns {Promise} Data object.
  */
 niuCloudConnector.Client.prototype.getVehicles = function() {
     var funcName = "getVehicles()";
@@ -316,10 +320,11 @@ niuCloudConnector.Client.prototype.getVehicles = function() {
 
 /**
  * Get battery info of vehicle.
+ *
+ * @param {Object}  options     - Options.
+ * @param {string}  options.sn  - Vehicle serial number.
  * 
- * @param {string}  options.sn  Vehicle serial number
- * 
- * @return {Promise} Data object
+ * @returns {Promise} Data object.
  */
 niuCloudConnector.Client.prototype.getBatteryInfo = function(options) {
     var funcName = "getBatteryInfo()";
@@ -344,9 +349,10 @@ niuCloudConnector.Client.prototype.getBatteryInfo = function(options) {
 /**
  * Get battery health of vehicle.
  * 
- * @param {string}  options.sn  Vehicle serial number
+ * @param {Object}  options     - Options.
+ * @param {string}  options.sn  - Vehicle serial number.
  * 
- * @return {Promise} Data object
+ * @returns {Promise} Data object.
  */
 niuCloudConnector.Client.prototype.getBatteryHealth = function(options) {
     var funcName = "getBatteryInfo()";
@@ -371,9 +377,10 @@ niuCloudConnector.Client.prototype.getBatteryHealth = function(options) {
 /**
  * Get motor info of vehicle.
  * 
- * @param {string}  options.sn  Vehicle serial number
+ * @param {Object}  options     - Options.
+ * @param {string}  options.sn  - Vehicle serial number.
  * 
- * @return {Promise} Data object
+ * @returns {Promise} Data object.
  */
 niuCloudConnector.Client.prototype.getMotorInfo = function(options) {
     var funcName = "getMotorInfo()";
@@ -398,9 +405,10 @@ niuCloudConnector.Client.prototype.getMotorInfo = function(options) {
 /**
  * Get overall tally of vehicle.
  * 
- * @param {string}  options.sn  Vehicle serial number
+ * @param {Object}  options     - Options.
+ * @param {string}  options.sn  - Vehicle serial number.
  * 
- * @return {Promise} Data object
+ * @returns {Promise} Data object.
  */
 niuCloudConnector.Client.prototype.getOverallTally = function(options) {
     var funcName = "getOverallTally()";
