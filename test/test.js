@@ -59,7 +59,7 @@ client.createSessionToken({
     vehicles = result.result.data;
 
     if (0 === vehicles.length) {
-        
+
         console.log("No vehicles found.");
         return Promise.reject(new Error("Aborted."));
 
@@ -72,12 +72,57 @@ client.createSessionToken({
         console.log("Get battery info of " + vehicles[0].name);
         return result.client.getBatteryInfo({
             sn: vehicles[0].sn
-        });    
+        });
     }
 
 }).then(function(result) {
 
-    console.log(JSON.stringify(result.result, null, 4));
+    var batteries = result.result.data.batteries;
+
+    if ("object" === typeof batteries.compartmentA) {
+        console.log("Battery " + batteries.compartmentA.bmsId + ": SOC " + batteries.compartmentA.batteryCharging + "%");
+    }
+    
+    if ("object" === typeof batteries.compartmentB) {
+        console.log("Battery " + batteries.compartmentB.bmsId + ": SOC " + batteries.compartmentB.batteryCharging + "%");
+    }
+
+    console.log("Estimated mileage: " + result.result.data.estimatedMileage);
+
+    console.log("Get battery health ...");
+    return result.client.getBatteryHealth({
+        sn: vehicles[0].sn
+    });
+
+}).then(function(result) {
+
+    var batteries = result.result.data.batteries;
+
+    if ("object" === typeof batteries.compartmentA) {
+        console.log("Battery " + batteries.compartmentA.bmsId + ": grade " + batteries.compartmentA.gradeBattery + "%");
+    }
+    
+    if ("object" === typeof batteries.compartmentB) {
+        console.log("Battery " + batteries.compartmentB.bmsId + ": grade " + batteries.compartmentB.gradeBattery + "%");
+    }
+
+    console.log("Get motor info ...");
+    return result.client.getMotorInfo({
+        sn: vehicles[0].sn
+    });
+
+}).then(function(result) {
+
+    console.log("Current speed: " + result.result.data.nowSpeed);
+
+    console.log("Get overall tally ...");
+    return result.client.getOverallTally({
+        sn: vehicles[0].sn
+    });
+
+}).then(function(result) {
+
+    console.log("Total mileage: " + result.result.data.totalMileage);
 
 }).catch(function(error) {
 

@@ -223,29 +223,44 @@ niuCloudConnector.Client.prototype.setSessionToken = function(options) {
 };
 
 /**
- * Get vehicles.
+ * Make specific http/https request. Default is a GET request.
+ * For a POST request, add postData to the options.
  * 
- * @return {Promise} Data object
+ * @param {object}  [options.postData]  If available, a POST request will be executed.
+ * 
+ * @return {Promise}
  */
-niuCloudConnector.Client.prototype.getVehicles = function() {
-    var funcName    = "getVehicles()";
+niuCloudConnector.Client.prototype._makeRequest = function(options) {
+    var funcName    = "_makeRequest()";
     var _this       = this;
+    var reqData     = null;
+    
+    if ("object" !== typeof options) {
+        return Promise.reject(this._error("Options is missing.", funcName));
+    }
 
-    if (0 === this._token.length) {
-        return Promise.reject(this._error("No valid token available.", funcName));
+    if ("string" !== typeof options.path) {
+        return Promise.reject(this._error("Path is missing.", funcName));
+    }
+
+    reqData = {
+        method: "GET",
+        url: niuCloudConnector.AppApiBaseUrl + options.path,
+        headers: {
+            "accept-language": "en-US",
+            "token": _this._token
+        },
+        json: true
+    };
+
+    if ("object" === typeof options.postData) {
+        reqData.method  = "POST";
+        reqData.form    = options.postData;
     }
 
     return new Promise(function(resolve, reject) {
 
-        request({
-            method: "POST",
-            url: niuCloudConnector.AppApiBaseUrl + "/motoinfo/list",
-            form: {},
-            headers: {
-                "token": _this._token
-            },
-            json: true
-        }, function(error, response, body) {
+        request(reqData, function(error, response, body) {
 
             /* Check for any error */
             if (null !== error) {
@@ -282,6 +297,24 @@ niuCloudConnector.Client.prototype.getVehicles = function() {
 };
 
 /**
+ * Get vehicles.
+ * 
+ * @return {Promise} Data object
+ */
+niuCloudConnector.Client.prototype.getVehicles = function() {
+    var funcName = "getVehicles()";
+
+    if (0 === this._token.length) {
+        return Promise.reject(this._error("No valid token available.", funcName));
+    }
+
+    return this._makeRequest({
+        path: "/motoinfo/list",
+        postData: {}
+    });
+};
+
+/**
  * Get battery info of vehicle.
  * 
  * @param {string}  options.sn  Vehicle serial number
@@ -289,8 +322,7 @@ niuCloudConnector.Client.prototype.getVehicles = function() {
  * @return {Promise} Data object
  */
 niuCloudConnector.Client.prototype.getBatteryInfo = function(options) {
-    var funcName    = "getBatteryInfo()";
-    var _this       = this;
+    var funcName = "getBatteryInfo()";
 
     if (0 === this._token.length) {
         return Promise.reject(this._error("No valid token available.", funcName));
@@ -304,47 +336,91 @@ niuCloudConnector.Client.prototype.getBatteryInfo = function(options) {
         return Promise.reject(this._error("Vehicle serial number is missing.", funcName));
     }
 
-    return new Promise(function(resolve, reject) {
+    return this._makeRequest({
+        path: "/v3/motor_data/battery_info?sn=" + options.sn
+    });
+};
 
-        request({
-            method: "GET",
-            url: niuCloudConnector.AppApiBaseUrl + "/v3/motor_data/battery_info?sn=" + options.sn,
-            headers: {
-                "token": _this._token
-            },
-            json: true
-        }, function(error, response, body) {
+/**
+ * Get battery health of vehicle.
+ * 
+ * @param {string}  options.sn  Vehicle serial number
+ * 
+ * @return {Promise} Data object
+ */
+niuCloudConnector.Client.prototype.getBatteryHealth = function(options) {
+    var funcName = "getBatteryInfo()";
 
-            /* Check for any error */
-            if (null !== error) {
-                reject(_this._error(error, funcName));
-            } else if ("object" !== typeof response) {
-                reject(_this._error("Unknown error.", funcName));
-            } else if ("number" !== typeof response.statusCode) {
-                reject(_this._error("Status code is missing.", funcName));
-            } else if (200 != response.statusCode) {
-                reject(_this._error("Bad request.", funcName));
-            } else {
+    if (0 === this._token.length) {
+        return Promise.reject(this._error("No valid token available.", funcName));
+    }
 
-                /* Response successful received.
-                 * Check body now.
-                 */
+    if ("object" !== typeof options) {
+        return Promise.reject(this._error("Options is missing.", funcName));
+    }
 
-                if ("object" !== typeof body) {
-                    reject(_this._error("No body received.", funcName));
-                } else if (("number" === typeof body.status) &&
-                           (0 !== body.status)) {
-                    reject(_this._error(body, funcName));
-                } else {
-                    resolve({
-                        client: _this,
-                        result: body
-                    });
-                }
-            }
+    if ("string" !== typeof options.sn) {
+        return Promise.reject(this._error("Vehicle serial number is missing.", funcName));
+    }
 
-            return;
-        });
+    return this._makeRequest({
+        path: "/v3/motor_data/battery_info/health?sn=" + options.sn
+    });
+};
 
+/**
+ * Get motor info of vehicle.
+ * 
+ * @param {string}  options.sn  Vehicle serial number
+ * 
+ * @return {Promise} Data object
+ */
+niuCloudConnector.Client.prototype.getMotorInfo = function(options) {
+    var funcName = "getMotorInfo()";
+
+    if (0 === this._token.length) {
+        return Promise.reject(this._error("No valid token available.", funcName));
+    }
+
+    if ("object" !== typeof options) {
+        return Promise.reject(this._error("Options is missing.", funcName));
+    }
+
+    if ("string" !== typeof options.sn) {
+        return Promise.reject(this._error("Vehicle serial number is missing.", funcName));
+    }
+
+    return this._makeRequest({
+        path: "/v3/motor_data/index_info?sn=" + options.sn
+    });
+};
+
+/**
+ * Get overall tally of vehicle.
+ * 
+ * @param {string}  options.sn  Vehicle serial number
+ * 
+ * @return {Promise} Data object
+ */
+niuCloudConnector.Client.prototype.getOverallTally = function(options) {
+    var funcName = "getOverallTally()";
+
+    if (0 === this._token.length) {
+        return Promise.reject(this._error("No valid token available.", funcName));
+    }
+
+    if ("object" !== typeof options) {
+        return Promise.reject(this._error("Options is missing.", funcName));
+    }
+
+    if ("string" !== typeof options.sn) {
+        return Promise.reject(this._error("Vehicle serial number is missing.", funcName));
+    }
+
+    return this._makeRequest({
+        path: "/motoinfo/overallTally",
+        postData: {
+            sn: options.sn
+        }
     });
 };
