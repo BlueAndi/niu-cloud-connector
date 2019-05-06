@@ -24,7 +24,10 @@
 /** Simplified http client */
 var request = require("request");
 
-/** NIU cloud connector */
+/**
+ * NIU cloud connector
+ * @namespace
+ */
 var niuCloudConnector = {};
 
 module.exports = niuCloudConnector;
@@ -41,6 +44,7 @@ niuCloudConnector.AppApiBaseUrl     = "https://app-api.niu.com";
 
 /**
  * NIU cloud connector client.
+ * @class
  */
 niuCloudConnector.Client = function() {  
     
