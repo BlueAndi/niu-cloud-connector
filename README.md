@@ -13,6 +13,10 @@ $ cd niu-cloud-connector
 $ npm install
 ```
 
+## API description
+
+Find the API description in the [./doc](https://github.com/BlueAndi/niu-cloud-connector/tree/master/doc) folder.
+
 ## Test
 
 Change credentials (account, password, country code) in the ```./test/test.js``` and run ```npm run test```.

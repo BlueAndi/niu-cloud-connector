@@ -4,7 +4,9 @@
   "description": "Javascript function API to access the NIU cloud.",
   "main": "index.js",
   "scripts": {
-    "test": "node ./test/test.js"
+    "test": "node ./test/test.js",
+    "generate-doc-html": "jsdoc index.js -d ./doc/html",
+    "generate-doc-md": "jsdoc2md index.js > ./doc/API.md"
   },
   "author": "Andreas Merkle <web@blue-andi.de>",
   "license": "MIT",
