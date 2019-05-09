@@ -53,8 +53,8 @@ NIU cloud connector
         * [.createSessionToken(options)](#niuCloudConnector.Client+createSessionToken) ⇒ [<code>Token</code>](#Token)
         * [.setSessionToken(options)](#niuCloudConnector.Client+setSessionToken) ⇒ <code>Promise</code>
         * [.getVehicles()](#niuCloudConnector.Client+getVehicles) ⇒ [<code>Array.&lt;Vehicles&gt;</code>](#Vehicles)
-        * [.getBatteryInfo(options)](#niuCloudConnector.Client+getBatteryInfo) ⇒ <code>Promise</code>
-        * [.getBatteryHealth(options)](#niuCloudConnector.Client+getBatteryHealth) ⇒ <code>Promise</code>
+        * [.getBatteryInfo(options)](#niuCloudConnector.Client+getBatteryInfo) ⇒ [<code>BatteryInfo</code>](#BatteryInfo)
+        * [.getBatteryHealth(options)](#niuCloudConnector.Client+getBatteryHealth) ⇒ [<code>BatteryInfoHealth</code>](#BatteryInfoHealth)
         * [.getMotorInfo(options)](#niuCloudConnector.Client+getMotorInfo) ⇒ [<code>MotorData</code>](#MotorData)
         * [.getOverallTally(options)](#niuCloudConnector.Client+getOverallTally) ⇒ [<code>OverallTally</code>](#OverallTally)
     * [.AccountBaseUrl](#niuCloudConnector.AccountBaseUrl)
@@ -71,8 +71,8 @@ NIU cloud connector
     * [.createSessionToken(options)](#niuCloudConnector.Client+createSessionToken) ⇒ [<code>Token</code>](#Token)
     * [.setSessionToken(options)](#niuCloudConnector.Client+setSessionToken) ⇒ <code>Promise</code>
     * [.getVehicles()](#niuCloudConnector.Client+getVehicles) ⇒ [<code>Array.&lt;Vehicles&gt;</code>](#Vehicles)
-    * [.getBatteryInfo(options)](#niuCloudConnector.Client+getBatteryInfo) ⇒ <code>Promise</code>
-    * [.getBatteryHealth(options)](#niuCloudConnector.Client+getBatteryHealth) ⇒ <code>Promise</code>
+    * [.getBatteryInfo(options)](#niuCloudConnector.Client+getBatteryInfo) ⇒ [<code>BatteryInfo</code>](#BatteryInfo)
+    * [.getBatteryHealth(options)](#niuCloudConnector.Client+getBatteryHealth) ⇒ [<code>BatteryInfoHealth</code>](#BatteryInfoHealth)
     * [.getMotorInfo(options)](#niuCloudConnector.Client+getMotorInfo) ⇒ [<code>MotorData</code>](#MotorData)
     * [.getOverallTally(options)](#niuCloudConnector.Client+getOverallTally) ⇒ [<code>OverallTally</code>](#OverallTally)
 
@@ -124,11 +124,11 @@ Get vehicles.
 **Returns**: [<code>Array.&lt;Vehicles&gt;</code>](#Vehicles) - Vehicles.  
 <a name="niuCloudConnector.Client+getBatteryInfo"></a>
 
-#### client.getBatteryInfo(options) ⇒ <code>Promise</code>
+#### client.getBatteryInfo(options) ⇒ [<code>BatteryInfo</code>](#BatteryInfo)
 Get battery info of vehicle.
 
 **Kind**: instance method of [<code>Client</code>](#niuCloudConnector.Client)  
-**Returns**: <code>Promise</code> - Data object.  
+**Returns**: [<code>BatteryInfo</code>](#BatteryInfo) - Battery info.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -137,11 +137,11 @@ Get battery info of vehicle.
 
 <a name="niuCloudConnector.Client+getBatteryHealth"></a>
 
-#### client.getBatteryHealth(options) ⇒ <code>Promise</code>
+#### client.getBatteryHealth(options) ⇒ [<code>BatteryInfoHealth</code>](#BatteryInfoHealth)
 Get battery health of vehicle.
 
 **Kind**: instance method of [<code>Client</code>](#niuCloudConnector.Client)  
-**Returns**: <code>Promise</code> - BatteryInfoHealth  
+**Returns**: [<code>BatteryInfoHealth</code>](#BatteryInfoHealth) - Battery info health.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -154,7 +154,7 @@ Get battery health of vehicle.
 Get motor info of vehicle.
 
 **Kind**: instance method of [<code>Client</code>](#niuCloudConnector.Client)  
-**Returns**: [<code>MotorData</code>](#MotorData) - Motor data  
+**Returns**: [<code>MotorData</code>](#MotorData) - Motor data.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -167,7 +167,7 @@ Get motor info of vehicle.
 Get overall tally of vehicle.
 
 **Kind**: instance method of [<code>Client</code>](#niuCloudConnector.Client)  
-**Returns**: [<code>OverallTally</code>](#OverallTally) - Overall tally  
+**Returns**: [<code>OverallTally</code>](#OverallTally) - Overall tally.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -217,38 +217,38 @@ URL to the NIU app API.
 | Name | Type | Description |
 | --- | --- | --- |
 | client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
-| result | <code>Object</code> |  |
-| result.sn | <code>string</code> |  |
-| result.specialEdition | <code>string</code> |  |
-| result.vehicleColorImg | <code>string</code> |  |
-| result.vehicleLogoImg | <code>string</code> |  |
-| result.vehicleTypeId | <code>string</code> |  |
-| result.indexHeaderBg | <code>string</code> |  |
-| result.scootorImg | <code>string</code> |  |
-| result.batteryInfoBg | <code>string</code> |  |
-| result.myPageHeaderBg | <code>string</code> |  |
-| result.listScooterImg | <code>string</code> |  |
-| result.name | <code>string</code> |  |
-| result.frameNo | <code>string</code> |  |
-| result.engineNo | <code>string</code> |  |
-| result.isSelected | <code>boolean</code> |  |
-| result.isMaster | <code>boolean</code> |  |
-| result.bindNum | <code>number</code> |  |
-| result.renovated | <code>boolean</code> |  |
-| result.bindDate | <code>number</code> |  |
-| result.isShow | <code>boolean</code> |  |
-| result.isLite | <code>boolean</code> |  |
-| result.gpsTimestamp | <code>number</code> |  |
-| result.infoTimestamp | <code>number</code> |  |
-| result.productType | <code>string</code> |  |
-| result.process | <code>string</code> |  |
-| result.brand | <code>string</code> |  |
-| result.isDoubleBattery | <code>boolean</code> |  |
-| result.features | <code>Array.&lt;Object&gt;</code> |  |
-| result.features.featureName | <code>string</code> |  |
-| result.features.isSupport | <code>boolean</code> |  |
-| result.features.switch_status | <code>string</code> |  |
-| result.type | <code>string</code> |  |
+| result | <code>Object</code> | Received response |
+| result.sn | <code>string</code> | Vehicle serial number |
+| result.specialEdition | <code>string</code> | ? |
+| result.vehicleColorImg | <code>string</code> | URL to vehicle color image |
+| result.vehicleLogoImg | <code>string</code> | URL to vehicle logo image |
+| result.vehicleTypeId | <code>string</code> | Vehicle type id |
+| result.indexHeaderBg | <code>string</code> | URL to background image |
+| result.scootorImg | <code>string</code> | URL to vehicle image |
+| result.batteryInfoBg | <code>string</code> | URL to battery info background image |
+| result.myPageHeaderBg | <code>string</code> | URL to my page header background |
+| result.listScooterImg | <code>string</code> | URL to scooter list background image |
+| result.name | <code>string</code> | Vehicle name, given by the user |
+| result.frameNo | <code>string</code> | Vehicle identification number (VIN) |
+| result.engineNo | <code>string</code> | Engine identification number |
+| result.isSelected | <code>boolean</code> | ? |
+| result.isMaster | <code>boolean</code> | ? |
+| result.bindNum | <code>number</code> | ? |
+| result.renovated | <code>boolean</code> | ? |
+| result.bindDate | <code>number</code> | ? timestamp in epoch unix timestamp format (13 digits) |
+| result.isShow | <code>boolean</code> | ? |
+| result.isLite | <code>boolean</code> | ? |
+| result.gpsTimestamp | <code>number</code> | GPS timestamp in epoch unix timestamp format (13 digits) |
+| result.infoTimestamp | <code>number</code> | Info timestamp in epoch unix timestamp format (13 digits) |
+| result.productType | <code>string</code> | Product type, e.g. "native" |
+| result.process | <code>string</code> | ? |
+| result.brand | <code>string</code> | ? |
+| result.isDoubleBattery | <code>boolean</code> | Vehicle has one or two batteries |
+| result.features | <code>Array.&lt;Object&gt;</code> | List of features |
+| result.features.featureName | <code>string</code> | Feature name |
+| result.features.isSupport | <code>boolean</code> | ? |
+| result.features.switch_status | <code>string</code> | ? |
+| result.type | <code>string</code> | Vehicle model, e.g. "NGT  Black with Red Stripes" |
 
 <a name="BatteryInfo"></a>
 
@@ -259,40 +259,40 @@ URL to the NIU app API.
 | Name | Type | Description |
 | --- | --- | --- |
 | client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
-| result | <code>Object</code> |  |
-| result.batteries | <code>Object</code> |  |
-| result.batteries.compartmentA | <code>Object</code> |  |
-| result.batteries.compartmentA.items | <code>Array.&lt;Object&gt;</code> |  |
-| result.batteries.compartmentA.items.x | <code>number</code> |  |
-| result.batteries.compartmentA.items.y | <code>number</code> |  |
-| result.batteries.compartmentA.items.z | <code>number</code> |  |
-| result.batteries.compartmentA.totalPoint | <code>number</code> |  |
-| result.batteries.compartmentA.bmsId | <code>string</code> |  |
-| result.batteries.compartmentA.isConnected | <code>boolean</code> |  |
-| result.batteries.compartmentA.batteryCharging | <code>number</code> |  |
-| result.batteries.compartmentA.chargedTimes | <code>string</code> |  |
-| result.batteries.compartmentA.temperature | <code>number</code> |  |
-| result.batteries.compartmentA.temperatureDesc | <code>string</code> |  |
-| result.batteries.compartmentA.energyConsumedTody | <code>number</code> |  |
-| result.batteries.compartmentA.gradeBattery | <code>string</code> |  |
+| result | <code>Object</code> | Received response |
+| result.batteries | <code>Object</code> | Batteries |
+| result.batteries.compartmentA | <code>Object</code> | Battery of compartment A |
+| result.batteries.compartmentA.items | <code>Array.&lt;Object&gt;</code> | ? |
+| result.batteries.compartmentA.items.x | <code>number</code> | ? |
+| result.batteries.compartmentA.items.y | <code>number</code> | ? |
+| result.batteries.compartmentA.items.z | <code>number</code> | ? |
+| result.batteries.compartmentA.totalPoint | <code>number</code> | Number of items |
+| result.batteries.compartmentA.bmsId | <code>string</code> | Battery management identification number |
+| result.batteries.compartmentA.isConnected | <code>boolean</code> | Is battery connected or not |
+| result.batteries.compartmentA.batteryCharging | <code>number</code> | State of charge in percent |
+| result.batteries.compartmentA.chargedTimes | <code>string</code> | Charging cycles |
+| result.batteries.compartmentA.temperature | <code>number</code> | Battery temperature in degree celsius |
+| result.batteries.compartmentA.temperatureDesc | <code>string</code> | Battery temperature status |
+| result.batteries.compartmentA.energyConsumedTody | <code>number</code> | Energey consumption of today |
+| result.batteries.compartmentA.gradeBattery | <code>string</code> | Battery grade points |
 | result.[batteries.compartmentB | <code>Object</code> |  |
-| result.batteries.compartmentB.items | <code>Array.&lt;Object&gt;</code> |  |
-| result.batteries.compartmentB.items.x | <code>number</code> |  |
-| result.batteries.compartmentB.items.y | <code>number</code> |  |
-| result.batteries.compartmentB.items.z | <code>number</code> |  |
-| result.batteries.compartmentB.totalPoint | <code>number</code> |  |
-| result.batteries.compartmentB.bmsId | <code>string</code> |  |
-| result.batteries.compartmentB.isConnected | <code>boolean</code> |  |
-| result.batteries.compartmentB.batteryCharging | <code>number</code> |  |
-| result.batteries.compartmentB.chargedTimes | <code>string</code> |  |
-| result.batteries.compartmentB.temperature | <code>number</code> |  |
-| result.batteries.compartmentB.temperatureDesc | <code>string</code> |  |
-| result.batteries.compartmentB.energyConsumedTody | <code>number</code> |  |
-| result.batteries.compartmentB.gradeBattery | <code>string</code> |  |
-| result.isCharging | <code>number</code> |  |
-| result.centreCtrlBattery | <code>string</code> |  |
-| result.batteryDetail | <code>boolean</code> |  |
-| result.estimatedMileage | <code>number</code> |  |
+| result.batteries.compartmentB.items | <code>Array.&lt;Object&gt;</code> | ? |
+| result.batteries.compartmentB.items.x | <code>number</code> | ? |
+| result.batteries.compartmentB.items.y | <code>number</code> | ? |
+| result.batteries.compartmentB.items.z | <code>number</code> | ? |
+| result.batteries.compartmentB.totalPoint | <code>number</code> | Number of items |
+| result.batteries.compartmentB.bmsId | <code>string</code> | Battery management identification number |
+| result.batteries.compartmentB.isConnected | <code>boolean</code> | Is battery connected or not |
+| result.batteries.compartmentB.batteryCharging | <code>number</code> | State of charge in percent |
+| result.batteries.compartmentB.chargedTimes | <code>string</code> | Charging cycles |
+| result.batteries.compartmentB.temperature | <code>number</code> | Battery temperature in degree celsius |
+| result.batteries.compartmentB.temperatureDesc | <code>string</code> | Battery temperature status |
+| result.batteries.compartmentB.energyConsumedTody | <code>number</code> | Energey consumption of today |
+| result.batteries.compartmentB.gradeBattery | <code>string</code> | Battery grade points |
+| result.isCharging | <code>number</code> | Is charging |
+| result.centreCtrlBattery | <code>string</code> | Centre control battery |
+| result.batteryDetail | <code>boolean</code> | Battery detail |
+| result.estimatedMileage | <code>number</code> | Estimated mileage in km |
 
 <a name="BatteryInfoHealth"></a>
 
@@ -303,31 +303,31 @@ URL to the NIU app API.
 | Name | Type | Description |
 | --- | --- | --- |
 | client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
-| result | <code>Object</code> |  |
-| result.batteries | <code>Object</code> |  |
-| result.batteries.compartmentA | <code>Object</code> |  |
-| result.batteries.compartmentA.bmsId | <code>string</code> |  |
-| result.batteries.compartmentA.isConnected | <code>boolean</code> |  |
-| result.batteries.compartmentA.gradeBattery | <code>string</code> |  |
-| result.batteries.compartmentA.faults | <code>Array.&lt;Object&gt;</code> |  |
-| result.batteries.compartmentA.healthRecords | <code>Array.&lt;Object&gt;</code> |  |
-| result.batteries.compartmentA.healthRecords.result | <code>string</code> |  |
-| result.batteries.compartmentA.healthRecords.chargeCount | <code>string</code> |  |
-| result.batteries.compartmentA.healthRecords.color | <code>string</code> |  |
-| result.batteries.compartmentA.healthRecords.time | <code>number</code> |  |
-| result.batteries.compartmentA.healthRecords.name | <code>string</code> |  |
-| result.[batteries.compartmentB | <code>Object</code> |  |
-| result.batteries.compartmentB.bmsId | <code>string</code> |  |
-| result.batteries.compartmentB.isConnected | <code>boolean</code> |  |
-| result.batteries.compartmentB.gradeBattery | <code>string</code> |  |
-| result.batteries.compartmentB.faults | <code>Array.&lt;Object&gt;</code> |  |
-| result.batteries.compartmentB.healthRecords | <code>Array.&lt;Object&gt;</code> |  |
-| result.batteries.compartmentB.healthRecords.result | <code>string</code> |  |
-| result.batteries.compartmentB.healthRecords.chargeCount | <code>string</code> |  |
-| result.batteries.compartmentB.healthRecords.color | <code>string</code> |  |
-| result.batteries.compartmentB.healthRecords.time | <code>number</code> |  |
-| result.batteries.compartmentB.healthRecords.name | <code>string</code> |  |
-| result.isDoubleBattery | <code>boolean</code> |  |
+| result | <code>Object</code> | Received response |
+| result.batteries | <code>Object</code> | Batteries |
+| result.batteries.compartmentA | <code>Object</code> | Battery compartment A |
+| result.batteries.compartmentA.bmsId | <code>string</code> | Battery management system identification number |
+| result.batteries.compartmentA.isConnected | <code>boolean</code> | Is connected or not |
+| result.batteries.compartmentA.gradeBattery | <code>string</code> | Battery grade points |
+| result.batteries.compartmentA.faults | <code>Array.&lt;Object&gt;</code> | List of faults |
+| result.batteries.compartmentA.healthRecords | <code>Array.&lt;Object&gt;</code> | List of health records |
+| result.batteries.compartmentA.healthRecords.result | <code>string</code> | Battery lost grade points |
+| result.batteries.compartmentA.healthRecords.chargeCount | <code>string</code> | Charging cycles |
+| result.batteries.compartmentA.healthRecords.color | <code>string</code> | HTML color in #RGB format |
+| result.batteries.compartmentA.healthRecords.time | <code>number</code> | Timestamp in unix timstamp epoch format (13 digits) |
+| result.batteries.compartmentA.healthRecords.name | <code>string</code> | Name |
+| result.[batteries.compartmentB | <code>Object</code> | Battery compratment B |
+| result.batteries.compartmentB.bmsId | <code>string</code> | Battery management system identification number |
+| result.batteries.compartmentB.isConnected | <code>boolean</code> | Is connected or not |
+| result.batteries.compartmentB.gradeBattery | <code>string</code> | Battery grade points |
+| result.batteries.compartmentB.faults | <code>Array.&lt;Object&gt;</code> | List of faults |
+| result.batteries.compartmentB.healthRecords | <code>Array.&lt;Object&gt;</code> | List of health records |
+| result.batteries.compartmentB.healthRecords.result | <code>string</code> | Battery lost grade points |
+| result.batteries.compartmentB.healthRecords.chargeCount | <code>string</code> | Charging cycles |
+| result.batteries.compartmentB.healthRecords.color | <code>string</code> | HTML color in #RGB format |
+| result.batteries.compartmentB.healthRecords.time | <code>number</code> | Timestamp in unix timstamp epoch format (13 digits) |
+| result.batteries.compartmentB.healthRecords.name | <code>string</code> | Name |
+| result.isDoubleBattery | <code>boolean</code> | Vehicle has one or two batteries |
 
 <a name="MotorData"></a>
 
@@ -338,43 +338,43 @@ URL to the NIU app API.
 | Name | Type | Description |
 | --- | --- | --- |
 | client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
-| result | <code>Object</code> |  |
-| result.isCharging | <code>number</code> |  |
-| result.lockStatus | <code>number</code> |  |
-| result.isAccOn | <code>number</code> |  |
-| result.isFortificationOn | <code>string</code> |  |
-| result.isConnected | <code>boolean</code> |  |
-| result.postion | <code>Object</code> |  |
-| result.postion.lat | <code>number</code> |  |
-| result.postion.lng | <code>number</code> |  |
-| result.hdop | <code>number</code> |  |
-| result.time | <code>number</code> |  |
-| result.batteries | <code>Object</code> |  |
-| result.batteries.compartmentA | <code>Object</code> |  |
-| result.batteries.compartmentA.bmsId | <code>string</code> |  |
-| result.batteries.compartmentA.isConnected | <code>boolean</code> |  |
-| result.batteries.compartmentA.batteryCharging | <code>number</code> |  |
-| result.batteries.compartmentA.gradeBattery | <code>string</code> |  |
-| result.[batteries.compartmentB | <code>Object</code> |  |
-| result.batteries.compartmentB.bmsId | <code>string</code> |  |
-| result.batteries.compartmentB.isConnected | <code>boolean</code> |  |
-| result.batteries.compartmentB.batteryCharging | <code>number</code> |  |
-| result.batteries.compartmentB.gradeBattery | <code>string</code> |  |
-| result.leftTime | <code>string</code> |  |
-| result.estimatedMileage | <code>number</code> |  |
-| result.gpsTimestamp | <code>number</code> |  |
-| result.infoTimestamp | <code>number</code> |  |
-| result.nowSpeed | <code>number</code> |  |
-| result.batteryDetail | <code>boolean</code> |  |
-| result.centreCtrlBattery | <code>number</code> |  |
-| result.ss_protocol_ver | <code>number</code> |  |
-| result.ss_online_sta | <code>string</code> |  |
-| result.gps | <code>number</code> |  |
-| result.gsm | <code>number</code> |  |
-| result.lastTrack | <code>Object</code> |  |
-| result.lastTrack.ridingTime | <code>number</code> |  |
-| result.lastTrack.distance | <code>number</code> |  |
-| result.lastTrack.time | <code>number</code> |  |
+| result | <code>Object</code> | Received response |
+| result.isCharging | <code>number</code> | Is charging |
+| result.lockStatus | <code>number</code> | Lock status |
+| result.isAccOn | <code>number</code> | Is adaptive cruise control on or not |
+| result.isFortificationOn | <code>string</code> | Is fortification on or not |
+| result.isConnected | <code>boolean</code> | Is connected or not |
+| result.postion | <code>Object</code> | Current position |
+| result.postion.lat | <code>number</code> | Latitude |
+| result.postion.lng | <code>number</code> | Longitude |
+| result.hdop | <code>number</code> | ? |
+| result.time | <code>number</code> | Time in unix timestamp epoch format (13 digits) |
+| result.batteries | <code>Object</code> | Batteries |
+| result.batteries.compartmentA | <code>Object</code> | Battery compartment A |
+| result.batteries.compartmentA.bmsId | <code>string</code> | Battery management system identification number |
+| result.batteries.compartmentA.isConnected | <code>boolean</code> | Battery is connected or not |
+| result.batteries.compartmentA.batteryCharging | <code>number</code> | Battery is charging or not |
+| result.batteries.compartmentA.gradeBattery | <code>string</code> | Battery grade points |
+| result.[batteries.compartmentB | <code>Object</code> | Battery compartment B |
+| result.batteries.compartmentB.bmsId | <code>string</code> | Battery management system identification number |
+| result.batteries.compartmentB.isConnected | <code>boolean</code> | Battery is connected or not |
+| result.batteries.compartmentB.batteryCharging | <code>number</code> | Battery is charging or not |
+| result.batteries.compartmentB.gradeBattery | <code>string</code> | Battery grade points |
+| result.leftTime | <code>string</code> | Left time |
+| result.estimatedMileage | <code>number</code> | Estimated mileage in km |
+| result.gpsTimestamp | <code>number</code> | GPS timestamp in unix timestamp epoch format (13 digits) |
+| result.infoTimestamp | <code>number</code> | Info timestamp in unix timestamp epoch format (13 digits) |
+| result.nowSpeed | <code>number</code> | Current speed in km/h |
+| result.batteryDetail | <code>boolean</code> | Battery detail |
+| result.centreCtrlBattery | <code>number</code> | Centre control battery |
+| result.ss_protocol_ver | <code>number</code> | SS protocol version |
+| result.ss_online_sta | <code>string</code> | SS online status |
+| result.gps | <code>number</code> | GPS signal strength |
+| result.gsm | <code>number</code> | GSM signal strength |
+| result.lastTrack | <code>Object</code> | Last track information |
+| result.lastTrack.ridingTime | <code>number</code> | Riding time in s |
+| result.lastTrack.distance | <code>number</code> | Distance in m |
+| result.lastTrack.time | <code>number</code> | Timestamp in unix timestamp epoch format (13 digits) |
 
 <a name="OverallTally"></a>
 
@@ -385,7 +385,7 @@ URL to the NIU app API.
 | Name | Type | Description |
 | --- | --- | --- |
 | client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
-| result | <code>Object</code> |  |
+| result | <code>Object</code> | Received response |
 | result.bindDaysCount | <code>number</code> | Number of days the vehicle is at the customer |
 | result.totalMileage | <code>number</code> | Total mileage in km |
 
