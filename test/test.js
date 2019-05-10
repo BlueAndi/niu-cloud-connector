@@ -124,6 +124,26 @@ client.createSessionToken({
 
     console.log("Total mileage: " + result.result.data.totalMileage);
 
+    console.log("Get a track ...");
+    return result.client.getTracks({
+        sn: vehicles[0].sn,
+        index: 0,
+        pageSize: 1
+    });
+
+}).then(function(result) {
+
+    var track       = result.result.data[0];
+    var startTime   = new Date(track.startTime);
+    var endTime     = new Date(track.endTime);
+
+    console.log("Track: " + track.trackId);
+    console.log("\tStart time  : " + startTime.toString());
+    console.log("\tEnd time    : " + endTime.toString());
+    console.log("\tDistance    : " + track.distance / 1000 + " km");
+    console.log("\tAvg. speed  : " + track.avespeed + " km/h");
+    console.log("\tRiding time : " + track.ridingtime / 60 + " h");
+
 }).catch(function(error) {
 
     if ("object" === typeof error) {

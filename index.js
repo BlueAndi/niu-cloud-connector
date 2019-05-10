@@ -611,3 +611,75 @@ niuCloudConnector.Client.prototype.getOverallTally = function(options) {
         }
     });
 };
+
+/**
+ * @typedef {Promise} Tracks
+ * @property {niuCloudConnector.Client} client      - Client
+ * @property {Object[]} result                      - Received response
+ * @property {string}   result.id                   - Identification number
+ * @property {string}   result.trackId              - Track identification number
+ * @property {number}   result.startTime            - Start time in unix timestamp epoch format (13 digits)
+ * @property {number}   result.endTime              - Stop time in unix timestamp epoch format (13 digits)
+ * @property {number}   result.distance             - Distance in m
+ * @property {number}   result.avespeed             - Average speed in km/h
+ * @property {number}   result.ridingtime           - Riding time in minutes
+ * @property {string}   result.type                 - Type
+ * @property {string}   result.date                 - Date in the format yyyymmdd
+ * @property {Object}   result.startPoint           - Start point
+ * @property {string}   result.startPoint.lng       - Longitude
+ * @property {string}   result.startPoint.lat       - Latitude
+ * @property {string}   result.startPoint.speed     - Speed
+ * @property {string}   result.startPoint.battery   - Battery state of charge in percent
+ * @property {string}   result.startPoint.mileage   - Mileage in m
+ * @property {string}   result.startPoint.date      - Date in unix timestamp epoch format (13 digits)
+ * @property {Object}   result.lastPoint            - Start point
+ * @property {string}   result.lastPoint.lng        - Longitude
+ * @property {string}   result.lastPoint.lat        - Latitude
+ * @property {string}   result.lastPoint.speed      - Speed
+ * @property {string}   result.lastPoint.battery    - Battery state of charge in percent
+ * @property {string}   result.lastPoint.mileage    - Mileage in m
+ * @property {string}   result.lastPoint.date       - Date in unix timestamp epoch format (13 digits)
+*/
+
+/**
+ * Get recorded tracks.
+ * 
+ * @param {Object}  options             - Options.
+ * @param {string}  options.sn          - Vehicle serial number.
+ * @param {number}  options.index       - Start from this index.
+ * @param {number}  options.pageSize    - Number of tracks.
+ * 
+ * @returns {Tracks} Tracks.
+ */
+niuCloudConnector.Client.prototype.getTracks = function(options) {
+    var funcName = "getTracks()";
+
+    if (0 === this._token.length) {
+        return Promise.reject(this._error("No valid token available.", funcName));
+    }
+
+    if ("object" !== typeof options) {
+        return Promise.reject(this._error("Options is missing.", funcName));
+    }
+
+    if ("string" !== typeof options.sn) {
+        return Promise.reject(this._error("Vehicle serial number is missing.", funcName));
+    }
+
+    if ("number" !== typeof options.index) {
+        return Promise.reject(this._error("Index is missing.", funcName));
+    }
+
+    if ("number" !== typeof options.pageSize) {
+        return Promise.reject(this._error("Page size is missing.", funcName));
+    }
+
+    return this._makeRequest({
+        path: "/v3/motor_data/track",
+        postData: {
+            sn: options.sn,
+            index: options.index,
+            pagesize: options.pageSize
+        }
+    });
+};

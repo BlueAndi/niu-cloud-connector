@@ -31,6 +31,8 @@
 <dd></dd>
 <dt><a href="#OverallTally">OverallTally</a> : <code>Promise</code></dt>
 <dd></dd>
+<dt><a href="#Tracks">Tracks</a> : <code>Promise</code></dt>
+<dd></dd>
 </dl>
 
 <a name="request"></a>
@@ -57,6 +59,7 @@ NIU cloud connector
         * [.getBatteryHealth(options)](#niuCloudConnector.Client+getBatteryHealth) ⇒ [<code>BatteryInfoHealth</code>](#BatteryInfoHealth)
         * [.getMotorInfo(options)](#niuCloudConnector.Client+getMotorInfo) ⇒ [<code>MotorData</code>](#MotorData)
         * [.getOverallTally(options)](#niuCloudConnector.Client+getOverallTally) ⇒ [<code>OverallTally</code>](#OverallTally)
+        * [.getTracks(options)](#niuCloudConnector.Client+getTracks) ⇒ [<code>Tracks</code>](#Tracks)
     * [.AccountBaseUrl](#niuCloudConnector.AccountBaseUrl)
     * [.AppApiBaseUrl](#niuCloudConnector.AppApiBaseUrl)
 
@@ -75,6 +78,7 @@ NIU cloud connector
     * [.getBatteryHealth(options)](#niuCloudConnector.Client+getBatteryHealth) ⇒ [<code>BatteryInfoHealth</code>](#BatteryInfoHealth)
     * [.getMotorInfo(options)](#niuCloudConnector.Client+getMotorInfo) ⇒ [<code>MotorData</code>](#MotorData)
     * [.getOverallTally(options)](#niuCloudConnector.Client+getOverallTally) ⇒ [<code>OverallTally</code>](#OverallTally)
+    * [.getTracks(options)](#niuCloudConnector.Client+getTracks) ⇒ [<code>Tracks</code>](#Tracks)
 
 <a name="new_niuCloudConnector.Client_new"></a>
 
@@ -173,6 +177,21 @@ Get overall tally of vehicle.
 | --- | --- | --- |
 | options | <code>Object</code> | Options. |
 | options.sn | <code>string</code> | Vehicle serial number. |
+
+<a name="niuCloudConnector.Client+getTracks"></a>
+
+#### client.getTracks(options) ⇒ [<code>Tracks</code>](#Tracks)
+Get recorded tracks.
+
+**Kind**: instance method of [<code>Client</code>](#niuCloudConnector.Client)  
+**Returns**: [<code>Tracks</code>](#Tracks) - Tracks.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>Object</code> | Options. |
+| options.sn | <code>string</code> | Vehicle serial number. |
+| options.index | <code>number</code> | Start from this index. |
+| options.pageSize | <code>number</code> | Number of tracks. |
 
 <a name="niuCloudConnector.AccountBaseUrl"></a>
 
@@ -388,4 +407,38 @@ URL to the NIU app API.
 | result | <code>Object</code> | Received response |
 | result.bindDaysCount | <code>number</code> | Number of days the vehicle is at the customer |
 | result.totalMileage | <code>number</code> | Total mileage in km |
+
+<a name="Tracks"></a>
+
+## Tracks : <code>Promise</code>
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
+| result | <code>Array.&lt;Object&gt;</code> | Received response |
+| result.id | <code>string</code> | Identification number |
+| result.trackId | <code>string</code> | Track identification number |
+| result.startTime | <code>number</code> | Start time in unix timestamp epoch format (13 digits) |
+| result.endTime | <code>number</code> | Stop time in unix timestamp epoch format (13 digits) |
+| result.distance | <code>number</code> | Distance in m |
+| result.avespeed | <code>number</code> | Average speed in km/h |
+| result.ridingtime | <code>number</code> | Riding time in minutes |
+| result.type | <code>string</code> | Type |
+| result.date | <code>string</code> | Date in the format yyyymmdd |
+| result.startPoint | <code>Object</code> | Start point |
+| result.startPoint.lng | <code>string</code> | Longitude |
+| result.startPoint.lat | <code>string</code> | Latitude |
+| result.startPoint.speed | <code>string</code> | Speed |
+| result.startPoint.battery | <code>string</code> | Battery state of charge in percent |
+| result.startPoint.mileage | <code>string</code> | Mileage in m |
+| result.startPoint.date | <code>string</code> | Date in unix timestamp epoch format (13 digits) |
+| result.lastPoint | <code>Object</code> | Start point |
+| result.lastPoint.lng | <code>string</code> | Longitude |
+| result.lastPoint.lat | <code>string</code> | Latitude |
+| result.lastPoint.speed | <code>string</code> | Speed |
+| result.lastPoint.battery | <code>string</code> | Battery state of charge in percent |
+| result.lastPoint.mileage | <code>string</code> | Mileage in m |
+| result.lastPoint.date | <code>string</code> | Date in unix timestamp epoch format (13 digits) |
 
