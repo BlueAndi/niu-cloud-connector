@@ -515,7 +515,7 @@ niuCloudConnector.Client.prototype.getBatteryHealth = function(options) {
  * @property {Object}   result.postion                                  - Current position
  * @property {number}   result.postion.lat                              - Latitude
  * @property {number}   result.postion.lng                              - Longitude
- * @property {number}   result.hdop                                     - ?
+ * @property {number}   result.hdop                                     - Horizontal dilution of precision [0; 50]. A good HDOP is up to 2.5. For navigation a value up to 8 is acceptable.
  * @property {number}   result.time                                     - Time in unix timestamp epoch format (13 digits)
  * @property {Object}   result.batteries                                - Batteries
  * @property {Object}   result.batteries.compartmentA                   - Battery compartment A

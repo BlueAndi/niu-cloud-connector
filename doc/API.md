@@ -347,7 +347,7 @@ URL to the NIU app API.
 | result.postion | <code>Object</code> | Current position |
 | result.postion.lat | <code>number</code> | Latitude |
 | result.postion.lng | <code>number</code> | Longitude |
-| result.hdop | <code>number</code> | ? |
+| result.hdop | <code>number</code> | Horizontal dilution of precision [0; 50]. A good HDOP is up to 2.5. For navigation a value up to 8 is acceptable. |
 | result.time | <code>number</code> | Time in unix timestamp epoch format (13 digits) |
 | result.batteries | <code>Object</code> | Batteries |
 | result.batteries.compartmentA | <code>Object</code> | Battery compartment A |
