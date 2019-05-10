@@ -144,6 +144,31 @@ client.createSessionToken({
     console.log("\tAvg. speed  : " + track.avespeed + " km/h");
     console.log("\tRiding time : " + track.ridingtime / 60 + " h");
 
+    console.log("Get a track detail ...");
+    return result.client.getTrackDetail({
+        sn: vehicles[0].sn,
+        trackId: track.trackId,
+        trackDate: track.date
+    });
+
+}).then(function(result) {
+
+    var index       = 0;
+    var trackItems  = result.result.data.trackItems;
+
+    for(index = 0; index < trackItems.length; ++index) {
+
+        console.log("Item #" + (index + 1));
+        console.log("\tLongitude: " + trackItems[index].lng);
+        console.log("\tLatitude: " + trackItems[index].lat);
+
+        if (0 === index) {
+            console.log("\tdiff: -");
+        } else {
+            console.log("\tdiff: " + ((parseInt(trackItems[index - 1].date) - parseInt(trackItems[index].date)) / 1000) + " s");
+        }
+    }    
+
 }).catch(function(error) {
 
     if ("object" === typeof error) {

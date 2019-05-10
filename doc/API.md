@@ -33,6 +33,8 @@
 <dd></dd>
 <dt><a href="#Tracks">Tracks</a> : <code>Promise</code></dt>
 <dd></dd>
+<dt><a href="#TrackDetail">TrackDetail</a> : <code>Promise</code></dt>
+<dd></dd>
 </dl>
 
 <a name="request"></a>
@@ -60,6 +62,7 @@ NIU cloud connector
         * [.getMotorInfo(options)](#niuCloudConnector.Client+getMotorInfo) ⇒ [<code>MotorData</code>](#MotorData)
         * [.getOverallTally(options)](#niuCloudConnector.Client+getOverallTally) ⇒ [<code>OverallTally</code>](#OverallTally)
         * [.getTracks(options)](#niuCloudConnector.Client+getTracks) ⇒ [<code>Tracks</code>](#Tracks)
+        * [.getTrackDetail(options)](#niuCloudConnector.Client+getTrackDetail) ⇒ [<code>TrackDetail</code>](#TrackDetail)
     * [.AccountBaseUrl](#niuCloudConnector.AccountBaseUrl)
     * [.AppApiBaseUrl](#niuCloudConnector.AppApiBaseUrl)
 
@@ -79,6 +82,7 @@ NIU cloud connector
     * [.getMotorInfo(options)](#niuCloudConnector.Client+getMotorInfo) ⇒ [<code>MotorData</code>](#MotorData)
     * [.getOverallTally(options)](#niuCloudConnector.Client+getOverallTally) ⇒ [<code>OverallTally</code>](#OverallTally)
     * [.getTracks(options)](#niuCloudConnector.Client+getTracks) ⇒ [<code>Tracks</code>](#Tracks)
+    * [.getTrackDetail(options)](#niuCloudConnector.Client+getTrackDetail) ⇒ [<code>TrackDetail</code>](#TrackDetail)
 
 <a name="new_niuCloudConnector.Client_new"></a>
 
@@ -192,6 +196,21 @@ Get recorded tracks.
 | options.sn | <code>string</code> | Vehicle serial number. |
 | options.index | <code>number</code> | Start from this index. |
 | options.pageSize | <code>number</code> | Number of tracks. |
+
+<a name="niuCloudConnector.Client+getTrackDetail"></a>
+
+#### client.getTrackDetail(options) ⇒ [<code>TrackDetail</code>](#TrackDetail)
+Get track details.
+
+**Kind**: instance method of [<code>Client</code>](#niuCloudConnector.Client)  
+**Returns**: [<code>TrackDetail</code>](#TrackDetail) - Track detail.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>Object</code> | Options. |
+| options.sn | <code>string</code> | Vehicle serial number. |
+| options.trackId | <code>string</code> | Track identification number. |
+| options.trackDate | <code>string</code> | Track date in yyyymmdd format. |
 
 <a name="niuCloudConnector.AccountBaseUrl"></a>
 
@@ -441,4 +460,27 @@ URL to the NIU app API.
 | result.lastPoint.battery | <code>string</code> | Battery state of charge in percent |
 | result.lastPoint.mileage | <code>string</code> | Mileage in m |
 | result.lastPoint.date | <code>string</code> | Date in unix timestamp epoch format (13 digits) |
+
+<a name="TrackDetail"></a>
+
+## TrackDetail : <code>Promise</code>
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
+| result | <code>Object</code> | Received response |
+| result.trackItems | <code>Array.&lt;Object&gt;</code> | Track items (end point at index 0) |
+| result.trackItems.lng | <code>number</code> | Longitude |
+| result.trackItems.lat | <code>number</code> | Latitude |
+| result.trackItems.date | <code>number</code> | Date in unix timestamp epoch format (13 digits) |
+| result.startPoint | <code>Object</code> | Start point |
+| result.startPoint.lng | <code>string</code> | Longitude |
+| result.startPoint.lat | <code>string</code> | Latitude |
+| result.lastPoint | <code>Object</code> | Start point |
+| result.lastPoint.lng | <code>string</code> | Longitude |
+| result.lastPoint.lat | <code>string</code> | Latitude |
+| result.startTime | <code>string</code> | Start time in unix timestamp epoch format (13 digits) |
+| result.lastDate | <code>string</code> | Last time in unix timestamp epoch format (13 digits) |
 

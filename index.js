@@ -683,3 +683,64 @@ niuCloudConnector.Client.prototype.getTracks = function(options) {
         }
     });
 };
+
+/**
+ * @typedef {Promise} TrackDetail
+ * @property {niuCloudConnector.Client} client      - Client
+ * @property {Object}   result                      - Received response
+ * @property {Object[]} result.trackItems           - Track items (end point at index 0)
+ * @property {number}   result.trackItems.lng       - Longitude
+ * @property {number}   result.trackItems.lat       - Latitude
+ * @property {number}   result.trackItems.date      - Date in unix timestamp epoch format (13 digits)
+ * @property {Object}   result.startPoint           - Start point
+ * @property {string}   result.startPoint.lng       - Longitude
+ * @property {string}   result.startPoint.lat       - Latitude
+ * @property {Object}   result.lastPoint            - Start point
+ * @property {string}   result.lastPoint.lng        - Longitude
+ * @property {string}   result.lastPoint.lat        - Latitude
+ * @property {string}   result.startTime            - Start time in unix timestamp epoch format (13 digits)
+ * @property {string}   result.lastDate             - Last time in unix timestamp epoch format (13 digits)
+*/
+
+/**
+ * Get track details.
+ * 
+ * @param {Object}  options             - Options.
+ * @param {string}  options.sn          - Vehicle serial number.
+ * @param {string}  options.trackId     - Track identification number.
+ * @param {string}  options.trackDate   - Track date in yyyymmdd format.
+ * 
+ * @returns {TrackDetail} Track detail.
+ */
+niuCloudConnector.Client.prototype.getTrackDetail = function(options) {
+    var funcName = "getTrackDetail()";
+
+    if (0 === this._token.length) {
+        return Promise.reject(this._error("No valid token available.", funcName));
+    }
+
+    if ("object" !== typeof options) {
+        return Promise.reject(this._error("Options is missing.", funcName));
+    }
+
+    if ("string" !== typeof options.sn) {
+        return Promise.reject(this._error("Vehicle serial number is missing.", funcName));
+    }
+
+    if ("string" !== typeof options.trackId) {
+        return Promise.reject(this._error("Track ID is missing.", funcName));
+    }
+
+    if ("string" !== typeof options.trackDate) {
+        return Promise.reject(this._error("Track date is missing.", funcName));
+    }
+
+    return this._makeRequest({
+        path: "/motoinfo/track/detail",
+        postData: {
+            sn: options.sn,
+            trackId: options.trackId,
+            date: options.trackDate
+        }
+    });
+};
