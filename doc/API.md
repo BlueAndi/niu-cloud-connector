@@ -383,8 +383,8 @@ URL to the NIU app API.
 | result.isFortificationOn | <code>string</code> | Is fortification on or not |
 | result.isConnected | <code>boolean</code> | Is connected or not |
 | result.postion | <code>Object</code> | Current position |
-| result.postion.lat | <code>number</code> | Latitude |
-| result.postion.lng | <code>number</code> | Longitude |
+| result.postion.lat | <code>number</code> | Latitude in decimal degree (WGS 84) |
+| result.postion.lng | <code>number</code> | Longitude in decimal degree (WGS 84) |
 | result.hdop | <code>number</code> | Horizontal dilution of precision [0; 50]. A good HDOP is up to 2.5. For navigation a value up to 8 is acceptable. |
 | result.time | <code>number</code> | Time in unix timestamp epoch format (13 digits) |
 | result.batteries | <code>Object</code> | Batteries |
@@ -447,15 +447,15 @@ URL to the NIU app API.
 | result.type | <code>string</code> | Type |
 | result.date | <code>string</code> | Date in the format yyyymmdd |
 | result.startPoint | <code>Object</code> | Start point |
-| result.startPoint.lng | <code>string</code> | Longitude |
-| result.startPoint.lat | <code>string</code> | Latitude |
+| result.startPoint.lng | <code>string</code> | Longitude in decimal degree (WGS 84) |
+| result.startPoint.lat | <code>string</code> | Latitude in decimal degree (WGS 84) |
 | result.startPoint.speed | <code>string</code> | Speed |
 | result.startPoint.battery | <code>string</code> | Battery state of charge in percent |
 | result.startPoint.mileage | <code>string</code> | Mileage in m |
 | result.startPoint.date | <code>string</code> | Date in unix timestamp epoch format (13 digits) |
 | result.lastPoint | <code>Object</code> | Start point |
-| result.lastPoint.lng | <code>string</code> | Longitude |
-| result.lastPoint.lat | <code>string</code> | Latitude |
+| result.lastPoint.lng | <code>string</code> | Longitude in decimal degree (WGS 84) |
+| result.lastPoint.lat | <code>string</code> | Latitude in decimal degree (WGS 84) |
 | result.lastPoint.speed | <code>string</code> | Speed |
 | result.lastPoint.battery | <code>string</code> | Battery state of charge in percent |
 | result.lastPoint.mileage | <code>string</code> | Mileage in m |
@@ -472,15 +472,15 @@ URL to the NIU app API.
 | client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
 | result | <code>Object</code> | Received response |
 | result.trackItems | <code>Array.&lt;Object&gt;</code> | Track items (end point at index 0) |
-| result.trackItems.lng | <code>number</code> | Longitude |
-| result.trackItems.lat | <code>number</code> | Latitude |
+| result.trackItems.lng | <code>number</code> | Longitude in decimal degree (WGS 84) |
+| result.trackItems.lat | <code>number</code> | Latitude in decimal degree (WGS 84) |
 | result.trackItems.date | <code>number</code> | Date in unix timestamp epoch format (13 digits) |
 | result.startPoint | <code>Object</code> | Start point |
-| result.startPoint.lng | <code>string</code> | Longitude |
-| result.startPoint.lat | <code>string</code> | Latitude |
+| result.startPoint.lng | <code>string</code> | Longitude in decimal degree (WGS 84) |
+| result.startPoint.lat | <code>string</code> | Latitude in decimal degree (WGS 84) |
 | result.lastPoint | <code>Object</code> | Start point |
-| result.lastPoint.lng | <code>string</code> | Longitude |
-| result.lastPoint.lat | <code>string</code> | Latitude |
+| result.lastPoint.lng | <code>string</code> | Longitude in decimal degree (WGS 84) |
+| result.lastPoint.lat | <code>string</code> | Latitude in decimal degree (WGS 84) |
 | result.startTime | <code>string</code> | Start time in unix timestamp epoch format (13 digits) |
 | result.lastDate | <code>string</code> | Last time in unix timestamp epoch format (13 digits) |
 

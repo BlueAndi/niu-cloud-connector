@@ -513,8 +513,8 @@ niuCloudConnector.Client.prototype.getBatteryHealth = function(options) {
  * @property {string}   result.isFortificationOn                        - Is fortification on or not
  * @property {boolean}  result.isConnected                              - Is connected or not
  * @property {Object}   result.postion                                  - Current position
- * @property {number}   result.postion.lat                              - Latitude
- * @property {number}   result.postion.lng                              - Longitude
+ * @property {number}   result.postion.lat                              - Latitude in decimal degree (WGS 84)
+ * @property {number}   result.postion.lng                              - Longitude in decimal degree (WGS 84)
  * @property {number}   result.hdop                                     - Horizontal dilution of precision [0; 50]. A good HDOP is up to 2.5. For navigation a value up to 8 is acceptable.
  * @property {number}   result.time                                     - Time in unix timestamp epoch format (13 digits)
  * @property {Object}   result.batteries                                - Batteries
@@ -626,15 +626,15 @@ niuCloudConnector.Client.prototype.getOverallTally = function(options) {
  * @property {string}   result.type                 - Type
  * @property {string}   result.date                 - Date in the format yyyymmdd
  * @property {Object}   result.startPoint           - Start point
- * @property {string}   result.startPoint.lng       - Longitude
- * @property {string}   result.startPoint.lat       - Latitude
+ * @property {string}   result.startPoint.lng       - Longitude in decimal degree (WGS 84)
+ * @property {string}   result.startPoint.lat       - Latitude in decimal degree (WGS 84)
  * @property {string}   result.startPoint.speed     - Speed
  * @property {string}   result.startPoint.battery   - Battery state of charge in percent
  * @property {string}   result.startPoint.mileage   - Mileage in m
  * @property {string}   result.startPoint.date      - Date in unix timestamp epoch format (13 digits)
  * @property {Object}   result.lastPoint            - Start point
- * @property {string}   result.lastPoint.lng        - Longitude
- * @property {string}   result.lastPoint.lat        - Latitude
+ * @property {string}   result.lastPoint.lng        - Longitude in decimal degree (WGS 84)
+ * @property {string}   result.lastPoint.lat        - Latitude in decimal degree (WGS 84)
  * @property {string}   result.lastPoint.speed      - Speed
  * @property {string}   result.lastPoint.battery    - Battery state of charge in percent
  * @property {string}   result.lastPoint.mileage    - Mileage in m
@@ -689,15 +689,15 @@ niuCloudConnector.Client.prototype.getTracks = function(options) {
  * @property {niuCloudConnector.Client} client      - Client
  * @property {Object}   result                      - Received response
  * @property {Object[]} result.trackItems           - Track items (end point at index 0)
- * @property {number}   result.trackItems.lng       - Longitude
- * @property {number}   result.trackItems.lat       - Latitude
+ * @property {number}   result.trackItems.lng       - Longitude in decimal degree (WGS 84)
+ * @property {number}   result.trackItems.lat       - Latitude in decimal degree (WGS 84)
  * @property {number}   result.trackItems.date      - Date in unix timestamp epoch format (13 digits)
  * @property {Object}   result.startPoint           - Start point
- * @property {string}   result.startPoint.lng       - Longitude
- * @property {string}   result.startPoint.lat       - Latitude
+ * @property {string}   result.startPoint.lng       - Longitude in decimal degree (WGS 84)
+ * @property {string}   result.startPoint.lat       - Latitude in decimal degree (WGS 84)
  * @property {Object}   result.lastPoint            - Start point
- * @property {string}   result.lastPoint.lng        - Longitude
- * @property {string}   result.lastPoint.lat        - Latitude
+ * @property {string}   result.lastPoint.lng        - Longitude in decimal degree (WGS 84)
+ * @property {string}   result.lastPoint.lat        - Latitude in decimal degree (WGS 84)
  * @property {string}   result.startTime            - Start time in unix timestamp epoch format (13 digits)
  * @property {string}   result.lastDate             - Last time in unix timestamp epoch format (13 digits)
 */
