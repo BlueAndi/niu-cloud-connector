@@ -133,41 +133,39 @@ client.createSessionToken({
 
 }).then(function(result) {
 
-    var track       = result.result.data[0];
-    var startTime   = new Date(track.startTime);
-    var endTime     = new Date(track.endTime);
+    if (0 === result.result.data.length) {
+        console.log("No tracks available.");
+    } else {
 
-    console.log("Track: " + track.trackId);
-    console.log("\tStart time  : " + startTime.toString());
-    console.log("\tEnd time    : " + endTime.toString());
-    console.log("\tDistance    : " + track.distance / 1000 + " km");
-    console.log("\tAvg. speed  : " + track.avespeed + " km/h");
-    console.log("\tRiding time : " + track.ridingtime / 60 + " h");
+        var track       = result.result.data[0];
+        var startTime   = new Date(track.startTime);
+        var endTime     = new Date(track.endTime);
 
-    console.log("Get a track detail ...");
-    return result.client.getTrackDetail({
-        sn: vehicles[0].sn,
-        trackId: track.trackId,
-        trackDate: track.date
-    });
+        console.log("Track: " + track.trackId);
+        console.log("\tStart time  : " + startTime.toString());
+        console.log("\tEnd time    : " + endTime.toString());
+        console.log("\tDistance    : " + track.distance / 1000 + " km");
+        console.log("\tAvg. speed  : " + track.avespeed + " km/h");
+        console.log("\tRiding time : " + track.ridingtime / 60 + " h");
 
-}).then(function(result) {
+        console.log("Get a track detail ...");
+        return result.client.getTrackDetail({
+            sn: vehicles[0].sn,
+            trackId: track.trackId,
+            trackDate: track.date
+        }).then(function(result) {
 
-    var index       = 0;
-    var trackItems  = result.result.data.trackItems;
-
-    for(index = 0; index < trackItems.length; ++index) {
-
-        console.log("Item #" + (index + 1));
-        console.log("\tLongitude: " + trackItems[index].lng);
-        console.log("\tLatitude: " + trackItems[index].lat);
-
-        if (0 === index) {
-            console.log("\tdiff: -");
-        } else {
-            console.log("\tdiff: " + ((parseInt(trackItems[index - 1].date) - parseInt(trackItems[index].date)) / 1000) + " s");
-        }
-    }    
+            var index       = 0;
+            var trackItems  = result.result.data.trackItems;
+        
+            for(index = 0; index < trackItems.length; ++index) {
+        
+                console.log("Item #" + (index + 1));
+                console.log("\tLongitude: " + trackItems[index].lng);
+                console.log("\tLatitude: " + trackItems[index].lat);
+            }
+        });
+    }
 
 }).catch(function(error) {
 
