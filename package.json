@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "node ./test/test.js",
-    "generate-doc-html": "jsdoc index.js -d ./doc/html",
-    "generate-doc-md": "jsdoc2md index.js > ./doc/API.md"
+    "generate-doc-html": "jsdoc index.js ./src/utils.js -d ./doc/html",
+    "generate-doc-md": "jsdoc2md index.js ./src/utils.js > ./doc/API.md"
   },
   "author": "Andreas Merkle <web@blue-andi.de>",
   "license": "MIT",

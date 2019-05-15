@@ -12,6 +12,9 @@
 <dt><a href="#niuCloudConnector">niuCloudConnector</a> : <code>object</code></dt>
 <dd><p>NIU cloud connector</p>
 </dd>
+<dt><a href="#niuCloudConnectorUtils">niuCloudConnectorUtils</a> : <code>object</code></dt>
+<dd><p>NIU cloud connector utilities</p>
+</dd>
 </dl>
 
 ## Typedefs
@@ -224,6 +227,25 @@ URL to NIU login, used for retrieving an access token.
 URL to the NIU app API.
 
 **Kind**: static property of [<code>niuCloudConnector</code>](#niuCloudConnector)  
+<a name="niuCloudConnectorUtils"></a>
+
+## niuCloudConnectorUtils : <code>object</code>
+NIU cloud connector utilities
+
+**Kind**: global namespace  
+<a name="niuCloudConnectorUtils.trackItems2Kml"></a>
+
+### niuCloudConnectorUtils.trackItems2Kml(options) ⇒ <code>string</code>
+Convert track items to KML format.
+
+**Kind**: static method of [<code>niuCloudConnectorUtils</code>](#niuCloudConnectorUtils)  
+**Returns**: <code>string</code> - KML data.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>Object</code> | Options. |
+| options.trackItems | <code>Array.&lt;Object&gt;</code> | Track items. |
+
 <a name="Error"></a>
 
 ## Error : <code>Object</code>

@@ -22,7 +22,9 @@
  */
 
 /** NIU cloud client, used to access the NIU cloud. */
-var niuCloudConnector = require("../index");
+const niuCloudConnector = require("../index");
+const utils = require("../src/utils");
+const fs = require("fs");
 
 /** EMail address / Username */
 var account = "email@somewhere.org";
@@ -164,6 +166,23 @@ client.createSessionToken({
                 console.log("\tLongitude: " + trackItems[index].lng);
                 console.log("\tLatitude: " + trackItems[index].lat);
             }
+
+            /* Convert last track to KML file */
+            fs.writeFile(
+                "lastTrack.kml",
+                utils.trackItems2Kml({
+                    trackItems: trackItems
+                }),
+                function(err) {
+                    console.log("");
+
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        console.log("Last track was saved to lastTrack.kml");
+                    }
+                }
+            );
         });
     }
 
