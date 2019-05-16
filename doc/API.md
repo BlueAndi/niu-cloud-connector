@@ -28,9 +28,15 @@
 <dd></dd>
 <dt><a href="#VehiclePos">VehiclePos</a> : <code>Promise</code></dt>
 <dd></dd>
+<dt><a href="#CompartmentBatteryInfo">CompartmentBatteryInfo</a> : <code>Object</code></dt>
+<dd></dd>
 <dt><a href="#BatteryInfo">BatteryInfo</a> : <code>Promise</code></dt>
 <dd></dd>
+<dt><a href="#CompartmentBatteryInfoHealth">CompartmentBatteryInfoHealth</a> : <code>Object</code></dt>
+<dd></dd>
 <dt><a href="#BatteryInfoHealth">BatteryInfoHealth</a> : <code>Promise</code></dt>
+<dd></dd>
+<dt><a href="#CompartmentMotorData">CompartmentMotorData</a> : <code>Object</code></dt>
 <dd></dd>
 <dt><a href="#MotorData">MotorData</a> : <code>Promise</code></dt>
 <dd></dd>
@@ -61,7 +67,7 @@ NIU cloud connector
         * [._token](#niuCloudConnector.Client+_token)
         * [.createSessionToken(options)](#niuCloudConnector.Client+createSessionToken) ⇒ [<code>Token</code>](#Token)
         * [.setSessionToken(options)](#niuCloudConnector.Client+setSessionToken) ⇒ <code>Promise</code>
-        * [.getVehicles()](#niuCloudConnector.Client+getVehicles) ⇒ [<code>Array.&lt;Vehicles&gt;</code>](#Vehicles)
+        * [.getVehicles()](#niuCloudConnector.Client+getVehicles) ⇒ [<code>Vehicles</code>](#Vehicles)
         * [.getVehiclePos(options)](#niuCloudConnector.Client+getVehiclePos) ⇒ [<code>VehiclePos</code>](#VehiclePos)
         * [.getBatteryInfo(options)](#niuCloudConnector.Client+getBatteryInfo) ⇒ [<code>BatteryInfo</code>](#BatteryInfo)
         * [.getBatteryHealth(options)](#niuCloudConnector.Client+getBatteryHealth) ⇒ [<code>BatteryInfoHealth</code>](#BatteryInfoHealth)
@@ -82,7 +88,7 @@ NIU cloud connector
     * [._token](#niuCloudConnector.Client+_token)
     * [.createSessionToken(options)](#niuCloudConnector.Client+createSessionToken) ⇒ [<code>Token</code>](#Token)
     * [.setSessionToken(options)](#niuCloudConnector.Client+setSessionToken) ⇒ <code>Promise</code>
-    * [.getVehicles()](#niuCloudConnector.Client+getVehicles) ⇒ [<code>Array.&lt;Vehicles&gt;</code>](#Vehicles)
+    * [.getVehicles()](#niuCloudConnector.Client+getVehicles) ⇒ [<code>Vehicles</code>](#Vehicles)
     * [.getVehiclePos(options)](#niuCloudConnector.Client+getVehiclePos) ⇒ [<code>VehiclePos</code>](#VehiclePos)
     * [.getBatteryInfo(options)](#niuCloudConnector.Client+getBatteryInfo) ⇒ [<code>BatteryInfo</code>](#BatteryInfo)
     * [.getBatteryHealth(options)](#niuCloudConnector.Client+getBatteryHealth) ⇒ [<code>BatteryInfoHealth</code>](#BatteryInfoHealth)
@@ -132,11 +138,11 @@ Set a previous created session token, to get access to the cloud API.
 
 <a name="niuCloudConnector.Client+getVehicles"></a>
 
-#### client.getVehicles() ⇒ [<code>Array.&lt;Vehicles&gt;</code>](#Vehicles)
+#### client.getVehicles() ⇒ [<code>Vehicles</code>](#Vehicles)
 Get a list of vehicles.
 
 **Kind**: instance method of [<code>Client</code>](#niuCloudConnector.Client)  
-**Returns**: [<code>Array.&lt;Vehicles&gt;</code>](#Vehicles) - Vehicles.  
+**Returns**: [<code>Vehicles</code>](#Vehicles) - Vehicles.  
 <a name="niuCloudConnector.Client+getVehiclePos"></a>
 
 #### client.getVehiclePos(options) ⇒ [<code>VehiclePos</code>](#VehiclePos)
@@ -295,7 +301,7 @@ Convert track items to KML format.
 | --- | --- | --- |
 | client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
 | result | <code>Object</code> | Received response |
-| result.data | <code>Object</code> | Response data |
+| result.data | <code>Array.&lt;Object&gt;</code> | Response data |
 | result.data.sn | <code>string</code> | Vehicle serial number |
 | result.data.specialEdition | <code>string</code> | ? |
 | result.data.vehicleColorImg | <code>string</code> | URL to vehicle color image |
@@ -351,6 +357,28 @@ Convert track items to KML format.
 | result.trace | <code>string</code> | For debug purposes |
 | result.status | <code>number</code> | Response status number |
 
+<a name="CompartmentBatteryInfo"></a>
+
+## CompartmentBatteryInfo : <code>Object</code>
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| items | <code>Array.&lt;Object&gt;</code> | ? |
+| items.x | <code>number</code> | ? |
+| items.y | <code>number</code> | ? |
+| items.z | <code>number</code> | ? |
+| totalPoint | <code>number</code> | Number of items |
+| bmsId | <code>string</code> | Battery management identification number |
+| isConnected | <code>boolean</code> | Is battery connected or not |
+| batteryCharging | <code>number</code> | State of charge in percent |
+| chargedTimes | <code>string</code> | Charging cycles |
+| temperature | <code>number</code> | Battery temperature in degree celsius |
+| temperatureDesc | <code>string</code> | Battery temperature status |
+| energyConsumedTody | <code>number</code> | Energey consumption of today |
+| gradeBattery | <code>string</code> | Battery grade points |
+
 <a name="BatteryInfo"></a>
 
 ## BatteryInfo : <code>Promise</code>
@@ -363,34 +391,8 @@ Convert track items to KML format.
 | result | <code>Object</code> | Received response |
 | result.data | <code>Object</code> | Response data |
 | result.data.batteries | <code>Object</code> | Batteries |
-| result.data.batteries.compartmentA | <code>Object</code> | Battery of compartment A |
-| result.data.batteries.compartmentA.items | <code>Array.&lt;Object&gt;</code> | ? |
-| result.data.batteries.compartmentA.items.x | <code>number</code> | ? |
-| result.data.batteries.compartmentA.items.y | <code>number</code> | ? |
-| result.data.batteries.compartmentA.items.z | <code>number</code> | ? |
-| result.data.batteries.compartmentA.totalPoint | <code>number</code> | Number of items |
-| result.data.batteries.compartmentA.bmsId | <code>string</code> | Battery management identification number |
-| result.data.batteries.compartmentA.isConnected | <code>boolean</code> | Is battery connected or not |
-| result.data.batteries.compartmentA.batteryCharging | <code>number</code> | State of charge in percent |
-| result.data.batteries.compartmentA.chargedTimes | <code>string</code> | Charging cycles |
-| result.data.batteries.compartmentA.temperature | <code>number</code> | Battery temperature in degree celsius |
-| result.data.batteries.compartmentA.temperatureDesc | <code>string</code> | Battery temperature status |
-| result.data.batteries.compartmentA.energyConsumedTody | <code>number</code> | Energey consumption of today |
-| result.data.batteries.compartmentA.gradeBattery | <code>string</code> | Battery grade points |
-| result.data.[batteries.compartmentB | <code>Object</code> | Battery of compartment B |
-| result.data.batteries.compartmentB.items | <code>Array.&lt;Object&gt;</code> | ? |
-| result.data.batteries.compartmentB.items.x | <code>number</code> | ? |
-| result.data.batteries.compartmentB.items.y | <code>number</code> | ? |
-| result.data.batteries.compartmentB.items.z | <code>number</code> | ? |
-| result.data.batteries.compartmentB.totalPoint | <code>number</code> | Number of items |
-| result.data.batteries.compartmentB.bmsId | <code>string</code> | Battery management identification number |
-| result.data.batteries.compartmentB.isConnected | <code>boolean</code> | Is battery connected or not |
-| result.data.batteries.compartmentB.batteryCharging | <code>number</code> | State of charge in percent |
-| result.data.batteries.compartmentB.chargedTimes | <code>string</code> | Charging cycles |
-| result.data.batteries.compartmentB.temperature | <code>number</code> | Battery temperature in degree celsius |
-| result.data.batteries.compartmentB.temperatureDesc | <code>string</code> | Battery temperature status |
-| result.data.batteries.compartmentB.energyConsumedTody | <code>number</code> | Energey consumption of today |
-| result.data.batteries.compartmentB.gradeBattery | <code>string</code> | Battery grade points |
+| result.data.batteries.compartmentA | [<code>CompartmentBatteryInfo</code>](#CompartmentBatteryInfo) | Battery of compartment A |
+| [result.data.batteries.compartmentB] | [<code>CompartmentBatteryInfo</code>](#CompartmentBatteryInfo) | Battery of compartment B |
 | result.data.isCharging | <code>number</code> | Is charging |
 | result.data.centreCtrlBattery | <code>string</code> | Centre control battery |
 | result.data.batteryDetail | <code>boolean</code> | Battery detail |
@@ -398,6 +400,25 @@ Convert track items to KML format.
 | result.desc | <code>string</code> | Response status description |
 | result.trace | <code>string</code> | For debug purposes |
 | result.status | <code>number</code> | Response status number |
+
+<a name="CompartmentBatteryInfoHealth"></a>
+
+## CompartmentBatteryInfoHealth : <code>Object</code>
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| bmsId | <code>string</code> | Battery management system identification number |
+| isConnected | <code>boolean</code> | Is connected or not |
+| gradeBattery | <code>string</code> | Battery grade points |
+| faults | <code>Array.&lt;Object&gt;</code> | List of faults |
+| healthRecords | <code>Array.&lt;Object&gt;</code> | List of health records |
+| healthRecords.result | <code>string</code> | Battery lost grade points |
+| healthRecords.chargeCount | <code>string</code> | Charging cycles |
+| healthRecords.color | <code>string</code> | HTML color in #RGB format |
+| healthRecords.time | <code>number</code> | Timestamp in unix timstamp epoch format (13 digits) |
+| healthRecords.name | <code>string</code> | Name |
 
 <a name="BatteryInfoHealth"></a>
 
@@ -411,32 +432,25 @@ Convert track items to KML format.
 | result | <code>Object</code> | Received response |
 | result.data | <code>Object</code> | Response data |
 | result.data.batteries | <code>Object</code> | Batteries |
-| result.data.batteries.compartmentA | <code>Object</code> | Battery compartment A |
-| result.data.batteries.compartmentA.bmsId | <code>string</code> | Battery management system identification number |
-| result.data.batteries.compartmentA.isConnected | <code>boolean</code> | Is connected or not |
-| result.data.batteries.compartmentA.gradeBattery | <code>string</code> | Battery grade points |
-| result.data.batteries.compartmentA.faults | <code>Array.&lt;Object&gt;</code> | List of faults |
-| result.data.batteries.compartmentA.healthRecords | <code>Array.&lt;Object&gt;</code> | List of health records |
-| result.data.batteries.compartmentA.healthRecords.result | <code>string</code> | Battery lost grade points |
-| result.data.batteries.compartmentA.healthRecords.chargeCount | <code>string</code> | Charging cycles |
-| result.data.batteries.compartmentA.healthRecords.color | <code>string</code> | HTML color in #RGB format |
-| result.data.batteries.compartmentA.healthRecords.time | <code>number</code> | Timestamp in unix timstamp epoch format (13 digits) |
-| result.data.batteries.compartmentA.healthRecords.name | <code>string</code> | Name |
-| result.data.[batteries.compartmentB | <code>Object</code> | Battery compratment B |
-| result.data.batteries.compartmentB.bmsId | <code>string</code> | Battery management system identification number |
-| result.data.batteries.compartmentB.isConnected | <code>boolean</code> | Is connected or not |
-| result.data.batteries.compartmentB.gradeBattery | <code>string</code> | Battery grade points |
-| result.data.batteries.compartmentB.faults | <code>Array.&lt;Object&gt;</code> | List of faults |
-| result.data.batteries.compartmentB.healthRecords | <code>Array.&lt;Object&gt;</code> | List of health records |
-| result.data.batteries.compartmentB.healthRecords.result | <code>string</code> | Battery lost grade points |
-| result.data.batteries.compartmentB.healthRecords.chargeCount | <code>string</code> | Charging cycles |
-| result.data.batteries.compartmentB.healthRecords.color | <code>string</code> | HTML color in #RGB format |
-| result.data.batteries.compartmentB.healthRecords.time | <code>number</code> | Timestamp in unix timstamp epoch format (13 digits) |
-| result.data.batteries.compartmentB.healthRecords.name | <code>string</code> | Name |
+| result.data.batteries.compartmentA | [<code>CompartmentBatteryInfoHealth</code>](#CompartmentBatteryInfoHealth) | Battery compartment A |
+| [result.data.batteries.compartmentB] | [<code>CompartmentBatteryInfoHealth</code>](#CompartmentBatteryInfoHealth) | Battery compratment B |
 | result.data.isDoubleBattery | <code>boolean</code> | Vehicle has one or two batteries |
 | result.desc | <code>string</code> | Response status description |
 | result.trace | <code>string</code> | For debug purposes |
 | result.status | <code>number</code> | Response status number |
+
+<a name="CompartmentMotorData"></a>
+
+## CompartmentMotorData : <code>Object</code>
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| bmsId | <code>string</code> | Battery management system identification number |
+| isConnected | <code>boolean</code> | Battery is connected or not |
+| batteryCharging | <code>number</code> | Battery is charging or not |
+| gradeBattery | <code>string</code> | Battery grade points |
 
 <a name="MotorData"></a>
 
@@ -460,16 +474,8 @@ Convert track items to KML format.
 | result.data.hdop | <code>number</code> | Horizontal dilution of precision [0; 50]. A good HDOP is up to 2.5. For navigation a value up to 8 is acceptable. |
 | result.data.time | <code>number</code> | Time in unix timestamp epoch format (13 digits) |
 | result.data.batteries | <code>Object</code> | Batteries |
-| result.data.batteries.compartmentA | <code>Object</code> | Battery compartment A |
-| result.data.batteries.compartmentA.bmsId | <code>string</code> | Battery management system identification number |
-| result.data.batteries.compartmentA.isConnected | <code>boolean</code> | Battery is connected or not |
-| result.data.batteries.compartmentA.batteryCharging | <code>number</code> | Battery is charging or not |
-| result.data.batteries.compartmentA.gradeBattery | <code>string</code> | Battery grade points |
-| result.data.[batteries.compartmentB | <code>Object</code> | Battery compartment B |
-| result.data.batteries.compartmentB.bmsId | <code>string</code> | Battery management system identification number |
-| result.data.batteries.compartmentB.isConnected | <code>boolean</code> | Battery is connected or not |
-| result.data.batteries.compartmentB.batteryCharging | <code>number</code> | Battery is charging or not |
-| result.data.batteries.compartmentB.gradeBattery | <code>string</code> | Battery grade points |
+| result.data.batteries.compartmentA | [<code>CompartmentMotorData</code>](#CompartmentMotorData) | Battery compartment A |
+| [result.data.batteries.compartmentB] | [<code>CompartmentMotorData</code>](#CompartmentMotorData) | Battery compartment B |
 | result.data.leftTime | <code>string</code> | Left time |
 | result.data.estimatedMileage | <code>number</code> | Estimated mileage in km |
 | result.data.gpsTimestamp | <code>number</code> | GPS timestamp in unix timestamp epoch format (13 digits) |

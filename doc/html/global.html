@@ -349,6 +349,8 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -367,6 +369,368 @@
             <td class="type">
             
                 
+<span class="param-type"><a href="global.html#CompartmentBatteryInfo">CompartmentBatteryInfo</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Battery of compartment A</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>compartmentB</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#CompartmentBatteryInfo">CompartmentBatteryInfo</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Battery of compartment B</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>isCharging</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Is charging</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>centreCtrlBattery</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Centre control battery</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>batteryDetail</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Battery detail</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>estimatedMileage</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Estimated mileage in km</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>desc</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Response status description</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>trace</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">For debug purposes</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>status</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Response status number</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line448">line 448</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="BatteryInfoHealth">BatteryInfoHealth</h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Promise</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>client</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="niuCloudConnector.Client.html">niuCloudConnector.Client</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Client</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>result</code></td>
+            
+
+            <td class="type">
+            
+                
 <span class="param-type">Object</span>
 
 
@@ -377,8 +741,362 @@
 
             
 
-            <td class="description last">Battery of compartment A
+            <td class="description last">Received response
                 <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Response data
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>batteries</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Batteries
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>compartmentA</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#CompartmentBatteryInfoHealth">CompartmentBatteryInfoHealth</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Battery compartment A</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>compartmentB</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#CompartmentBatteryInfoHealth">CompartmentBatteryInfoHealth</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Battery compratment B</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>isDoubleBattery</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Vehicle has one or two batteries</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>desc</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Response status description</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>trace</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">For debug purposes</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>status</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Response status number</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line507">line 507</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="CompartmentBatteryInfo">CompartmentBatteryInfo</h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
 
 <table class="props">
     <thead>
@@ -726,542 +1444,6 @@
     </tbody>
 </table>
 
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>[batteries.compartmentB</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Battery of compartment B</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.items</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;Object></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">?
-                <h6>Properties</h6>
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>x</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">?</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>y</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">?</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>z</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">?</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.totalPoint</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Number of items</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.bmsId</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Battery management identification number</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.isConnected</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Is battery connected or not</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.batteryCharging</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">State of charge in percent</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.chargedTimes</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Charging cycles</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.temperature</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Battery temperature in degree celsius</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.temperatureDesc</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Battery temperature status</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.energyConsumedTody</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Energey consumption of today</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.gradeBattery</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Battery grade points</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>isCharging</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Is charging</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>centreCtrlBattery</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Centre control battery</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteryDetail</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Battery detail</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>estimatedMileage</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Estimated mileage in km</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>desc</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Response status description</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>trace</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">For debug purposes</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>status</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Response status number</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
 
 
 
@@ -1312,7 +1494,7 @@
 
             
                 
-<h4 class="name" id="BatteryInfoHealth">BatteryInfoHealth</h4>
+<h4 class="name" id="CompartmentBatteryInfoHealth">CompartmentBatteryInfoHealth</h4>
 
 
 
@@ -1323,7 +1505,7 @@
     <ul>
         <li>
             
-<span class="param-type">Promise</span>
+<span class="param-type">Object</span>
 
 
         </li>
@@ -1336,193 +1518,6 @@
     <h5 class="subsection-title">Properties:</h5>
 
     
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>client</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="niuCloudConnector.Client.html">niuCloudConnector.Client</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Client</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>result</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Received response
-                <h6>Properties</h6>
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>data</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Response data
-                <h6>Properties</h6>
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>batteries</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Batteries
-                <h6>Properties</h6>
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>compartmentA</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Battery compartment A
-                <h6>Properties</h6>
 
 <table class="props">
     <thead>
@@ -1801,153 +1796,80 @@
     </tbody>
 </table>
 
-            </td>
-        </tr>
 
-    
-    </tbody>
-</table>
 
-            </td>
-        </tr>
+
+<dl class="details">
 
     
 
-        <tr>
-            
-                <td class="name"><code>[batteries.compartmentB</code></td>
-            
+    
 
-            <td class="type">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line493">line 493</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
             
                 
+<h4 class="name" id="CompartmentMotorData">CompartmentMotorData</h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">Object</span>
 
 
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Battery compratment B</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.bmsId</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
+        </li>
+    </ul>
 
 
-            
-            </td>
 
-            
 
-            
 
-            <td class="description last">Battery management system identification number</td>
-        </tr>
+    <h5 class="subsection-title">Properties:</h5>
 
     
-
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.isConnected</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Is connected or not</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.gradeBattery</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Battery grade points</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.faults</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;Object></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">List of faults</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.healthRecords</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;Object></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">List of health records
-                <h6>Properties</h6>
 
 <table class="props">
     <thead>
@@ -1971,7 +1893,7 @@
 
         <tr>
             
-                <td class="name"><code>result</code></td>
+                <td class="name"><code>bmsId</code></td>
             
 
             <td class="type">
@@ -1987,113 +1909,14 @@
 
             
 
-            <td class="description last">Battery lost grade points</td>
+            <td class="description last">Battery management system identification number</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>chargeCount</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Charging cycles</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>color</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">HTML color in #RGB format</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>time</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Timestamp in unix timstamp epoch format (13 digits)</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Name</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>isDoubleBattery</code></td>
+                <td class="name"><code>isConnected</code></td>
             
 
             <td class="type">
@@ -2109,67 +1932,14 @@
 
             
 
-            <td class="description last">Vehicle has one or two batteries</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
+            <td class="description last">Battery is connected or not</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>desc</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Response status description</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>trace</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">For debug purposes</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>status</code></td>
+                <td class="name"><code>batteryCharging</code></td>
             
 
             <td class="type">
@@ -2185,14 +1955,30 @@
 
             
 
-            <td class="description last">Response status number</td>
+            <td class="description last">Battery is charging or not</td>
         </tr>
 
     
-    </tbody>
-</table>
 
+        <tr>
+            
+                <td class="name"><code>gradeBattery</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
             </td>
+
+            
+
+            
+
+            <td class="description last">Battery grade points</td>
         </tr>
 
     
@@ -2231,7 +2017,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line502">line 502</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line549">line 549</a>
     </li></ul></dd>
     
 
@@ -2863,6 +2649,8 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -2881,159 +2669,49 @@
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type"><a href="global.html#CompartmentMotorData">CompartmentMotorData</a></span>
 
 
             
             </td>
 
             
-
-            
-
-            <td class="description last">Battery compartment A
-                <h6>Properties</h6>
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>bmsId</code></td>
-            
-
-            <td class="type">
-            
+                <td class="attributes">
                 
-<span class="param-type">string</span>
 
-
-            
-            </td>
-
+                
+                </td>
             
 
             
 
-            <td class="description last">Battery management system identification number</td>
+            <td class="description last">Battery compartment A</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>isConnected</code></td>
+                <td class="name"><code>compartmentB</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">boolean</span>
+<span class="param-type"><a href="global.html#CompartmentMotorData">CompartmentMotorData</a></span>
 
 
             
             </td>
 
             
-
-            
-
-            <td class="description last">Battery is connected or not</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteryCharging</code></td>
-            
-
-            <td class="type">
-            
+                <td class="attributes">
                 
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Battery is charging or not</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>gradeBattery</code></td>
-            
-
-            <td class="type">
-            
+                    &lt;optional><br>
                 
-<span class="param-type">string</span>
 
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Battery grade points</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>[batteries.compartmentB</code></td>
-            
-
-            <td class="type">
-            
                 
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
+                </td>
             
 
             
@@ -3042,95 +2720,10 @@
         </tr>
 
     
+    </tbody>
+</table>
 
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.bmsId</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
             </td>
-
-            
-
-            
-
-            <td class="description last">Battery management system identification number</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.isConnected</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Battery is connected or not</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.batteryCharging</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Battery is charging or not</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>batteries.compartmentB.gradeBattery</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Battery grade points</td>
         </tr>
 
     
@@ -3622,7 +3215,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line564">line 564</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line557">line 557</a>
     </li></ul></dd>
     
 
@@ -3953,7 +3546,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line638">line 638</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line623">line 623</a>
     </li></ul></dd>
     
 
@@ -4732,7 +4325,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line758">line 758</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line743">line 743</a>
     </li></ul></dd>
     
 
@@ -5596,7 +5189,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line682">line 682</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line667">line 667</a>
     </li></ul></dd>
     
 
@@ -6131,7 +5724,7 @@
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">Array.&lt;Object></span>
 
 
             
@@ -7055,7 +6648,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.1</a> on Thu May 16 2019 22:34:19 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.1</a> on Thu May 16 2019 23:14:35 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>
