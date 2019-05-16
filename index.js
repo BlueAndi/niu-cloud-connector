@@ -325,43 +325,47 @@ niuCloudConnector.Client.prototype._makeRequest = function(options) {
 
 /**
  * @typedef {Promise} Vehicles
- * @property {niuCloudConnector.Client} client          - Client
- * @property {Object}   result                          - Received response
- * @property {string}   result.sn                       - Vehicle serial number
- * @property {string}   result.specialEdition           - ?
- * @property {string}   result.vehicleColorImg          - URL to vehicle color image
- * @property {string}   result.vehicleLogoImg           - URL to vehicle logo image
- * @property {string}   result.vehicleTypeId            - Vehicle type id
- * @property {string}   result.indexHeaderBg            - URL to background image
- * @property {string}   result.scootorImg               - URL to vehicle image
- * @property {string}   result.batteryInfoBg            - URL to battery info background image
- * @property {string}   result.myPageHeaderBg           - URL to my page header background
- * @property {string}   result.listScooterImg           - URL to scooter list background image
- * @property {string}   result.name                     - Vehicle name, given by the user
- * @property {string}   result.frameNo                  - Vehicle identification number (VIN)
- * @property {string}   result.engineNo                 - Engine identification number
- * @property {boolean}  result.isSelected               - ?
- * @property {boolean}  result.isMaster                 - ?
- * @property {number}   result.bindNum                  - ?
- * @property {boolean}  result.renovated                - ?
- * @property {number}   result.bindDate                 - ? timestamp in epoch unix timestamp format (13 digits)
- * @property {boolean}  result.isShow                   - ?
- * @property {boolean}  result.isLite                   - ?
- * @property {number}   result.gpsTimestamp             - GPS timestamp in epoch unix timestamp format (13 digits)
- * @property {number}   result.infoTimestamp            - Info timestamp in epoch unix timestamp format (13 digits)
- * @property {string}   result.productType              - Product type, e.g. "native"
- * @property {string}   result.process                  - ?
- * @property {string}   result.brand                    - ?
- * @property {boolean}  result.isDoubleBattery          - Vehicle has one or two batteries
- * @property {Object[]} result.features                 - List of features
- * @property {string}   result.features.featureName     - Feature name
- * @property {boolean}  result.features.isSupport       - ?
- * @property {string}   result.features.switch_status   - ?
- * @property {string}   result.type                     - Vehicle model, e.g. "NGT  Black with Red Stripes"
+ * @property {niuCloudConnector.Client} client              - Client
+ * @property {Object}   result                              - Received response
+ * @property {Object}   result.data                         - Response data
+ * @property {string}   result.data.sn                      - Vehicle serial number
+ * @property {string}   result.data.specialEdition          - ?
+ * @property {string}   result.data.vehicleColorImg         - URL to vehicle color image
+ * @property {string}   result.data.vehicleLogoImg          - URL to vehicle logo image
+ * @property {string}   result.data.vehicleTypeId           - Vehicle type id
+ * @property {string}   result.data.indexHeaderBg           - URL to background image
+ * @property {string}   result.data.scootorImg              - URL to vehicle image
+ * @property {string}   result.data.batteryInfoBg           - URL to battery info background image
+ * @property {string}   result.data.myPageHeaderBg          - URL to my page header background
+ * @property {string}   result.data.listScooterImg          - URL to scooter list background image
+ * @property {string}   result.data.name                    - Vehicle name, given by the user
+ * @property {string}   result.data.frameNo                 - Vehicle identification number (VIN)
+ * @property {string}   result.data.engineNo                - Engine identification number
+ * @property {boolean}  result.data.isSelected              - ?
+ * @property {boolean}  result.data.isMaster                - ?
+ * @property {number}   result.data.bindNum                 - ?
+ * @property {boolean}  result.data.renovated               - ?
+ * @property {number}   result.data.bindDate                - ? timestamp in epoch unix timestamp format (13 digits)
+ * @property {boolean}  result.data.isShow                  - ?
+ * @property {boolean}  result.data.isLite                  - ?
+ * @property {number}   result.data.gpsTimestamp            - GPS timestamp in epoch unix timestamp format (13 digits)
+ * @property {number}   result.data.infoTimestamp           - Info timestamp in epoch unix timestamp format (13 digits)
+ * @property {string}   result.data.productType             - Product type, e.g. "native"
+ * @property {string}   result.data.process                 - ?
+ * @property {string}   result.data.brand                   - ?
+ * @property {boolean}  result.data.isDoubleBattery         - Vehicle has one or two batteries
+ * @property {Object[]} result.data.features                - List of features
+ * @property {string}   result.data.features.featureName    - Feature name
+ * @property {boolean}  result.data.features.isSupport      - ?
+ * @property {string}   result.data.features.switch_status  - ?
+ * @property {string}   result.data.type                    - Vehicle model, e.g. "NGT  Black with Red Stripes"
+ * @property {string}   result.desc                         - Response status description
+ * @property {string}   result.trace                        - For debug purposes
+ * @property {number}   result.status                       - Response status number
  */
 
 /**
- * Get vehicles.
+ * Get a list of vehicles.
  * 
  * @returns {Vehicles[]} Vehicles.
  */
@@ -379,42 +383,92 @@ niuCloudConnector.Client.prototype.getVehicles = function() {
 };
 
 /**
+ * @typedef {Promise} VehiclePos
+ * @property {niuCloudConnector.Client} client      - Client
+ * @property {Object}   result                      - Received response
+ * @property {Object}   result.data                 - Response data
+ * @property {number}   result.data.lat             - Latitude in decimal degree (WGS 84)
+ * @property {number}   result.data.lng             - Longitude in decimal degree (WGS 84)
+ * @property {number}   result.data.timestamp       - Timestamp in unix timestamp epoch format (13 digits)
+ * @property {number}   result.data.gps             - ?
+ * @property {number}   result.data.gpsPrecision    - GPS precision
+ * @property {string}   result.desc                 - Response status description
+ * @property {string}   result.trace                - For debug purposes
+ * @property {number}   result.status               - Response status number
+ */
+
+/**
+ * Get current position of a vehicle.
+ * 
+ * @param {Object}  options     - Options.
+ * @param {string}  options.sn  - Vehicle serial number.
+ * 
+ * @returns {VehiclePos} Vehicle position.
+ */
+niuCloudConnector.Client.prototype.getVehiclePos = function(options) {
+    var funcName = "getVehiclePos()";
+
+    if (0 === this._token.length) {
+        return Promise.reject(this._error("No valid token available.", funcName));
+    }
+
+    if ("object" !== typeof options) {
+        return Promise.reject(this._error("Options is missing.", funcName));
+    }
+
+    if ("string" !== typeof options.sn) {
+        return Promise.reject(this._error("Vehicle serial number is missing.", funcName));
+    }
+
+    return this._makeRequest({
+        path: "/motoinfo/currentpos",
+        postData: {
+            sn: options.sn
+        }
+    });
+};
+
+/**
  * @typedef {Promise} BatteryInfo
- * @property {niuCloudConnector.Client} client                              - Client
- * @property {Object}   result                                              - Received response
- * @property {Object}   result.batteries                                    - Batteries
- * @property {Object}   result.batteries.compartmentA                       - Battery of compartment A
- * @property {Object[]} result.batteries.compartmentA.items                 - ?
- * @property {number}   result.batteries.compartmentA.items.x               - ?
- * @property {number}   result.batteries.compartmentA.items.y               - ?
- * @property {number}   result.batteries.compartmentA.items.z               - ?
- * @property {number}   result.batteries.compartmentA.totalPoint            - Number of items
- * @property {string}   result.batteries.compartmentA.bmsId                 - Battery management identification number
- * @property {boolean}  result.batteries.compartmentA.isConnected           - Is battery connected or not
- * @property {number}   result.batteries.compartmentA.batteryCharging       - State of charge in percent
- * @property {string}   result.batteries.compartmentA.chargedTimes          - Charging cycles
- * @property {number}   result.batteries.compartmentA.temperature           - Battery temperature in degree celsius
- * @property {string}   result.batteries.compartmentA.temperatureDesc       - Battery temperature status
- * @property {number}   result.batteries.compartmentA.energyConsumedTody    - Energey consumption of today
- * @property {string}   result.batteries.compartmentA.gradeBattery          - Battery grade points
- * @property {Object}   result.[batteries.compartmentB]
- * @property {Object[]} result.batteries.compartmentB.items                 - ?
- * @property {number}   result.batteries.compartmentB.items.x               - ?
- * @property {number}   result.batteries.compartmentB.items.y               - ?
- * @property {number}   result.batteries.compartmentB.items.z               - ?
- * @property {number}   result.batteries.compartmentB.totalPoint            - Number of items
- * @property {string}   result.batteries.compartmentB.bmsId                 - Battery management identification number
- * @property {boolean}  result.batteries.compartmentB.isConnected           - Is battery connected or not
- * @property {number}   result.batteries.compartmentB.batteryCharging       - State of charge in percent
- * @property {string}   result.batteries.compartmentB.chargedTimes          - Charging cycles
- * @property {number}   result.batteries.compartmentB.temperature           - Battery temperature in degree celsius
- * @property {string}   result.batteries.compartmentB.temperatureDesc       - Battery temperature status
- * @property {number}   result.batteries.compartmentB.energyConsumedTody    - Energey consumption of today
- * @property {string}   result.batteries.compartmentB.gradeBattery          - Battery grade points
- * @property {number}   result.isCharging                                   - Is charging
- * @property {string}   result.centreCtrlBattery                            - Centre control battery
- * @property {boolean}  result.batteryDetail                                - Battery detail
- * @property {number}   result.estimatedMileage                             - Estimated mileage in km
+ * @property {niuCloudConnector.Client} client                                  - Client
+ * @property {Object}   result                                                  - Received response
+ * @property {Object}   result.data                                             - Response data
+ * @property {Object}   result.data.batteries                                   - Batteries
+ * @property {Object}   result.data.batteries.compartmentA                      - Battery of compartment A
+ * @property {Object[]} result.data.batteries.compartmentA.items                - ?
+ * @property {number}   result.data.batteries.compartmentA.items.x              - ?
+ * @property {number}   result.data.batteries.compartmentA.items.y              - ?
+ * @property {number}   result.data.batteries.compartmentA.items.z              - ?
+ * @property {number}   result.data.batteries.compartmentA.totalPoint           - Number of items
+ * @property {string}   result.data.batteries.compartmentA.bmsId                - Battery management identification number
+ * @property {boolean}  result.data.batteries.compartmentA.isConnected          - Is battery connected or not
+ * @property {number}   result.data.batteries.compartmentA.batteryCharging      - State of charge in percent
+ * @property {string}   result.data.batteries.compartmentA.chargedTimes         - Charging cycles
+ * @property {number}   result.data.batteries.compartmentA.temperature          - Battery temperature in degree celsius
+ * @property {string}   result.data.batteries.compartmentA.temperatureDesc      - Battery temperature status
+ * @property {number}   result.data.batteries.compartmentA.energyConsumedTody   - Energey consumption of today
+ * @property {string}   result.data.batteries.compartmentA.gradeBattery         - Battery grade points
+ * @property {Object}   result.data.[batteries.compartmentB]                    - Battery of compartment B
+ * @property {Object[]} result.data.batteries.compartmentB.items                - ?
+ * @property {number}   result.data.batteries.compartmentB.items.x              - ?
+ * @property {number}   result.data.batteries.compartmentB.items.y              - ?
+ * @property {number}   result.data.batteries.compartmentB.items.z              - ?
+ * @property {number}   result.data.batteries.compartmentB.totalPoint           - Number of items
+ * @property {string}   result.data.batteries.compartmentB.bmsId                - Battery management identification number
+ * @property {boolean}  result.data.batteries.compartmentB.isConnected          - Is battery connected or not
+ * @property {number}   result.data.batteries.compartmentB.batteryCharging      - State of charge in percent
+ * @property {string}   result.data.batteries.compartmentB.chargedTimes         - Charging cycles
+ * @property {number}   result.data.batteries.compartmentB.temperature          - Battery temperature in degree celsius
+ * @property {string}   result.data.batteries.compartmentB.temperatureDesc      - Battery temperature status
+ * @property {number}   result.data.batteries.compartmentB.energyConsumedTody   - Energey consumption of today
+ * @property {string}   result.data.batteries.compartmentB.gradeBattery         - Battery grade points
+ * @property {number}   result.data.isCharging                                  - Is charging
+ * @property {string}   result.data.centreCtrlBattery                           - Centre control battery
+ * @property {boolean}  result.data.batteryDetail                               - Battery detail
+ * @property {number}   result.data.estimatedMileage                            - Estimated mileage in km
+ * @property {string}   result.desc                                             - Response status description
+ * @property {string}   result.trace                                            - For debug purposes
+ * @property {number}   result.status                                           - Response status number
  */
 
 /**
@@ -447,32 +501,36 @@ niuCloudConnector.Client.prototype.getBatteryInfo = function(options) {
 
 /**
  * @typedef {Promise} BatteryInfoHealth
- * @property {niuCloudConnector.Client} client                                  - Client
- * @property {Object}   result                                                  - Received response
- * @property {Object}   result.batteries                                        - Batteries
- * @property {Object}   result.batteries.compartmentA                           - Battery compartment A
- * @property {string}   result.batteries.compartmentA.bmsId                     - Battery management system identification number
- * @property {boolean}  result.batteries.compartmentA.isConnected               - Is connected or not
- * @property {string}   result.batteries.compartmentA.gradeBattery              - Battery grade points
- * @property {Object[]} result.batteries.compartmentA.faults                    - List of faults
- * @property {Object[]} result.batteries.compartmentA.healthRecords             - List of health records
- * @property {string}   result.batteries.compartmentA.healthRecords.result      - Battery lost grade points
- * @property {string}   result.batteries.compartmentA.healthRecords.chargeCount - Charging cycles
- * @property {string}   result.batteries.compartmentA.healthRecords.color       - HTML color in #RGB format
- * @property {number}   result.batteries.compartmentA.healthRecords.time        - Timestamp in unix timstamp epoch format (13 digits)
- * @property {string}   result.batteries.compartmentA.healthRecords.name        - Name
- * @property {Object}   result.[batteries.compartmentB]                         - Battery compratment B
- * @property {string}   result.batteries.compartmentB.bmsId                     - Battery management system identification number
- * @property {boolean}  result.batteries.compartmentB.isConnected               - Is connected or not
- * @property {string}   result.batteries.compartmentB.gradeBattery              - Battery grade points
- * @property {Object[]} result.batteries.compartmentB.faults                    - List of faults
- * @property {Object[]} result.batteries.compartmentB.healthRecords             - List of health records
- * @property {string}   result.batteries.compartmentB.healthRecords.result      - Battery lost grade points
- * @property {string}   result.batteries.compartmentB.healthRecords.chargeCount - Charging cycles
- * @property {string}   result.batteries.compartmentB.healthRecords.color       - HTML color in #RGB format
- * @property {number}   result.batteries.compartmentB.healthRecords.time        - Timestamp in unix timstamp epoch format (13 digits)
- * @property {string}   result.batteries.compartmentB.healthRecords.name        - Name
- * @property {boolean}  result.isDoubleBattery                                  - Vehicle has one or two batteries
+ * @property {niuCloudConnector.Client} client                                          - Client
+ * @property {Object}   result                                                          - Received response
+ * @property {Object}   result.data                                                     - Response data
+ * @property {Object}   result.data.batteries                                           - Batteries
+ * @property {Object}   result.data.batteries.compartmentA                              - Battery compartment A
+ * @property {string}   result.data.batteries.compartmentA.bmsId                        - Battery management system identification number
+ * @property {boolean}  result.data.batteries.compartmentA.isConnected                  - Is connected or not
+ * @property {string}   result.data.batteries.compartmentA.gradeBattery                 - Battery grade points
+ * @property {Object[]} result.data.batteries.compartmentA.faults                       - List of faults
+ * @property {Object[]} result.data.batteries.compartmentA.healthRecords                - List of health records
+ * @property {string}   result.data.batteries.compartmentA.healthRecords.result         - Battery lost grade points
+ * @property {string}   result.data.batteries.compartmentA.healthRecords.chargeCount    - Charging cycles
+ * @property {string}   result.data.batteries.compartmentA.healthRecords.color          - HTML color in #RGB format
+ * @property {number}   result.data.batteries.compartmentA.healthRecords.time           - Timestamp in unix timstamp epoch format (13 digits)
+ * @property {string}   result.data.batteries.compartmentA.healthRecords.name           - Name
+ * @property {Object}   result.data.[batteries.compartmentB]                            - Battery compratment B
+ * @property {string}   result.data.batteries.compartmentB.bmsId                        - Battery management system identification number
+ * @property {boolean}  result.data.batteries.compartmentB.isConnected                  - Is connected or not
+ * @property {string}   result.data.batteries.compartmentB.gradeBattery                 - Battery grade points
+ * @property {Object[]} result.data.batteries.compartmentB.faults                       - List of faults
+ * @property {Object[]} result.data.batteries.compartmentB.healthRecords                - List of health records
+ * @property {string}   result.data.batteries.compartmentB.healthRecords.result         - Battery lost grade points
+ * @property {string}   result.data.batteries.compartmentB.healthRecords.chargeCount    - Charging cycles
+ * @property {string}   result.data.batteries.compartmentB.healthRecords.color          - HTML color in #RGB format
+ * @property {number}   result.data.batteries.compartmentB.healthRecords.time           - Timestamp in unix timstamp epoch format (13 digits)
+ * @property {string}   result.data.batteries.compartmentB.healthRecords.name           - Name
+ * @property {boolean}  result.data.isDoubleBattery                                     - Vehicle has one or two batteries
+ * @property {string}   result.desc                                                     - Response status description
+ * @property {string}   result.trace                                                    - For debug purposes
+ * @property {number}   result.status                                                   - Response status number
  */
 
 /**
@@ -505,44 +563,48 @@ niuCloudConnector.Client.prototype.getBatteryHealth = function(options) {
 
 /**
  * @typedef {Promise} MotorData
- * @property {niuCloudConnector.Client} client                          - Client
- * @property {Object}   result                                          - Received response
- * @property {number}   result.isCharging                               - Is charging
- * @property {number}   result.lockStatus                               - Lock status
- * @property {number}   result.isAccOn                                  - Is adaptive cruise control on or not
- * @property {string}   result.isFortificationOn                        - Is fortification on or not
- * @property {boolean}  result.isConnected                              - Is connected or not
- * @property {Object}   result.postion                                  - Current position
- * @property {number}   result.postion.lat                              - Latitude in decimal degree (WGS 84)
- * @property {number}   result.postion.lng                              - Longitude in decimal degree (WGS 84)
- * @property {number}   result.hdop                                     - Horizontal dilution of precision [0; 50]. A good HDOP is up to 2.5. For navigation a value up to 8 is acceptable.
- * @property {number}   result.time                                     - Time in unix timestamp epoch format (13 digits)
- * @property {Object}   result.batteries                                - Batteries
- * @property {Object}   result.batteries.compartmentA                   - Battery compartment A
- * @property {string}   result.batteries.compartmentA.bmsId             - Battery management system identification number
- * @property {boolean}  result.batteries.compartmentA.isConnected       - Battery is connected or not
- * @property {number}   result.batteries.compartmentA.batteryCharging   - Battery is charging or not
- * @property {string}   result.batteries.compartmentA.gradeBattery      - Battery grade points
- * @property {Object}   result.[batteries.compartmentB]                 - Battery compartment B
- * @property {string}   result.batteries.compartmentB.bmsId             - Battery management system identification number
- * @property {boolean}  result.batteries.compartmentB.isConnected       - Battery is connected or not
- * @property {number}   result.batteries.compartmentB.batteryCharging   - Battery is charging or not
- * @property {string}   result.batteries.compartmentB.gradeBattery      - Battery grade points
- * @property {string}   result.leftTime                                 - Left time
- * @property {number}   result.estimatedMileage                         - Estimated mileage in km
- * @property {number}   result.gpsTimestamp                             - GPS timestamp in unix timestamp epoch format (13 digits)
- * @property {number}   result.infoTimestamp                            - Info timestamp in unix timestamp epoch format (13 digits)
- * @property {number}   result.nowSpeed                                 - Current speed in km/h
- * @property {boolean}  result.batteryDetail                            - Battery detail
- * @property {number}   result.centreCtrlBattery                        - Centre control battery
- * @property {number}   result.ss_protocol_ver                          - SS protocol version
- * @property {string}   result.ss_online_sta                            - SS online status
- * @property {number}   result.gps                                      - GPS signal strength
- * @property {number}   result.gsm                                      - GSM signal strength
- * @property {Object}   result.lastTrack                                - Last track information
- * @property {number}   result.lastTrack.ridingTime                     - Riding time in s
- * @property {number}   result.lastTrack.distance                       - Distance in m
- * @property {number}   result.lastTrack.time                           - Timestamp in unix timestamp epoch format (13 digits)
+ * @property {niuCloudConnector.Client} client                              - Client
+ * @property {Object}   result                                              - Received response
+ * @property {Object}   result.data                                         - Response data
+ * @property {number}   result.data.isCharging                              - Is charging
+ * @property {number}   result.data.lockStatus                              - Lock status
+ * @property {number}   result.data.isAccOn                                 - Is adaptive cruise control on or not
+ * @property {string}   result.data.isFortificationOn                       - Is fortification on or not
+ * @property {boolean}  result.data.isConnected                             - Is connected or not
+ * @property {Object}   result.data.postion                                 - Current position
+ * @property {number}   result.data.postion.lat                             - Latitude in decimal degree (WGS 84)
+ * @property {number}   result.data.postion.lng                             - Longitude in decimal degree (WGS 84)
+ * @property {number}   result.data.hdop                                    - Horizontal dilution of precision [0; 50]. A good HDOP is up to 2.5. For navigation a value up to 8 is acceptable.
+ * @property {number}   result.data.time                                    - Time in unix timestamp epoch format (13 digits)
+ * @property {Object}   result.data.batteries                               - Batteries
+ * @property {Object}   result.data.batteries.compartmentA                  - Battery compartment A
+ * @property {string}   result.data.batteries.compartmentA.bmsId            - Battery management system identification number
+ * @property {boolean}  result.data.batteries.compartmentA.isConnected      - Battery is connected or not
+ * @property {number}   result.data.batteries.compartmentA.batteryCharging  - Battery is charging or not
+ * @property {string}   result.data.batteries.compartmentA.gradeBattery     - Battery grade points
+ * @property {Object}   result.data.[batteries.compartmentB]                - Battery compartment B
+ * @property {string}   result.data.batteries.compartmentB.bmsId            - Battery management system identification number
+ * @property {boolean}  result.data.batteries.compartmentB.isConnected      - Battery is connected or not
+ * @property {number}   result.data.batteries.compartmentB.batteryCharging  - Battery is charging or not
+ * @property {string}   result.data.batteries.compartmentB.gradeBattery     - Battery grade points
+ * @property {string}   result.data.leftTime                                - Left time
+ * @property {number}   result.data.estimatedMileage                        - Estimated mileage in km
+ * @property {number}   result.data.gpsTimestamp                            - GPS timestamp in unix timestamp epoch format (13 digits)
+ * @property {number}   result.data.infoTimestamp                           - Info timestamp in unix timestamp epoch format (13 digits)
+ * @property {number}   result.data.nowSpeed                                - Current speed in km/h
+ * @property {boolean}  result.data.batteryDetail                           - Battery detail
+ * @property {number}   result.data.centreCtrlBattery                       - Centre control battery
+ * @property {number}   result.data.ss_protocol_ver                         - SS protocol version
+ * @property {string}   result.data.ss_online_sta                           - SS online status
+ * @property {number}   result.data.gps                                     - GPS signal strength
+ * @property {number}   result.data.gsm                                     - GSM signal strength
+ * @property {Object}   result.data.lastTrack                               - Last track information
+ * @property {number}   result.data.lastTrack.ridingTime                    - Riding time in s
+ * @property {number}   result.data.lastTrack.distance                      - Distance in m
+ * @property {number}   result.data.lastTrack.time                          - Timestamp in unix timestamp epoch format (13 digits)
+ * @property {string}   result.desc                                         - Response status description
+ * @property {string}   result.trace                                        - For debug purposes
+ * @property {number}   result.status                                       - Response status number
  */
 
 /**
@@ -575,10 +637,15 @@ niuCloudConnector.Client.prototype.getMotorInfo = function(options) {
 
 /**
  * @typedef {Promise} OverallTally
- * @property {niuCloudConnector.Client} client  - Client
- * @property {Object}   result                  - Received response
- * @property {number}   result.bindDaysCount    - Number of days the vehicle is at the customer
- * @property {number}   result.totalMileage     - Total mileage in km
+ * @property {niuCloudConnector.Client} client      - Client
+ * @property {Object}   result                      - Received response
+ * @property {Object}   result.data                 - Response data
+ * @property {number}   result.data.bindDaysCount   - Number of days the vehicle is at the customer
+ * @property {number}   result.data.totalMileage    - Total mileage in km
+ * @property {string}   result.desc                 - Response status description
+ * @property {string}   result.trace                - For debug purposes
+ * @property {number}   result.status               - Response status number
+ * 
  */
 
 /**
@@ -614,32 +681,36 @@ niuCloudConnector.Client.prototype.getOverallTally = function(options) {
 
 /**
  * @typedef {Promise} Tracks
- * @property {niuCloudConnector.Client} client      - Client
- * @property {Object[]} result                      - Received response
- * @property {string}   result.id                   - Identification number
- * @property {string}   result.trackId              - Track identification number
- * @property {number}   result.startTime            - Start time in unix timestamp epoch format (13 digits)
- * @property {number}   result.endTime              - Stop time in unix timestamp epoch format (13 digits)
- * @property {number}   result.distance             - Distance in m
- * @property {number}   result.avespeed             - Average speed in km/h
- * @property {number}   result.ridingtime           - Riding time in minutes
- * @property {string}   result.type                 - Type
- * @property {string}   result.date                 - Date in the format yyyymmdd
- * @property {Object}   result.startPoint           - Start point
- * @property {string}   result.startPoint.lng       - Longitude in decimal degree (WGS 84)
- * @property {string}   result.startPoint.lat       - Latitude in decimal degree (WGS 84)
- * @property {string}   result.startPoint.speed     - Speed
- * @property {string}   result.startPoint.battery   - Battery state of charge in percent
- * @property {string}   result.startPoint.mileage   - Mileage in m
- * @property {string}   result.startPoint.date      - Date in unix timestamp epoch format (13 digits)
- * @property {Object}   result.lastPoint            - Start point
- * @property {string}   result.lastPoint.lng        - Longitude in decimal degree (WGS 84)
- * @property {string}   result.lastPoint.lat        - Latitude in decimal degree (WGS 84)
- * @property {string}   result.lastPoint.speed      - Speed
- * @property {string}   result.lastPoint.battery    - Battery state of charge in percent
- * @property {string}   result.lastPoint.mileage    - Mileage in m
- * @property {string}   result.lastPoint.date       - Date in unix timestamp epoch format (13 digits)
-*/
+ * @property {niuCloudConnector.Client} client          - Client
+ * @property {Object}   result                          - Received response
+ * @property {Object[]} result.data                     - Response data
+ * @property {string}   result.data.id                  - Identification number
+ * @property {string}   result.data.trackId             - Track identification number
+ * @property {number}   result.data.startTime           - Start time in unix timestamp epoch format (13 digits)
+ * @property {number}   result.data.endTime             - Stop time in unix timestamp epoch format (13 digits)
+ * @property {number}   result.data.distance            - Distance in m
+ * @property {number}   result.data.avespeed            - Average speed in km/h
+ * @property {number}   result.data.ridingtime          - Riding time in minutes
+ * @property {string}   result.data.type                - Type
+ * @property {string}   result.data.date                - Date in the format yyyymmdd
+ * @property {Object}   result.data.startPoint          - Start point
+ * @property {string}   result.data.startPoint.lng      - Longitude in decimal degree (WGS 84)
+ * @property {string}   result.data.startPoint.lat      - Latitude in decimal degree (WGS 84)
+ * @property {string}   result.data.startPoint.speed    - Speed
+ * @property {string}   result.data.startPoint.battery  - Battery state of charge in percent
+ * @property {string}   result.data.startPoint.mileage  - Mileage in m
+ * @property {string}   result.data.startPoint.date     - Date in unix timestamp epoch format (13 digits)
+ * @property {Object}   result.data.lastPoint           - Start point
+ * @property {string}   result.data.lastPoint.lng       - Longitude in decimal degree (WGS 84)
+ * @property {string}   result.data.lastPoint.lat       - Latitude in decimal degree (WGS 84)
+ * @property {string}   result.data.lastPoint.speed     - Speed
+ * @property {string}   result.data.lastPoint.battery   - Battery state of charge in percent
+ * @property {string}   result.data.lastPoint.mileage   - Mileage in m
+ * @property {string}   result.data.lastPoint.date      - Date in unix timestamp epoch format (13 digits)
+ * @property {string}   result.desc                     - Response status description
+ * @property {string}   result.trace                    - For debug purposes
+ * @property {number}   result.status                   - Response status number
+ */
 
 /**
  * Get recorded tracks.
@@ -688,19 +759,23 @@ niuCloudConnector.Client.prototype.getTracks = function(options) {
  * @typedef {Promise} TrackDetail
  * @property {niuCloudConnector.Client} client      - Client
  * @property {Object}   result                      - Received response
- * @property {Object[]} result.trackItems           - Track items (end point at index 0)
- * @property {number}   result.trackItems.lng       - Longitude in decimal degree (WGS 84)
- * @property {number}   result.trackItems.lat       - Latitude in decimal degree (WGS 84)
- * @property {number}   result.trackItems.date      - Date in unix timestamp epoch format (13 digits)
- * @property {Object}   result.startPoint           - Start point
- * @property {string}   result.startPoint.lng       - Longitude in decimal degree (WGS 84)
- * @property {string}   result.startPoint.lat       - Latitude in decimal degree (WGS 84)
- * @property {Object}   result.lastPoint            - Start point
- * @property {string}   result.lastPoint.lng        - Longitude in decimal degree (WGS 84)
- * @property {string}   result.lastPoint.lat        - Latitude in decimal degree (WGS 84)
- * @property {string}   result.startTime            - Start time in unix timestamp epoch format (13 digits)
- * @property {string}   result.lastDate             - Last time in unix timestamp epoch format (13 digits)
-*/
+ * @property {Object}   result.data                 - Response data
+ * @property {Object[]} result.data.trackItems      - Track items (end point at index 0)
+ * @property {number}   result.data.trackItems.lng  - Longitude in decimal degree (WGS 84)
+ * @property {number}   result.data.trackItems.lat  - Latitude in decimal degree (WGS 84)
+ * @property {number}   result.data.trackItems.date - Date in unix timestamp epoch format (13 digits)
+ * @property {Object}   result.data.startPoint      - Start point
+ * @property {string}   result.data.startPoint.lng  - Longitude in decimal degree (WGS 84)
+ * @property {string}   result.data.startPoint.lat  - Latitude in decimal degree (WGS 84)
+ * @property {Object}   result.data.lastPoint       - Start point
+ * @property {string}   result.data.lastPoint.lng   - Longitude in decimal degree (WGS 84)
+ * @property {string}   result.data.lastPoint.lat   - Latitude in decimal degree (WGS 84)
+ * @property {string}   result.data.startTime       - Start time in unix timestamp epoch format (13 digits)
+ * @property {string}   result.data.lastDate        - Last time in unix timestamp epoch format (13 digits)
+ * @property {string}   result.desc                     - Response status description
+ * @property {string}   result.trace                    - For debug purposes
+ * @property {number}   result.status                   - Response status number
+ */
 
 /**
  * Get track details.

@@ -49,47 +49,72 @@ client.createSessionToken({
     countryCode: countryCode
 }).then(function(result) {
 
-    console.log("Session token created: " + result.result);
+    console.log("\tSession token created: " + result.result);
 
     console.log("Get vehicles ...");
     return result.client.getVehicles();
 
 }).then(function(result) {
 
-    var index = 0;
+    var index       = 0;
+    var nextPromise = Promise.resolve({
+        client: result.client,
+        index: 0
+    });
 
     vehicles = result.result.data;
 
     if (0 === vehicles.length) {
 
-        console.log("No vehicles found.");
+        console.log("\tNo vehicles found.");
         return Promise.reject(new Error("Aborted."));
+    }
 
-    } else {
+    for(index = 0; index < vehicles.length; ++index) {
 
-        for(index = 0; index < vehicles.length; ++index) {
-            console.log("Vehicle: " + vehicles[index].type + " " + vehicles[index].name + " (" + vehicles[index].sn + ")");
-        }
-    
+        nextPromise = nextPromise.then(function(vehicleResult) {
+            var vehicleIndex = vehicleResult.index;
+
+            ++vehicleResult.index;
+
+            console.log("\t#" + vehicleResult.index + " Vehicle: " + vehicles[vehicleIndex].type + " " + vehicles[vehicleIndex].name + " (" + vehicles[vehicleIndex].sn + ")");
+
+            return result.client.getVehiclePos({
+                sn: vehicles[vehicleIndex].sn
+            }).then(function(vehiclePosResult) {
+
+                console.log("\t\tCurrent position: latitude=" + vehiclePosResult.result.data.lat + " longitude=" + vehiclePosResult.result.data.lng);
+                return Promise.resolve({
+                    client: vehiclePosResult.client,
+                    index: vehicleResult.index
+                });
+            });
+        });
+    }
+
+    nextPromise = nextPromise.then(function() {
+        
         console.log("Get battery info of " + vehicles[0].name);
         return result.client.getBatteryInfo({
             sn: vehicles[0].sn
         });
-    }
+    });
+
+    return nextPromise;
 
 }).then(function(result) {
 
     var batteries = result.result.data.batteries;
 
     if ("object" === typeof batteries.compartmentA) {
-        console.log("Battery " + batteries.compartmentA.bmsId + ": SOC " + batteries.compartmentA.batteryCharging + "%");
+        console.log("\tBattery " + batteries.compartmentA.bmsId + ": SOC " + batteries.compartmentA.batteryCharging + "%");
     }
     
     if ("object" === typeof batteries.compartmentB) {
-        console.log("Battery " + batteries.compartmentB.bmsId + ": SOC " + batteries.compartmentB.batteryCharging + "%");
+        console.log("\tBattery " + batteries.compartmentB.bmsId + ": SOC " + batteries.compartmentB.batteryCharging + "%");
     }
 
-    console.log("Estimated mileage: " + result.result.data.estimatedMileage);
+    console.log("\tEstimated mileage: " + result.result.data.estimatedMileage);
 
     console.log("Get battery health ...");
     return result.client.getBatteryHealth({
@@ -101,11 +126,11 @@ client.createSessionToken({
     var batteries = result.result.data.batteries;
 
     if ("object" === typeof batteries.compartmentA) {
-        console.log("Battery " + batteries.compartmentA.bmsId + ": grade " + batteries.compartmentA.gradeBattery + "%");
+        console.log("\tBattery " + batteries.compartmentA.bmsId + ": grade " + batteries.compartmentA.gradeBattery + "%");
     }
     
     if ("object" === typeof batteries.compartmentB) {
-        console.log("Battery " + batteries.compartmentB.bmsId + ": grade " + batteries.compartmentB.gradeBattery + "%");
+        console.log("\tBattery " + batteries.compartmentB.bmsId + ": grade " + batteries.compartmentB.gradeBattery + "%");
     }
 
     console.log("Get motor info ...");
@@ -115,7 +140,7 @@ client.createSessionToken({
 
 }).then(function(result) {
 
-    console.log("Current speed: " + result.result.data.nowSpeed);
+    console.log("\tCurrent speed: " + result.result.data.nowSpeed);
 
     console.log("Get overall tally ...");
     return result.client.getOverallTally({
@@ -124,7 +149,7 @@ client.createSessionToken({
 
 }).then(function(result) {
 
-    console.log("Total mileage: " + result.result.data.totalMileage);
+    console.log("\tTotal mileage: " + result.result.data.totalMileage);
 
     console.log("Get a track ...");
     return result.client.getTracks({
@@ -136,19 +161,19 @@ client.createSessionToken({
 }).then(function(result) {
 
     if (0 === result.result.data.length) {
-        console.log("No tracks available.");
+        console.log("\tNo tracks available.");
     } else {
 
         var track       = result.result.data[0];
         var startTime   = new Date(track.startTime);
         var endTime     = new Date(track.endTime);
 
-        console.log("Track: " + track.trackId);
-        console.log("\tStart time  : " + startTime.toString());
-        console.log("\tEnd time    : " + endTime.toString());
-        console.log("\tDistance    : " + track.distance / 1000 + " km");
-        console.log("\tAvg. speed  : " + track.avespeed + " km/h");
-        console.log("\tRiding time : " + track.ridingtime / 60 + " h");
+        console.log("\tTrack: " + track.trackId);
+        console.log("\t\tStart time  : " + startTime.toString());
+        console.log("\t\tEnd time    : " + endTime.toString());
+        console.log("\t\tDistance    : " + track.distance / 1000 + " km");
+        console.log("\t\tAvg. speed  : " + track.avespeed + " km/h");
+        console.log("\t\tRiding time : " + track.ridingtime / 60 + " h");
 
         console.log("Get a track detail ...");
         return result.client.getTrackDetail({
@@ -162,9 +187,9 @@ client.createSessionToken({
         
             for(index = 0; index < trackItems.length; ++index) {
         
-                console.log("Item #" + (index + 1));
-                console.log("\tLongitude: " + trackItems[index].lng);
-                console.log("\tLatitude: " + trackItems[index].lat);
+                console.log("\tItem #" + (index + 1));
+                console.log("\t\tLongitude: " + trackItems[index].lng);
+                console.log("\t\tLatitude: " + trackItems[index].lat);
             }
 
             /* Convert last track to KML file */
