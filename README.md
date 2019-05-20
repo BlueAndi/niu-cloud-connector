@@ -21,6 +21,10 @@ Find the API description in the [./doc](https://github.com/BlueAndi/niu-cloud-co
 
 Change credentials (account, password, country code) in the ```./test/test.js``` and run ```npm run test```.
 
+## Command line interface
+
+If you search for a command line interface to use it for some script, take a look to the [niu-cloud-cli](https://github.com/BlueAndi/niu-cloud-cli) project.
+
 ## Other related projects
 
 * [niu_api_service.rb](https://gist.github.com/saschagehlich/36d3584ea3812e59abdb9a2de05b9be0) (Ruby on Rails) from Sascha Gehlich.
