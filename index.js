@@ -297,7 +297,7 @@ niuCloudConnector.Client.prototype._makeRequest = function(options) {
             } else if ("number" !== typeof response.statusCode) {
                 reject(_this._error("Status code is missing.", funcName));
             } else if (200 != response.statusCode) {
-                reject(_this._error("Bad request.", funcName));
+                reject(_this._error("Bad request: " + response.statusCode, funcName));
             } else {
 
                 /* Response successful received.
