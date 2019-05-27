@@ -323,6 +323,8 @@ niuCloudConnector.Client.prototype._makeRequest = function(options) {
     });
 };
 
+/* ---------- /motoinfo/ --------- */
+
 /**
  * @typedef {Promise} Vehicles
  * @property {niuCloudConnector.Client} client              - Client
@@ -427,6 +429,117 @@ niuCloudConnector.Client.prototype.getVehiclePos = function(options) {
         }
     });
 };
+
+/**
+ * @typedef {Promise} OverallTally
+ * @property {niuCloudConnector.Client} client      - Client
+ * @property {Object}   result                      - Received response
+ * @property {Object}   result.data                 - Response data
+ * @property {number}   result.data.bindDaysCount   - Number of days the vehicle is at the customer
+ * @property {number}   result.data.totalMileage    - Total mileage in km
+ * @property {string}   result.desc                 - Response status description
+ * @property {string}   result.trace                - For debug purposes
+ * @property {number}   result.status               - Response status number
+ * 
+ */
+
+/**
+ * Get overall tally of vehicle.
+ * 
+ * @param {Object}  options     - Options.
+ * @param {string}  options.sn  - Vehicle serial number.
+ * 
+ * @returns {OverallTally} Overall tally.
+ */
+niuCloudConnector.Client.prototype.getOverallTally = function(options) {
+    var funcName = "getOverallTally()";
+
+    if (0 === this._token.length) {
+        return Promise.reject(this._error("No valid token available.", funcName));
+    }
+
+    if ("object" !== typeof options) {
+        return Promise.reject(this._error("Options is missing.", funcName));
+    }
+
+    if ("string" !== typeof options.sn) {
+        return Promise.reject(this._error("Vehicle serial number is missing.", funcName));
+    }
+
+    return this._makeRequest({
+        path: "/motoinfo/overallTally",
+        postData: {
+            sn: options.sn
+        }
+    });
+};
+
+/**
+ * @typedef {Promise} TrackDetail
+ * @property {niuCloudConnector.Client} client      - Client
+ * @property {Object}   result                      - Received response
+ * @property {Object}   result.data                 - Response data
+ * @property {Object[]} result.data.trackItems      - Track items (end point at index 0)
+ * @property {number}   result.data.trackItems.lng  - Longitude in decimal degree (WGS 84)
+ * @property {number}   result.data.trackItems.lat  - Latitude in decimal degree (WGS 84)
+ * @property {number}   result.data.trackItems.date - Date in unix timestamp epoch format (13 digits)
+ * @property {Object}   result.data.startPoint      - Start point
+ * @property {string}   result.data.startPoint.lng  - Longitude in decimal degree (WGS 84)
+ * @property {string}   result.data.startPoint.lat  - Latitude in decimal degree (WGS 84)
+ * @property {Object}   result.data.lastPoint       - Start point
+ * @property {string}   result.data.lastPoint.lng   - Longitude in decimal degree (WGS 84)
+ * @property {string}   result.data.lastPoint.lat   - Latitude in decimal degree (WGS 84)
+ * @property {string}   result.data.startTime       - Start time in unix timestamp epoch format (13 digits)
+ * @property {string}   result.data.lastDate        - Last time in unix timestamp epoch format (13 digits)
+ * @property {string}   result.desc                     - Response status description
+ * @property {string}   result.trace                    - For debug purposes
+ * @property {number}   result.status                   - Response status number
+ */
+
+/**
+ * Get track details.
+ * 
+ * @param {Object}  options             - Options.
+ * @param {string}  options.sn          - Vehicle serial number.
+ * @param {string}  options.trackId     - Track identification number.
+ * @param {string}  options.trackDate   - Track date in yyyymmdd format.
+ * 
+ * @returns {TrackDetail} Track detail.
+ */
+niuCloudConnector.Client.prototype.getTrackDetail = function(options) {
+    var funcName = "getTrackDetail()";
+
+    if (0 === this._token.length) {
+        return Promise.reject(this._error("No valid token available.", funcName));
+    }
+
+    if ("object" !== typeof options) {
+        return Promise.reject(this._error("Options is missing.", funcName));
+    }
+
+    if ("string" !== typeof options.sn) {
+        return Promise.reject(this._error("Vehicle serial number is missing.", funcName));
+    }
+
+    if ("string" !== typeof options.trackId) {
+        return Promise.reject(this._error("Track ID is missing.", funcName));
+    }
+
+    if ("string" !== typeof options.trackDate) {
+        return Promise.reject(this._error("Track date is missing.", funcName));
+    }
+
+    return this._makeRequest({
+        path: "/motoinfo/track/detail",
+        postData: {
+            sn: options.sn,
+            trackId: options.trackId,
+            date: options.trackDate
+        }
+    });
+};
+
+/* ---------- /v3/motor_data ---------- */
 
 /**
  * @typedef {Object} CompartmentBatteryInfo
@@ -621,50 +734,6 @@ niuCloudConnector.Client.prototype.getMotorInfo = function(options) {
 };
 
 /**
- * @typedef {Promise} OverallTally
- * @property {niuCloudConnector.Client} client      - Client
- * @property {Object}   result                      - Received response
- * @property {Object}   result.data                 - Response data
- * @property {number}   result.data.bindDaysCount   - Number of days the vehicle is at the customer
- * @property {number}   result.data.totalMileage    - Total mileage in km
- * @property {string}   result.desc                 - Response status description
- * @property {string}   result.trace                - For debug purposes
- * @property {number}   result.status               - Response status number
- * 
- */
-
-/**
- * Get overall tally of vehicle.
- * 
- * @param {Object}  options     - Options.
- * @param {string}  options.sn  - Vehicle serial number.
- * 
- * @returns {OverallTally} Overall tally.
- */
-niuCloudConnector.Client.prototype.getOverallTally = function(options) {
-    var funcName = "getOverallTally()";
-
-    if (0 === this._token.length) {
-        return Promise.reject(this._error("No valid token available.", funcName));
-    }
-
-    if ("object" !== typeof options) {
-        return Promise.reject(this._error("Options is missing.", funcName));
-    }
-
-    if ("string" !== typeof options.sn) {
-        return Promise.reject(this._error("Vehicle serial number is missing.", funcName));
-    }
-
-    return this._makeRequest({
-        path: "/motoinfo/overallTally",
-        postData: {
-            sn: options.sn
-        }
-    });
-};
-
-/**
  * @typedef {Promise} Tracks
  * @property {niuCloudConnector.Client} client          - Client
  * @property {Object}   result                          - Received response
@@ -736,71 +805,6 @@ niuCloudConnector.Client.prototype.getTracks = function(options) {
             sn: options.sn,
             index: options.index,
             pagesize: options.pageSize
-        }
-    });
-};
-
-/**
- * @typedef {Promise} TrackDetail
- * @property {niuCloudConnector.Client} client      - Client
- * @property {Object}   result                      - Received response
- * @property {Object}   result.data                 - Response data
- * @property {Object[]} result.data.trackItems      - Track items (end point at index 0)
- * @property {number}   result.data.trackItems.lng  - Longitude in decimal degree (WGS 84)
- * @property {number}   result.data.trackItems.lat  - Latitude in decimal degree (WGS 84)
- * @property {number}   result.data.trackItems.date - Date in unix timestamp epoch format (13 digits)
- * @property {Object}   result.data.startPoint      - Start point
- * @property {string}   result.data.startPoint.lng  - Longitude in decimal degree (WGS 84)
- * @property {string}   result.data.startPoint.lat  - Latitude in decimal degree (WGS 84)
- * @property {Object}   result.data.lastPoint       - Start point
- * @property {string}   result.data.lastPoint.lng   - Longitude in decimal degree (WGS 84)
- * @property {string}   result.data.lastPoint.lat   - Latitude in decimal degree (WGS 84)
- * @property {string}   result.data.startTime       - Start time in unix timestamp epoch format (13 digits)
- * @property {string}   result.data.lastDate        - Last time in unix timestamp epoch format (13 digits)
- * @property {string}   result.desc                     - Response status description
- * @property {string}   result.trace                    - For debug purposes
- * @property {number}   result.status                   - Response status number
- */
-
-/**
- * Get track details.
- * 
- * @param {Object}  options             - Options.
- * @param {string}  options.sn          - Vehicle serial number.
- * @param {string}  options.trackId     - Track identification number.
- * @param {string}  options.trackDate   - Track date in yyyymmdd format.
- * 
- * @returns {TrackDetail} Track detail.
- */
-niuCloudConnector.Client.prototype.getTrackDetail = function(options) {
-    var funcName = "getTrackDetail()";
-
-    if (0 === this._token.length) {
-        return Promise.reject(this._error("No valid token available.", funcName));
-    }
-
-    if ("object" !== typeof options) {
-        return Promise.reject(this._error("Options is missing.", funcName));
-    }
-
-    if ("string" !== typeof options.sn) {
-        return Promise.reject(this._error("Vehicle serial number is missing.", funcName));
-    }
-
-    if ("string" !== typeof options.trackId) {
-        return Promise.reject(this._error("Track ID is missing.", funcName));
-    }
-
-    if ("string" !== typeof options.trackDate) {
-        return Promise.reject(this._error("Track date is missing.", funcName));
-    }
-
-    return this._makeRequest({
-        path: "/motoinfo/track/detail",
-        postData: {
-            sn: options.sn,
-            trackId: options.trackId,
-            date: options.trackDate
         }
     });
 };
