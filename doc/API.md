@@ -12,9 +12,6 @@
 <dt><a href="#niuCloudConnector">niuCloudConnector</a> : <code>object</code></dt>
 <dd><p>NIU cloud connector</p>
 </dd>
-<dt><a href="#niuCloudConnectorUtils">niuCloudConnectorUtils</a> : <code>object</code></dt>
-<dd><p>NIU cloud connector utilities</p>
-</dd>
 </dl>
 
 ## Typedefs
@@ -28,6 +25,10 @@
 <dd></dd>
 <dt><a href="#VehiclePos">VehiclePos</a> : <code>Promise</code></dt>
 <dd></dd>
+<dt><a href="#OverallTally">OverallTally</a> : <code>Promise</code></dt>
+<dd></dd>
+<dt><a href="#TrackDetail">TrackDetail</a> : <code>Promise</code></dt>
+<dd></dd>
 <dt><a href="#CompartmentBatteryInfo">CompartmentBatteryInfo</a> : <code>Object</code></dt>
 <dd></dd>
 <dt><a href="#BatteryInfo">BatteryInfo</a> : <code>Promise</code></dt>
@@ -40,11 +41,9 @@
 <dd></dd>
 <dt><a href="#MotorData">MotorData</a> : <code>Promise</code></dt>
 <dd></dd>
-<dt><a href="#OverallTally">OverallTally</a> : <code>Promise</code></dt>
-<dd></dd>
 <dt><a href="#Tracks">Tracks</a> : <code>Promise</code></dt>
 <dd></dd>
-<dt><a href="#TrackDetail">TrackDetail</a> : <code>Promise</code></dt>
+<dt><a href="#FirmwareVersion">FirmwareVersion</a> : <code>Promise</code></dt>
 <dd></dd>
 </dl>
 
@@ -69,12 +68,13 @@ NIU cloud connector
         * [.setSessionToken(options)](#niuCloudConnector.Client+setSessionToken) ⇒ <code>Promise</code>
         * [.getVehicles()](#niuCloudConnector.Client+getVehicles) ⇒ [<code>Vehicles</code>](#Vehicles)
         * [.getVehiclePos(options)](#niuCloudConnector.Client+getVehiclePos) ⇒ [<code>VehiclePos</code>](#VehiclePos)
+        * [.getOverallTally(options)](#niuCloudConnector.Client+getOverallTally) ⇒ [<code>OverallTally</code>](#OverallTally)
+        * [.getTrackDetail(options)](#niuCloudConnector.Client+getTrackDetail) ⇒ [<code>TrackDetail</code>](#TrackDetail)
         * [.getBatteryInfo(options)](#niuCloudConnector.Client+getBatteryInfo) ⇒ [<code>BatteryInfo</code>](#BatteryInfo)
         * [.getBatteryHealth(options)](#niuCloudConnector.Client+getBatteryHealth) ⇒ [<code>BatteryInfoHealth</code>](#BatteryInfoHealth)
         * [.getMotorInfo(options)](#niuCloudConnector.Client+getMotorInfo) ⇒ [<code>MotorData</code>](#MotorData)
-        * [.getOverallTally(options)](#niuCloudConnector.Client+getOverallTally) ⇒ [<code>OverallTally</code>](#OverallTally)
         * [.getTracks(options)](#niuCloudConnector.Client+getTracks) ⇒ [<code>Tracks</code>](#Tracks)
-        * [.getTrackDetail(options)](#niuCloudConnector.Client+getTrackDetail) ⇒ [<code>TrackDetail</code>](#TrackDetail)
+        * [.getFirmwareVersion(options)](#niuCloudConnector.Client+getFirmwareVersion) ⇒ [<code>FirmwareVersion</code>](#FirmwareVersion)
     * [.AccountBaseUrl](#niuCloudConnector.AccountBaseUrl)
     * [.AppApiBaseUrl](#niuCloudConnector.AppApiBaseUrl)
 
@@ -90,12 +90,13 @@ NIU cloud connector
     * [.setSessionToken(options)](#niuCloudConnector.Client+setSessionToken) ⇒ <code>Promise</code>
     * [.getVehicles()](#niuCloudConnector.Client+getVehicles) ⇒ [<code>Vehicles</code>](#Vehicles)
     * [.getVehiclePos(options)](#niuCloudConnector.Client+getVehiclePos) ⇒ [<code>VehiclePos</code>](#VehiclePos)
+    * [.getOverallTally(options)](#niuCloudConnector.Client+getOverallTally) ⇒ [<code>OverallTally</code>](#OverallTally)
+    * [.getTrackDetail(options)](#niuCloudConnector.Client+getTrackDetail) ⇒ [<code>TrackDetail</code>](#TrackDetail)
     * [.getBatteryInfo(options)](#niuCloudConnector.Client+getBatteryInfo) ⇒ [<code>BatteryInfo</code>](#BatteryInfo)
     * [.getBatteryHealth(options)](#niuCloudConnector.Client+getBatteryHealth) ⇒ [<code>BatteryInfoHealth</code>](#BatteryInfoHealth)
     * [.getMotorInfo(options)](#niuCloudConnector.Client+getMotorInfo) ⇒ [<code>MotorData</code>](#MotorData)
-    * [.getOverallTally(options)](#niuCloudConnector.Client+getOverallTally) ⇒ [<code>OverallTally</code>](#OverallTally)
     * [.getTracks(options)](#niuCloudConnector.Client+getTracks) ⇒ [<code>Tracks</code>](#Tracks)
-    * [.getTrackDetail(options)](#niuCloudConnector.Client+getTrackDetail) ⇒ [<code>TrackDetail</code>](#TrackDetail)
+    * [.getFirmwareVersion(options)](#niuCloudConnector.Client+getFirmwareVersion) ⇒ [<code>FirmwareVersion</code>](#FirmwareVersion)
 
 <a name="new_niuCloudConnector.Client_new"></a>
 
@@ -156,6 +157,34 @@ Get current position of a vehicle.
 | options | <code>Object</code> | Options. |
 | options.sn | <code>string</code> | Vehicle serial number. |
 
+<a name="niuCloudConnector.Client+getOverallTally"></a>
+
+#### client.getOverallTally(options) ⇒ [<code>OverallTally</code>](#OverallTally)
+Get overall tally of vehicle.
+
+**Kind**: instance method of [<code>Client</code>](#niuCloudConnector.Client)  
+**Returns**: [<code>OverallTally</code>](#OverallTally) - Overall tally.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>Object</code> | Options. |
+| options.sn | <code>string</code> | Vehicle serial number. |
+
+<a name="niuCloudConnector.Client+getTrackDetail"></a>
+
+#### client.getTrackDetail(options) ⇒ [<code>TrackDetail</code>](#TrackDetail)
+Get track details.
+
+**Kind**: instance method of [<code>Client</code>](#niuCloudConnector.Client)  
+**Returns**: [<code>TrackDetail</code>](#TrackDetail) - Track detail.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>Object</code> | Options. |
+| options.sn | <code>string</code> | Vehicle serial number. |
+| options.trackId | <code>string</code> | Track identification number. |
+| options.trackDate | <code>string</code> | Track date in yyyymmdd format. |
+
 <a name="niuCloudConnector.Client+getBatteryInfo"></a>
 
 #### client.getBatteryInfo(options) ⇒ [<code>BatteryInfo</code>](#BatteryInfo)
@@ -195,19 +224,6 @@ Get motor info of vehicle.
 | options | <code>Object</code> | Options. |
 | options.sn | <code>string</code> | Vehicle serial number. |
 
-<a name="niuCloudConnector.Client+getOverallTally"></a>
-
-#### client.getOverallTally(options) ⇒ [<code>OverallTally</code>](#OverallTally)
-Get overall tally of vehicle.
-
-**Kind**: instance method of [<code>Client</code>](#niuCloudConnector.Client)  
-**Returns**: [<code>OverallTally</code>](#OverallTally) - Overall tally.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>Object</code> | Options. |
-| options.sn | <code>string</code> | Vehicle serial number. |
-
 <a name="niuCloudConnector.Client+getTracks"></a>
 
 #### client.getTracks(options) ⇒ [<code>Tracks</code>](#Tracks)
@@ -223,20 +239,18 @@ Get recorded tracks.
 | options.index | <code>number</code> | Start from this index. |
 | options.pageSize | <code>number</code> | Number of tracks. |
 
-<a name="niuCloudConnector.Client+getTrackDetail"></a>
+<a name="niuCloudConnector.Client+getFirmwareVersion"></a>
 
-#### client.getTrackDetail(options) ⇒ [<code>TrackDetail</code>](#TrackDetail)
-Get track details.
+#### client.getFirmwareVersion(options) ⇒ [<code>FirmwareVersion</code>](#FirmwareVersion)
+Get firmware version.
 
 **Kind**: instance method of [<code>Client</code>](#niuCloudConnector.Client)  
-**Returns**: [<code>TrackDetail</code>](#TrackDetail) - Track detail.  
+**Returns**: [<code>FirmwareVersion</code>](#FirmwareVersion) - Firmware version.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>Object</code> | Options. |
 | options.sn | <code>string</code> | Vehicle serial number. |
-| options.trackId | <code>string</code> | Track identification number. |
-| options.trackDate | <code>string</code> | Track date in yyyymmdd format. |
 
 <a name="niuCloudConnector.AccountBaseUrl"></a>
 
@@ -250,25 +264,6 @@ URL to NIU login, used for retrieving an access token.
 URL to the NIU app API.
 
 **Kind**: static property of [<code>niuCloudConnector</code>](#niuCloudConnector)  
-<a name="niuCloudConnectorUtils"></a>
-
-## niuCloudConnectorUtils : <code>object</code>
-NIU cloud connector utilities
-
-**Kind**: global namespace  
-<a name="niuCloudConnectorUtils.trackItems2Kml"></a>
-
-### niuCloudConnectorUtils.trackItems2Kml(options) ⇒ <code>string</code>
-Convert track items to KML format.
-
-**Kind**: static method of [<code>niuCloudConnectorUtils</code>](#niuCloudConnectorUtils)  
-**Returns**: <code>string</code> - KML data.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>Object</code> | Options. |
-| options.trackItems | <code>Array.&lt;Object&gt;</code> | Track items. |
-
 <a name="Error"></a>
 
 ## Error : <code>Object</code>
@@ -353,6 +348,50 @@ Convert track items to KML format.
 | result.data.timestamp | <code>number</code> | Timestamp in unix timestamp epoch format (13 digits) |
 | result.data.gps | <code>number</code> | ? |
 | result.data.gpsPrecision | <code>number</code> | GPS precision |
+| result.desc | <code>string</code> | Response status description |
+| result.trace | <code>string</code> | For debug purposes |
+| result.status | <code>number</code> | Response status number |
+
+<a name="OverallTally"></a>
+
+## OverallTally : <code>Promise</code>
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
+| result | <code>Object</code> | Received response |
+| result.data | <code>Object</code> | Response data |
+| result.data.bindDaysCount | <code>number</code> | Number of days the vehicle is at the customer |
+| result.data.totalMileage | <code>number</code> | Total mileage in km |
+| result.desc | <code>string</code> | Response status description |
+| result.trace | <code>string</code> | For debug purposes |
+| result.status | <code>number</code> | Response status number |
+
+<a name="TrackDetail"></a>
+
+## TrackDetail : <code>Promise</code>
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
+| result | <code>Object</code> | Received response |
+| result.data | <code>Object</code> | Response data |
+| result.data.trackItems | <code>Array.&lt;Object&gt;</code> | Track items (end point at index 0) |
+| result.data.trackItems.lng | <code>number</code> | Longitude in decimal degree (WGS 84) |
+| result.data.trackItems.lat | <code>number</code> | Latitude in decimal degree (WGS 84) |
+| result.data.trackItems.date | <code>number</code> | Date in unix timestamp epoch format (13 digits) |
+| result.data.startPoint | <code>Object</code> | Start point |
+| result.data.startPoint.lng | <code>string</code> | Longitude in decimal degree (WGS 84) |
+| result.data.startPoint.lat | <code>string</code> | Latitude in decimal degree (WGS 84) |
+| result.data.lastPoint | <code>Object</code> | Start point |
+| result.data.lastPoint.lng | <code>string</code> | Longitude in decimal degree (WGS 84) |
+| result.data.lastPoint.lat | <code>string</code> | Latitude in decimal degree (WGS 84) |
+| result.data.startTime | <code>string</code> | Start time in unix timestamp epoch format (13 digits) |
+| result.data.lastDate | <code>string</code> | Last time in unix timestamp epoch format (13 digits) |
 | result.desc | <code>string</code> | Response status description |
 | result.trace | <code>string</code> | For debug purposes |
 | result.status | <code>number</code> | Response status number |
@@ -495,23 +534,6 @@ Convert track items to KML format.
 | result.trace | <code>string</code> | For debug purposes |
 | result.status | <code>number</code> | Response status number |
 
-<a name="OverallTally"></a>
-
-## OverallTally : <code>Promise</code>
-**Kind**: global typedef  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
-| result | <code>Object</code> | Received response |
-| result.data | <code>Object</code> | Response data |
-| result.data.bindDaysCount | <code>number</code> | Number of days the vehicle is at the customer |
-| result.data.totalMileage | <code>number</code> | Total mileage in km |
-| result.desc | <code>string</code> | Response status description |
-| result.trace | <code>string</code> | For debug purposes |
-| result.status | <code>number</code> | Response status number |
-
 <a name="Tracks"></a>
 
 ## Tracks : <code>Promise</code>
@@ -550,9 +572,9 @@ Convert track items to KML format.
 | result.trace | <code>string</code> | For debug purposes |
 | result.status | <code>number</code> | Response status number |
 
-<a name="TrackDetail"></a>
+<a name="FirmwareVersion"></a>
 
-## TrackDetail : <code>Promise</code>
+## FirmwareVersion : <code>Promise</code>
 **Kind**: global typedef  
 **Properties**
 
@@ -560,19 +582,16 @@ Convert track items to KML format.
 | --- | --- | --- |
 | client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
 | result | <code>Object</code> | Received response |
-| result.data | <code>Object</code> | Response data |
-| result.data.trackItems | <code>Array.&lt;Object&gt;</code> | Track items (end point at index 0) |
-| result.data.trackItems.lng | <code>number</code> | Longitude in decimal degree (WGS 84) |
-| result.data.trackItems.lat | <code>number</code> | Latitude in decimal degree (WGS 84) |
-| result.data.trackItems.date | <code>number</code> | Date in unix timestamp epoch format (13 digits) |
-| result.data.startPoint | <code>Object</code> | Start point |
-| result.data.startPoint.lng | <code>string</code> | Longitude in decimal degree (WGS 84) |
-| result.data.startPoint.lat | <code>string</code> | Latitude in decimal degree (WGS 84) |
-| result.data.lastPoint | <code>Object</code> | Start point |
-| result.data.lastPoint.lng | <code>string</code> | Longitude in decimal degree (WGS 84) |
-| result.data.lastPoint.lat | <code>string</code> | Latitude in decimal degree (WGS 84) |
-| result.data.startTime | <code>string</code> | Start time in unix timestamp epoch format (13 digits) |
-| result.data.lastDate | <code>string</code> | Last time in unix timestamp epoch format (13 digits) |
+| result.data | <code>Array.&lt;Object&gt;</code> | Response data |
+| result.data.nowVersion | <code>string</code> | Current version |
+| result.data.version | <code>string</code> | Current version |
+| result.data.hardVersion | <code>string</code> | Current hard version |
+| result.data.ss_protocol_ver | <code>number</code> | ? |
+| result.data.byteSize | <code>string</code> | Byte size |
+| result.data.date | <code>number</code> | Date |
+| result.data.isSupportUpdate | <code>boolean</code> | Is the update mechanism supported? |
+| result.data.needUpdate | <code>boolean</code> | Is update necessary? |
+| result.data.otaDescribe | <code>string</code> | Over the air update description |
 | result.desc | <code>string</code> | Response status description |
 | result.trace | <code>string</code> | For debug purposes |
 | result.status | <code>number</code> | Response status number |

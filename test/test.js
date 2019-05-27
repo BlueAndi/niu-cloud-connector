@@ -149,6 +149,15 @@ client.createSessionToken({
 
     console.log("\tTotal mileage: " + result.result.data.totalMileage);
 
+    console.log("Get firmware version ...");
+    return result.client.getFirmwareVersion({
+        sn: vehicles[0].sn
+    });
+
+}).then(function(result) {
+
+    console.log("Current firmware version: " + result.result.data.version);
+
     console.log("Get a track ...");
     return result.client.getTracks({
         sn: vehicles[0].sn,

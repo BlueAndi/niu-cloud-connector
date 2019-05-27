@@ -325,7 +325,7 @@ niuCloudConnector.Client.prototype._makeRequest = function(options) {
             } else if ("number" !== typeof response.statusCode) {
                 reject(_this._error("Status code is missing.", funcName));
             } else if (200 != response.statusCode) {
-                reject(_this._error("Bad request.", funcName));
+                reject(_this._error("Bad request: " + response.statusCode, funcName));
             } else {
 
                 /* Response successful received.
@@ -350,6 +350,11 @@ niuCloudConnector.Client.prototype._makeRequest = function(options) {
 
     });
 };
+
+/* ------------------------------- */
+/* ---------- Motor Info --------- */
+/* ---------- /motoinfo  --------- */
+/* ------------------------------- */
 
 /**
  * @typedef {Promise} Vehicles
@@ -455,6 +460,120 @@ niuCloudConnector.Client.prototype.getVehiclePos = function(options) {
         }
     });
 };
+
+/**
+ * @typedef {Promise} OverallTally
+ * @property {niuCloudConnector.Client} client      - Client
+ * @property {Object}   result                      - Received response
+ * @property {Object}   result.data                 - Response data
+ * @property {number}   result.data.bindDaysCount   - Number of days the vehicle is at the customer
+ * @property {number}   result.data.totalMileage    - Total mileage in km
+ * @property {string}   result.desc                 - Response status description
+ * @property {string}   result.trace                - For debug purposes
+ * @property {number}   result.status               - Response status number
+ * 
+ */
+
+/**
+ * Get overall tally of vehicle.
+ * 
+ * @param {Object}  options     - Options.
+ * @param {string}  options.sn  - Vehicle serial number.
+ * 
+ * @returns {OverallTally} Overall tally.
+ */
+niuCloudConnector.Client.prototype.getOverallTally = function(options) {
+    var funcName = "getOverallTally()";
+
+    if (0 === this._token.length) {
+        return Promise.reject(this._error("No valid token available.", funcName));
+    }
+
+    if ("object" !== typeof options) {
+        return Promise.reject(this._error("Options is missing.", funcName));
+    }
+
+    if ("string" !== typeof options.sn) {
+        return Promise.reject(this._error("Vehicle serial number is missing.", funcName));
+    }
+
+    return this._makeRequest({
+        path: "/motoinfo/overallTally",
+        postData: {
+            sn: options.sn
+        }
+    });
+};
+
+/**
+ * @typedef {Promise} TrackDetail
+ * @property {niuCloudConnector.Client} client      - Client
+ * @property {Object}   result                      - Received response
+ * @property {Object}   result.data                 - Response data
+ * @property {Object[]} result.data.trackItems      - Track items (end point at index 0)
+ * @property {number}   result.data.trackItems.lng  - Longitude in decimal degree (WGS 84)
+ * @property {number}   result.data.trackItems.lat  - Latitude in decimal degree (WGS 84)
+ * @property {number}   result.data.trackItems.date - Date in unix timestamp epoch format (13 digits)
+ * @property {Object}   result.data.startPoint      - Start point
+ * @property {string}   result.data.startPoint.lng  - Longitude in decimal degree (WGS 84)
+ * @property {string}   result.data.startPoint.lat  - Latitude in decimal degree (WGS 84)
+ * @property {Object}   result.data.lastPoint       - Start point
+ * @property {string}   result.data.lastPoint.lng   - Longitude in decimal degree (WGS 84)
+ * @property {string}   result.data.lastPoint.lat   - Latitude in decimal degree (WGS 84)
+ * @property {string}   result.data.startTime       - Start time in unix timestamp epoch format (13 digits)
+ * @property {string}   result.data.lastDate        - Last time in unix timestamp epoch format (13 digits)
+ * @property {string}   result.desc                     - Response status description
+ * @property {string}   result.trace                    - For debug purposes
+ * @property {number}   result.status                   - Response status number
+ */
+
+/**
+ * Get track details.
+ * 
+ * @param {Object}  options             - Options.
+ * @param {string}  options.sn          - Vehicle serial number.
+ * @param {string}  options.trackId     - Track identification number.
+ * @param {string}  options.trackDate   - Track date in yyyymmdd format.
+ * 
+ * @returns {TrackDetail} Track detail.
+ */
+niuCloudConnector.Client.prototype.getTrackDetail = function(options) {
+    var funcName = "getTrackDetail()";
+
+    if (0 === this._token.length) {
+        return Promise.reject(this._error("No valid token available.", funcName));
+    }
+
+    if ("object" !== typeof options) {
+        return Promise.reject(this._error("Options is missing.", funcName));
+    }
+
+    if ("string" !== typeof options.sn) {
+        return Promise.reject(this._error("Vehicle serial number is missing.", funcName));
+    }
+
+    if ("string" !== typeof options.trackId) {
+        return Promise.reject(this._error("Track ID is missing.", funcName));
+    }
+
+    if ("string" !== typeof options.trackDate) {
+        return Promise.reject(this._error("Track date is missing.", funcName));
+    }
+
+    return this._makeRequest({
+        path: "/motoinfo/track/detail",
+        postData: {
+            sn: options.sn,
+            trackId: options.trackId,
+            date: options.trackDate
+        }
+    });
+};
+
+/* ------------------------------------ */
+/* ---------- Motor Data     ---------- */
+/* ---------- /v3/motor_data ---------- */
+/* ------------------------------------ */
 
 /**
  * @typedef {Object} CompartmentBatteryInfo
@@ -649,50 +768,6 @@ niuCloudConnector.Client.prototype.getMotorInfo = function(options) {
 };
 
 /**
- * @typedef {Promise} OverallTally
- * @property {niuCloudConnector.Client} client      - Client
- * @property {Object}   result                      - Received response
- * @property {Object}   result.data                 - Response data
- * @property {number}   result.data.bindDaysCount   - Number of days the vehicle is at the customer
- * @property {number}   result.data.totalMileage    - Total mileage in km
- * @property {string}   result.desc                 - Response status description
- * @property {string}   result.trace                - For debug purposes
- * @property {number}   result.status               - Response status number
- * 
- */
-
-/**
- * Get overall tally of vehicle.
- * 
- * @param {Object}  options     - Options.
- * @param {string}  options.sn  - Vehicle serial number.
- * 
- * @returns {OverallTally} Overall tally.
- */
-niuCloudConnector.Client.prototype.getOverallTally = function(options) {
-    var funcName = "getOverallTally()";
-
-    if (0 === this._token.length) {
-        return Promise.reject(this._error("No valid token available.", funcName));
-    }
-
-    if ("object" !== typeof options) {
-        return Promise.reject(this._error("Options is missing.", funcName));
-    }
-
-    if ("string" !== typeof options.sn) {
-        return Promise.reject(this._error("Vehicle serial number is missing.", funcName));
-    }
-
-    return this._makeRequest({
-        path: "/motoinfo/overallTally",
-        postData: {
-            sn: options.sn
-        }
-    });
-};
-
-/**
  * @typedef {Promise} Tracks
  * @property {niuCloudConnector.Client} client          - Client
  * @property {Object}   result                          - Received response
@@ -768,40 +843,40 @@ niuCloudConnector.Client.prototype.getTracks = function(options) {
     });
 };
 
+/* -------------------------------------------- */
+/* --------- Motor Over The Air update -------- */
+/* --------- /motorota                 -------- */
+/* -------------------------------------------- */
+
 /**
- * @typedef {Promise} TrackDetail
+ * @typedef {Promise} FirmwareVersion
  * @property {niuCloudConnector.Client} client      - Client
  * @property {Object}   result                      - Received response
- * @property {Object}   result.data                 - Response data
- * @property {Object[]} result.data.trackItems      - Track items (end point at index 0)
- * @property {number}   result.data.trackItems.lng  - Longitude in decimal degree (WGS 84)
- * @property {number}   result.data.trackItems.lat  - Latitude in decimal degree (WGS 84)
- * @property {number}   result.data.trackItems.date - Date in unix timestamp epoch format (13 digits)
- * @property {Object}   result.data.startPoint      - Start point
- * @property {string}   result.data.startPoint.lng  - Longitude in decimal degree (WGS 84)
- * @property {string}   result.data.startPoint.lat  - Latitude in decimal degree (WGS 84)
- * @property {Object}   result.data.lastPoint       - Start point
- * @property {string}   result.data.lastPoint.lng   - Longitude in decimal degree (WGS 84)
- * @property {string}   result.data.lastPoint.lat   - Latitude in decimal degree (WGS 84)
- * @property {string}   result.data.startTime       - Start time in unix timestamp epoch format (13 digits)
- * @property {string}   result.data.lastDate        - Last time in unix timestamp epoch format (13 digits)
- * @property {string}   result.desc                     - Response status description
- * @property {string}   result.trace                    - For debug purposes
- * @property {number}   result.status                   - Response status number
+ * @property {Object[]} result.data                 - Response data
+ * @property {string}   result.data.nowVersion      - Current version
+ * @property {string}   result.data.version         - Current version
+ * @property {string}   result.data.hardVersion     - Current hard version
+ * @property {number}   result.data.ss_protocol_ver - ?
+ * @property {string}   result.data.byteSize        - Byte size
+ * @property {number}   result.data.date            - Date
+ * @property {boolean}  result.data.isSupportUpdate - Is the update mechanism supported?
+ * @property {boolean}  result.data.needUpdate      - Is update necessary?
+ * @property {string}   result.data.otaDescribe     - Over the air update description
+ * @property {string}   result.desc                 - Response status description
+ * @property {string}   result.trace                - For debug purposes
+ * @property {number}   result.status               - Response status number
  */
 
 /**
- * Get track details.
+ * Get firmware version.
  * 
  * @param {Object}  options             - Options.
  * @param {string}  options.sn          - Vehicle serial number.
- * @param {string}  options.trackId     - Track identification number.
- * @param {string}  options.trackDate   - Track date in yyyymmdd format.
  * 
- * @returns {TrackDetail} Track detail.
+ * @returns {FirmwareVersion} Firmware version.
  */
-niuCloudConnector.Client.prototype.getTrackDetail = function(options) {
-    var funcName = "getTrackDetail()";
+niuCloudConnector.Client.prototype.getFirmwareVersion = function(options) {
+    var funcName = "getTracks()";
 
     if (0 === this._token.length) {
         return Promise.reject(this._error("No valid token available.", funcName));
@@ -815,20 +890,10 @@ niuCloudConnector.Client.prototype.getTrackDetail = function(options) {
         return Promise.reject(this._error("Vehicle serial number is missing.", funcName));
     }
 
-    if ("string" !== typeof options.trackId) {
-        return Promise.reject(this._error("Track ID is missing.", funcName));
-    }
-
-    if ("string" !== typeof options.trackDate) {
-        return Promise.reject(this._error("Track date is missing.", funcName));
-    }
-
     return this._makeRequest({
-        path: "/motoinfo/track/detail",
+        path: "/motorota/getfirmwareversion",
         postData: {
-            sn: options.sn,
-            trackId: options.trackId,
-            date: options.trackDate
+            sn: options.sn
         }
     });
 };
@@ -842,13 +907,13 @@ niuCloudConnector.Client.prototype.getTrackDetail = function(options) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="niuCloudConnector.html">niuCloudConnector</a></li><li><a href="niuCloudConnectorUtils.html">niuCloudConnectorUtils</a></li></ul><h3>Classes</h3><ul><li><a href="niuCloudConnector.Client.html">Client</a></li></ul><h3>Global</h3><ul><li><a href="global.html#request">request</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="niuCloudConnector.html">niuCloudConnector</a></li></ul><h3>Classes</h3><ul><li><a href="niuCloudConnector.Client.html">Client</a></li></ul><h3>Global</h3><ul><li><a href="global.html#request">request</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.1</a> on Thu May 16 2019 23:14:35 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.1</a> on Mon May 27 2019 21:15:29 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

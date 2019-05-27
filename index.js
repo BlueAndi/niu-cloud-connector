@@ -323,7 +323,10 @@ niuCloudConnector.Client.prototype._makeRequest = function(options) {
     });
 };
 
-/* ---------- /motoinfo/ --------- */
+/* ------------------------------- */
+/* ---------- Motor Info --------- */
+/* ---------- /motoinfo  --------- */
+/* ------------------------------- */
 
 /**
  * @typedef {Promise} Vehicles
@@ -539,7 +542,10 @@ niuCloudConnector.Client.prototype.getTrackDetail = function(options) {
     });
 };
 
+/* ------------------------------------ */
+/* ---------- Motor Data     ---------- */
 /* ---------- /v3/motor_data ---------- */
+/* ------------------------------------ */
 
 /**
  * @typedef {Object} CompartmentBatteryInfo
@@ -805,6 +811,61 @@ niuCloudConnector.Client.prototype.getTracks = function(options) {
             sn: options.sn,
             index: options.index,
             pagesize: options.pageSize
+        }
+    });
+};
+
+/* -------------------------------------------- */
+/* --------- Motor Over The Air update -------- */
+/* --------- /motorota                 -------- */
+/* -------------------------------------------- */
+
+/**
+ * @typedef {Promise} FirmwareVersion
+ * @property {niuCloudConnector.Client} client      - Client
+ * @property {Object}   result                      - Received response
+ * @property {Object[]} result.data                 - Response data
+ * @property {string}   result.data.nowVersion      - Current version
+ * @property {string}   result.data.version         - Current version
+ * @property {string}   result.data.hardVersion     - Current hard version
+ * @property {number}   result.data.ss_protocol_ver - ?
+ * @property {string}   result.data.byteSize        - Byte size
+ * @property {number}   result.data.date            - Date
+ * @property {boolean}  result.data.isSupportUpdate - Is the update mechanism supported?
+ * @property {boolean}  result.data.needUpdate      - Is update necessary?
+ * @property {string}   result.data.otaDescribe     - Over the air update description
+ * @property {string}   result.desc                 - Response status description
+ * @property {string}   result.trace                - For debug purposes
+ * @property {number}   result.status               - Response status number
+ */
+
+/**
+ * Get firmware version.
+ * 
+ * @param {Object}  options             - Options.
+ * @param {string}  options.sn          - Vehicle serial number.
+ * 
+ * @returns {FirmwareVersion} Firmware version.
+ */
+niuCloudConnector.Client.prototype.getFirmwareVersion = function(options) {
+    var funcName = "getTracks()";
+
+    if (0 === this._token.length) {
+        return Promise.reject(this._error("No valid token available.", funcName));
+    }
+
+    if ("object" !== typeof options) {
+        return Promise.reject(this._error("Options is missing.", funcName));
+    }
+
+    if ("string" !== typeof options.sn) {
+        return Promise.reject(this._error("Vehicle serial number is missing.", funcName));
+    }
+
+    return this._makeRequest({
+        path: "/motorota/getfirmwareversion",
+        postData: {
+            sn: options.sn
         }
     });
 };
