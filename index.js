@@ -869,3 +869,47 @@ niuCloudConnector.Client.prototype.getFirmwareVersion = function(options) {
         }
     });
 };
+
+/**
+ * @typedef {Promise} UpdateInfo
+ * @property {niuCloudConnector.Client} client          - Client
+ * @property {Object}   result                          - Received response
+ * @property {Object[]} result.data                     - Response data
+ * @property {number}   result.data.csq                 - ?
+ * @property {string}   result.data.centreCtrlBattery   - Centre control battery
+ * @property {number}   result.data.date                - Current hard version
+ * @property {string}   result.desc                     - Response status description
+ * @property {string}   result.trace                    - For debug purposes
+ * @property {number}   result.status                   - Response status number
+ */
+
+/**
+ * Get firmware version.
+ * 
+ * @param {Object}  options             - Options.
+ * @param {string}  options.sn          - Vehicle serial number.
+ * 
+ * @returns {UpdateInfo} Update information.
+ */
+niuCloudConnector.Client.prototype.getUpdateInfo = function(options) {
+    var funcName = "getTracks()";
+
+    if (0 === this._token.length) {
+        return Promise.reject(this._error("No valid token available.", funcName));
+    }
+
+    if ("object" !== typeof options) {
+        return Promise.reject(this._error("Options is missing.", funcName));
+    }
+
+    if ("string" !== typeof options.sn) {
+        return Promise.reject(this._error("Vehicle serial number is missing.", funcName));
+    }
+
+    return this._makeRequest({
+        path: "/motorota/getupdateinfo",
+        postData: {
+            sn: options.sn
+        }
+    });
+};

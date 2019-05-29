@@ -45,6 +45,8 @@
 <dd></dd>
 <dt><a href="#FirmwareVersion">FirmwareVersion</a> : <code>Promise</code></dt>
 <dd></dd>
+<dt><a href="#UpdateInfo">UpdateInfo</a> : <code>Promise</code></dt>
+<dd></dd>
 </dl>
 
 <a name="request"></a>
@@ -75,6 +77,7 @@ NIU cloud connector
         * [.getMotorInfo(options)](#niuCloudConnector.Client+getMotorInfo) ⇒ [<code>MotorData</code>](#MotorData)
         * [.getTracks(options)](#niuCloudConnector.Client+getTracks) ⇒ [<code>Tracks</code>](#Tracks)
         * [.getFirmwareVersion(options)](#niuCloudConnector.Client+getFirmwareVersion) ⇒ [<code>FirmwareVersion</code>](#FirmwareVersion)
+        * [.getUpdateInfo(options)](#niuCloudConnector.Client+getUpdateInfo) ⇒ [<code>UpdateInfo</code>](#UpdateInfo)
     * [.AccountBaseUrl](#niuCloudConnector.AccountBaseUrl)
     * [.AppApiBaseUrl](#niuCloudConnector.AppApiBaseUrl)
 
@@ -97,6 +100,7 @@ NIU cloud connector
     * [.getMotorInfo(options)](#niuCloudConnector.Client+getMotorInfo) ⇒ [<code>MotorData</code>](#MotorData)
     * [.getTracks(options)](#niuCloudConnector.Client+getTracks) ⇒ [<code>Tracks</code>](#Tracks)
     * [.getFirmwareVersion(options)](#niuCloudConnector.Client+getFirmwareVersion) ⇒ [<code>FirmwareVersion</code>](#FirmwareVersion)
+    * [.getUpdateInfo(options)](#niuCloudConnector.Client+getUpdateInfo) ⇒ [<code>UpdateInfo</code>](#UpdateInfo)
 
 <a name="new_niuCloudConnector.Client_new"></a>
 
@@ -246,6 +250,19 @@ Get firmware version.
 
 **Kind**: instance method of [<code>Client</code>](#niuCloudConnector.Client)  
 **Returns**: [<code>FirmwareVersion</code>](#FirmwareVersion) - Firmware version.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>Object</code> | Options. |
+| options.sn | <code>string</code> | Vehicle serial number. |
+
+<a name="niuCloudConnector.Client+getUpdateInfo"></a>
+
+#### client.getUpdateInfo(options) ⇒ [<code>UpdateInfo</code>](#UpdateInfo)
+Get firmware version.
+
+**Kind**: instance method of [<code>Client</code>](#niuCloudConnector.Client)  
+**Returns**: [<code>UpdateInfo</code>](#UpdateInfo) - Update information.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -592,6 +609,24 @@ URL to the NIU app API.
 | result.data.isSupportUpdate | <code>boolean</code> | Is the update mechanism supported? |
 | result.data.needUpdate | <code>boolean</code> | Is update necessary? |
 | result.data.otaDescribe | <code>string</code> | Over the air update description |
+| result.desc | <code>string</code> | Response status description |
+| result.trace | <code>string</code> | For debug purposes |
+| result.status | <code>number</code> | Response status number |
+
+<a name="UpdateInfo"></a>
+
+## UpdateInfo : <code>Promise</code>
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
+| result | <code>Object</code> | Received response |
+| result.data | <code>Array.&lt;Object&gt;</code> | Response data |
+| result.data.csq | <code>number</code> | ? |
+| result.data.centreCtrlBattery | <code>string</code> | Centre control battery |
+| result.data.date | <code>number</code> | Current hard version |
 | result.desc | <code>string</code> | Response status description |
 | result.trace | <code>string</code> | For debug purposes |
 | result.status | <code>number</code> | Response status number |
