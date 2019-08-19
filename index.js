@@ -728,7 +728,7 @@ niuCloudConnector.Client.prototype.getBatteryChart = function(options) {
     }
 
     return this._makeRequest({
-        path: "/v3/motor_data/battery_chart/?sn=" + options.sn + "&bmsId=" + options.bmsId + "&page=" + options.page + "&page_size=" + options.pageSize + "&pageLength=" & options.pageLength
+        path: "/v3/motor_data/battery_chart/?sn=" + options.sn + "&bmsId=" + options.bmsId + "&page=" + options.page + "&page_size=" + options.pageSize + "&pageLength=" + options.pageLength
     });
 };
 
