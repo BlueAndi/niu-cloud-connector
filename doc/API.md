@@ -233,8 +233,8 @@ Get battery chart data.
 | --- | --- | --- |
 | options | <code>Object</code> | Options. |
 | options.sn | <code>string</code> | Vehicle serial number. |
-| options.bmsId | <code>number</code> | Selects the battery (2: Battery B / 3: Battery A). |
-| options.page | <code>number</code> | The page number selects the data. If pageLength is 1, start with page 0. If pageLength is 2, start with page 1 (results in data for page 0 and 1). |
+| options.bmsId | <code>number</code> | Selects the battery (1: Battery A / 2: Battery B / 3: Battery ???). |
+| options.page | <code>number</code> | The page number selects the data. Start always with 1. |
 | options.pageSize | <code>string</code> | 'A' or 'B'. Using 'B' instead of 'A' results in getting more data at once. |
 | options.pageLength | <code>number</code> | [1; 2]. Controls whether the result contains a second array of data. |
 
