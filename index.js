@@ -689,10 +689,10 @@ niuCloudConnector.Client.prototype.getBatteryHealth = function(options) {
  * 
  * @param {Object}  options             - Options.
  * @param {string}  options.sn          - Vehicle serial number.
- * @param {string}  options.bmsId       - Selects the battery (2: Battery B / 3: Battery A).
- * @param {string}  options.page        - The page number selects the data. If pageLength is 1, start with page 0. If pageLength is 2, start with page 1 (results in data for page 0 and 1).
+ * @param {number}  options.bmsId       - Selects the battery (2: Battery B / 3: Battery A).
+ * @param {number}  options.page        - The page number selects the data. If pageLength is 1, start with page 0. If pageLength is 2, start with page 1 (results in data for page 0 and 1).
  * @param {string}  options.pageSize    - 'A' or 'B'. Using 'B' instead of 'A' results in getting more data at once.
- * @param {string}  options.pageLength  - [1; 2]. Controls whether the result contains a second array of data.
+ * @param {number}  options.pageLength  - [1; 2]. Controls whether the result contains a second array of data.
  * 
  * @returns {BatteryChart} Battery chart information.
  */
@@ -711,11 +711,11 @@ niuCloudConnector.Client.prototype.getBatteryChart = function(options) {
         return Promise.reject(this._error("Vehicle serial number is missing.", funcName));
     }
 
-    if ("string" !== typeof options.bmsId) {
+    if ("number" !== typeof options.bmsId) {
         return Promise.reject(this._error("BMS id is missing.", funcName));
     }
 
-    if ("string" !== typeof options.page) {
+    if ("number" !== typeof options.page) {
         return Promise.reject(this._error("Page is missing.", funcName));
     }
 
@@ -723,7 +723,7 @@ niuCloudConnector.Client.prototype.getBatteryChart = function(options) {
         return Promise.reject(this._error("Page size is missing.", funcName));
     }
 
-    if ("string" !== typeof options.pageLength) {
+    if ("number" !== typeof options.pageLength) {
         return Promise.reject(this._error("Page length is missing.", funcName));
     }
 

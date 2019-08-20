@@ -37,6 +37,10 @@
 <dd></dd>
 <dt><a href="#BatteryInfoHealth">BatteryInfoHealth</a> : <code>Promise</code></dt>
 <dd></dd>
+<dt><a href="#BatteryChartData">BatteryChartData</a> : <code>Object</code></dt>
+<dd></dd>
+<dt><a href="#BatteryChart">BatteryChart</a> : <code>Promise</code></dt>
+<dd></dd>
 <dt><a href="#CompartmentMotorData">CompartmentMotorData</a> : <code>Object</code></dt>
 <dd></dd>
 <dt><a href="#MotorData">MotorData</a> : <code>Promise</code></dt>
@@ -74,6 +78,7 @@ NIU cloud connector
         * [.getTrackDetail(options)](#niuCloudConnector.Client+getTrackDetail) ⇒ [<code>TrackDetail</code>](#TrackDetail)
         * [.getBatteryInfo(options)](#niuCloudConnector.Client+getBatteryInfo) ⇒ [<code>BatteryInfo</code>](#BatteryInfo)
         * [.getBatteryHealth(options)](#niuCloudConnector.Client+getBatteryHealth) ⇒ [<code>BatteryInfoHealth</code>](#BatteryInfoHealth)
+        * [.getBatteryChart(options)](#niuCloudConnector.Client+getBatteryChart) ⇒ [<code>BatteryChart</code>](#BatteryChart)
         * [.getMotorInfo(options)](#niuCloudConnector.Client+getMotorInfo) ⇒ [<code>MotorData</code>](#MotorData)
         * [.getTracks(options)](#niuCloudConnector.Client+getTracks) ⇒ [<code>Tracks</code>](#Tracks)
         * [.getFirmwareVersion(options)](#niuCloudConnector.Client+getFirmwareVersion) ⇒ [<code>FirmwareVersion</code>](#FirmwareVersion)
@@ -97,6 +102,7 @@ NIU cloud connector
     * [.getTrackDetail(options)](#niuCloudConnector.Client+getTrackDetail) ⇒ [<code>TrackDetail</code>](#TrackDetail)
     * [.getBatteryInfo(options)](#niuCloudConnector.Client+getBatteryInfo) ⇒ [<code>BatteryInfo</code>](#BatteryInfo)
     * [.getBatteryHealth(options)](#niuCloudConnector.Client+getBatteryHealth) ⇒ [<code>BatteryInfoHealth</code>](#BatteryInfoHealth)
+    * [.getBatteryChart(options)](#niuCloudConnector.Client+getBatteryChart) ⇒ [<code>BatteryChart</code>](#BatteryChart)
     * [.getMotorInfo(options)](#niuCloudConnector.Client+getMotorInfo) ⇒ [<code>MotorData</code>](#MotorData)
     * [.getTracks(options)](#niuCloudConnector.Client+getTracks) ⇒ [<code>Tracks</code>](#Tracks)
     * [.getFirmwareVersion(options)](#niuCloudConnector.Client+getFirmwareVersion) ⇒ [<code>FirmwareVersion</code>](#FirmwareVersion)
@@ -214,6 +220,23 @@ Get battery health of vehicle.
 | --- | --- | --- |
 | options | <code>Object</code> | Options. |
 | options.sn | <code>string</code> | Vehicle serial number. |
+
+<a name="niuCloudConnector.Client+getBatteryChart"></a>
+
+#### client.getBatteryChart(options) ⇒ [<code>BatteryChart</code>](#BatteryChart)
+Get battery chart data.
+
+**Kind**: instance method of [<code>Client</code>](#niuCloudConnector.Client)  
+**Returns**: [<code>BatteryChart</code>](#BatteryChart) - Battery chart information.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>Object</code> | Options. |
+| options.sn | <code>string</code> | Vehicle serial number. |
+| options.bmsId | <code>number</code> | Selects the battery (2: Battery B / 3: Battery A). |
+| options.page | <code>number</code> | The page number selects the data. If pageLength is 1, start with page 0. If pageLength is 2, start with page 1 (results in data for page 0 and 1). |
+| options.pageSize | <code>string</code> | 'A' or 'B'. Using 'B' instead of 'A' results in getting more data at once. |
+| options.pageLength | <code>number</code> | [1; 2]. Controls whether the result contains a second array of data. |
 
 <a name="niuCloudConnector.Client+getMotorInfo"></a>
 
@@ -490,6 +513,35 @@ URL to the NIU app API.
 | result.data.batteries | <code>Object</code> | Batteries |
 | result.data.batteries.compartmentA | [<code>CompartmentBatteryInfoHealth</code>](#CompartmentBatteryInfoHealth) | Battery compartment A |
 | [result.data.batteries.compartmentB] | [<code>CompartmentBatteryInfoHealth</code>](#CompartmentBatteryInfoHealth) | Battery compratment B |
+| result.data.isDoubleBattery | <code>boolean</code> | Vehicle has one or two batteries |
+| result.desc | <code>string</code> | Response status description |
+| result.trace | <code>string</code> | For debug purposes |
+| result.status | <code>number</code> | Response status number |
+
+<a name="BatteryChartData"></a>
+
+## BatteryChartData : <code>Object</code>
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| m | <code>string</code> | Mileage in km |
+| b | <code>string</code> | Battery SOC in percent |
+
+<a name="BatteryChart"></a>
+
+## BatteryChart : <code>Promise</code>
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
+| result | <code>Object</code> | Received response |
+| result.data | <code>Object</code> | Response data |
+| result.data.items1 | [<code>BatteryChartData</code>](#BatteryChartData) | Battery data 1 |
+| [result.data.items2] | [<code>BatteryChartData</code>](#BatteryChartData) | Battery data 2 |
 | result.data.isDoubleBattery | <code>boolean</code> | Vehicle has one or two batteries |
 | result.desc | <code>string</code> | Response status description |
 | result.trace | <code>string</code> | For debug purposes |
