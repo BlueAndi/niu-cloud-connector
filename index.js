@@ -35,12 +35,12 @@ module.exports = niuCloudConnector;
 /**
  * URL to NIU login, used for retrieving an access token.
  */
-niuCloudConnector.AccountBaseUrl    = "https://account.niu.com";
+niuCloudConnector.AccountBaseUrl    = "https://account-fk.niu.com";
 
 /**
  * URL to the NIU app API.
  */
-niuCloudConnector.AppApiBaseUrl     = "https://app-api.niu.com";
+niuCloudConnector.AppApiBaseUrl     = "https://app-api-fk.niu.com";
 
 /**
  * NIU cloud connector client.
