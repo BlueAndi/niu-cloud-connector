@@ -29,6 +29,7 @@ If you search for a command line interface to use it for some script, take a loo
 
 * [niu_api_service.rb](https://gist.github.com/saschagehlich/36d3584ea3812e59abdb9a2de05b9be0) (Ruby on Rails) from Sascha Gehlich.
 * [NIU-API](https://github.com/volkerschulz/NIU-API) (PHP) from Volker Schulz.
+* [Web-App](https://github.com/aleixpellicer/niu) (PHP) from Aleix Pellicer. See [article in the Elektroroller-Forum](https://www.elektroroller-forum.de/viewtopic.php?f=63&t=9843) [German].
 
 ## Issues, Ideas and bugs
 
