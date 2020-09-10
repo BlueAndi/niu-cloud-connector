@@ -22,7 +22,7 @@
  */
 
 /** Simplified http client */
-var request = require("request");
+var got = require("got");
 
 /**
  * NIU cloud connector
@@ -166,56 +166,31 @@ niuCloudConnector.Client.prototype.createSessionToken = function(options) {
         return Promise.reject(this._error("Country code is missing.", funcName));
     }
 
-    return new Promise(function(resolve, reject) {
+    return got(niuCloudConnector.AccountBaseUrl + "/appv2/login", {
+        method: "POST",
+        json: options,
+        responseType: "json"
+    }).then(function(result) {
 
-        request({
-            method: "POST",
-            url: niuCloudConnector.AccountBaseUrl + "/appv2/login",
-            form: options,
-            json: true
-        }, function(error, response, body) {
+        if (200 !== result.statusCode) {
+            return Promise.reject(_this._error("Bad request.", funcName));
+        }
 
-            /* Check for any error */
-            if (null !== error) {
-                reject(_this._error(error, funcName));
-            } else if ("object" !== typeof response) {
-                reject(_this._error("Invalid response.", funcName));
-            } else if ("number" !== typeof response.statusCode) {
-                reject(_this._error("Status code is missing.", funcName));
-            } else if (200 != response.statusCode) {
-                reject(_this._error("Bad request.", funcName));
-            } else {
+        if (("number" === typeof result.body.status) &&
+            (0 !== result.body.status)) {
+            return Promise.reject(_this._error("Invalid login data.", funcName));
+        }
 
-                /* Response successful received.
-                 * Check body now.
-                 */
+        if (0 === result.body.data.token.length) {
+            return Promise.reject(_this._error("Token is empty in response.", funcName));
+        }
+        
+        _this._token = result.body.data.token;
 
-                if ("object" !== typeof body) {
-                    reject(_this._error("No body received.", funcName));
-                } else if (("number" === typeof body.status) &&
-                           (0 !== body.status)) {
-                    reject(_this._error("Invalid login data.", funcName));
-                } else if ("object" !== typeof body.data) {
-                    reject(_this._error("Data is missing in response.", funcName));
-                } else if ("string" !== typeof body.data.token) {
-                    reject(_this._error("Token is missing in response.", funcName));
-                } else if (0 === body.data.token.length) {
-                    reject(_this._error("Token is empty in response.", funcName));
-                } else {
-                    /* Successful response with valid content received. */
-
-                    _this._token = body.data.token;
-
-                    resolve({
-                        client: _this,
-                        result: body.data.token
-                    });
-                }
-            }
-
-            return;
+        return Promise.resolve({
+            client: _this,
+            result: result.body.data.token
         });
-
     });
 };
 
@@ -260,7 +235,14 @@ niuCloudConnector.Client.prototype.setSessionToken = function(options) {
 niuCloudConnector.Client.prototype._makeRequest = function(options) {
     var funcName    = "_makeRequest()";
     var _this       = this;
-    var reqData     = null;
+    var reqOptions  = {
+        method: "GET",
+        headers: {
+            "accept-language": "en-US",
+            "token": _this._token
+        },
+        responseType: "json"
+    };
     
     if ("object" !== typeof options) {
         return Promise.reject(this._error("Options is missing.", funcName));
@@ -270,56 +252,16 @@ niuCloudConnector.Client.prototype._makeRequest = function(options) {
         return Promise.reject(this._error("Path is missing.", funcName));
     }
 
-    reqData = {
-        method: "GET",
-        url: niuCloudConnector.AppApiBaseUrl + options.path,
-        headers: {
-            "accept-language": "en-US",
-            "token": _this._token
-        },
-        json: true
-    };
-
     if ("object" === typeof options.postData) {
-        reqData.method  = "POST";
-        reqData.form    = options.postData;
+        reqOptions.method  = "POST";
+        reqOptions.json    = options.postData;
     }
 
-    return new Promise(function(resolve, reject) {
-
-        request(reqData, function(error, response, body) {
-
-            /* Check for any error */
-            if (null !== error) {
-                reject(_this._error(error, funcName));
-            } else if ("object" !== typeof response) {
-                reject(_this._error("Unknown error.", funcName));
-            } else if ("number" !== typeof response.statusCode) {
-                reject(_this._error("Status code is missing.", funcName));
-            } else if (200 != response.statusCode) {
-                reject(_this._error("Bad request: " + response.statusCode, funcName));
-            } else {
-
-                /* Response successful received.
-                 * Check body now.
-                 */
-
-                if ("object" !== typeof body) {
-                    reject(_this._error("No body received.", funcName));
-                } else if (("number" === typeof body.status) &&
-                           (0 !== body.status)) {
-                    reject(_this._error(body, funcName));
-                } else {
-                    resolve({
-                        client: _this,
-                        result: body
-                    });
-                }
-            }
-
-            return;
+    return got(niuCloudConnector.AppApiBaseUrl + options.path, reqOptions).then(function(result) {
+        return Promise.resolve({
+            client: _this,
+            result: result.body
         });
-
     });
 };
 
