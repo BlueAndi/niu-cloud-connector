@@ -1,7 +1,7 @@
 ## Members
 
 <dl>
-<dt><a href="#request">request</a></dt>
+<dt><a href="#got">got</a></dt>
 <dd><p>Simplified http client</p>
 </dd>
 </dl>
@@ -53,9 +53,9 @@
 <dd></dd>
 </dl>
 
-<a name="request"></a>
+<a name="got"></a>
 
-## request
+## got
 Simplified http client
 
 **Kind**: global variable  
@@ -70,6 +70,8 @@ NIU cloud connector
     * [.Client](#niuCloudConnector.Client)
         * [new niuCloudConnector.Client()](#new_niuCloudConnector.Client_new)
         * [._token](#niuCloudConnector.Client+_token)
+        * [._acceptedLanguage](#niuCloudConnector.Client+_acceptedLanguage)
+        * [._userAgent](#niuCloudConnector.Client+_userAgent)
         * [.createSessionToken(options)](#niuCloudConnector.Client+createSessionToken) ⇒ [<code>Token</code>](#Token)
         * [.setSessionToken(options)](#niuCloudConnector.Client+setSessionToken) ⇒ <code>Promise</code>
         * [.getVehicles()](#niuCloudConnector.Client+getVehicles) ⇒ [<code>Vehicles</code>](#Vehicles)
@@ -94,6 +96,8 @@ NIU cloud connector
 * [.Client](#niuCloudConnector.Client)
     * [new niuCloudConnector.Client()](#new_niuCloudConnector.Client_new)
     * [._token](#niuCloudConnector.Client+_token)
+    * [._acceptedLanguage](#niuCloudConnector.Client+_acceptedLanguage)
+    * [._userAgent](#niuCloudConnector.Client+_userAgent)
     * [.createSessionToken(options)](#niuCloudConnector.Client+createSessionToken) ⇒ [<code>Token</code>](#Token)
     * [.setSessionToken(options)](#niuCloudConnector.Client+setSessionToken) ⇒ <code>Promise</code>
     * [.getVehicles()](#niuCloudConnector.Client+getVehicles) ⇒ [<code>Vehicles</code>](#Vehicles)
@@ -117,6 +121,18 @@ NIU cloud connector client.
 
 #### client.\_token
 Session token
+
+**Kind**: instance property of [<code>Client</code>](#niuCloudConnector.Client)  
+<a name="niuCloudConnector.Client+_acceptedLanguage"></a>
+
+#### client.\_acceptedLanguage
+Accepted language, used in HTTP request header.
+
+**Kind**: instance property of [<code>Client</code>](#niuCloudConnector.Client)  
+<a name="niuCloudConnector.Client+_userAgent"></a>
+
+#### client.\_userAgent
+User agent, used in HTTP request header.
 
 **Kind**: instance property of [<code>Client</code>](#niuCloudConnector.Client)  
 <a name="niuCloudConnector.Client+createSessionToken"></a>
@@ -336,7 +352,7 @@ URL to the NIU app API.
 | --- | --- | --- |
 | client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
 | result | <code>Object</code> | Received response |
-| result.data | <code>Array.&lt;Object&gt;</code> | Response data |
+| result.data | <code>[ &#x27;Array&#x27; ].&lt;Object&gt;</code> | Response data |
 | result.data.sn | <code>string</code> | Vehicle serial number |
 | result.data.specialEdition | <code>string</code> | ? |
 | result.data.vehicleColorImg | <code>string</code> | URL to vehicle color image |
@@ -363,7 +379,7 @@ URL to the NIU app API.
 | result.data.process | <code>string</code> | ? |
 | result.data.brand | <code>string</code> | ? |
 | result.data.isDoubleBattery | <code>boolean</code> | Vehicle has one or two batteries |
-| result.data.features | <code>Array.&lt;Object&gt;</code> | List of features |
+| result.data.features | <code>[ &#x27;Array&#x27; ].&lt;Object&gt;</code> | List of features |
 | result.data.features.featureName | <code>string</code> | Feature name |
 | result.data.features.isSupport | <code>boolean</code> | ? |
 | result.data.features.switch_status | <code>string</code> | ? |
@@ -420,7 +436,7 @@ URL to the NIU app API.
 | client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
 | result | <code>Object</code> | Received response |
 | result.data | <code>Object</code> | Response data |
-| result.data.trackItems | <code>Array.&lt;Object&gt;</code> | Track items (end point at index 0) |
+| result.data.trackItems | <code>[ &#x27;Array&#x27; ].&lt;Object&gt;</code> | Track items (end point at index 0) |
 | result.data.trackItems.lng | <code>number</code> | Longitude in decimal degree (WGS 84) |
 | result.data.trackItems.lat | <code>number</code> | Latitude in decimal degree (WGS 84) |
 | result.data.trackItems.date | <code>number</code> | Date in unix timestamp epoch format (13 digits) |
@@ -444,7 +460,7 @@ URL to the NIU app API.
 
 | Name | Type | Description |
 | --- | --- | --- |
-| items | <code>Array.&lt;Object&gt;</code> | ? |
+| items | <code>[ &#x27;Array&#x27; ].&lt;Object&gt;</code> | ? |
 | items.x | <code>number</code> | ? |
 | items.y | <code>number</code> | ? |
 | items.z | <code>number</code> | ? |
@@ -491,8 +507,8 @@ URL to the NIU app API.
 | bmsId | <code>string</code> | Battery management system identification number |
 | isConnected | <code>boolean</code> | Is connected or not |
 | gradeBattery | <code>string</code> | Battery grade points |
-| faults | <code>Array.&lt;Object&gt;</code> | List of faults |
-| healthRecords | <code>Array.&lt;Object&gt;</code> | List of health records |
+| faults | <code>[ &#x27;Array&#x27; ].&lt;Object&gt;</code> | List of faults |
+| healthRecords | <code>[ &#x27;Array&#x27; ].&lt;Object&gt;</code> | List of health records |
 | healthRecords.result | <code>string</code> | Battery lost grade points |
 | healthRecords.chargeCount | <code>string</code> | Charging cycles |
 | healthRecords.color | <code>string</code> | HTML color in #RGB format |
@@ -613,7 +629,7 @@ URL to the NIU app API.
 | --- | --- | --- |
 | client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
 | result | <code>Object</code> | Received response |
-| result.data | <code>Array.&lt;Object&gt;</code> | Response data |
+| result.data | <code>[ &#x27;Array&#x27; ].&lt;Object&gt;</code> | Response data |
 | result.data.id | <code>string</code> | Identification number |
 | result.data.trackId | <code>string</code> | Track identification number |
 | result.data.startTime | <code>number</code> | Start time in unix timestamp epoch format (13 digits) |
@@ -651,7 +667,7 @@ URL to the NIU app API.
 | --- | --- | --- |
 | client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
 | result | <code>Object</code> | Received response |
-| result.data | <code>Array.&lt;Object&gt;</code> | Response data |
+| result.data | <code>[ &#x27;Array&#x27; ].&lt;Object&gt;</code> | Response data |
 | result.data.nowVersion | <code>string</code> | Current version |
 | result.data.version | <code>string</code> | Current version |
 | result.data.hardVersion | <code>string</code> | Current hard version |
@@ -675,7 +691,7 @@ URL to the NIU app API.
 | --- | --- | --- |
 | client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
 | result | <code>Object</code> | Received response |
-| result.data | <code>Array.&lt;Object&gt;</code> | Response data |
+| result.data | <code>[ &#x27;Array&#x27; ].&lt;Object&gt;</code> | Response data |
 | result.data.csq | <code>number</code> | ? |
 | result.data.centreCtrlBattery | <code>string</code> | Centre control battery |
 | result.data.date | <code>number</code> | Current hard version |

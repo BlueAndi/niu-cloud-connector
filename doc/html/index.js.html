@@ -50,7 +50,7 @@
  */
 
 /** Simplified http client */
-var request = require("request");
+var got = require("got");
 
 /**
  * NIU cloud connector
@@ -63,12 +63,12 @@ module.exports = niuCloudConnector;
 /**
  * URL to NIU login, used for retrieving an access token.
  */
-niuCloudConnector.AccountBaseUrl    = "https://account.niu.com";
+niuCloudConnector.AccountBaseUrl    = "https://account-fk.niu.com";
 
 /**
  * URL to the NIU app API.
  */
-niuCloudConnector.AppApiBaseUrl     = "https://app-api.niu.com";
+niuCloudConnector.AppApiBaseUrl     = "https://app-api-fk.niu.com";
 
 /**
  * NIU cloud connector client.
@@ -79,6 +79,12 @@ niuCloudConnector.Client = function() {
     
     /** Session token */
     this._token = "";
+
+    /** Accepted language, used in HTTP request header. */
+    this._acceptedLanguage = "en-US";
+
+    /** User agent, used in HTTP request header. */
+    this._userAgent = "manager/4.6.2 (iPhone; iOS 14.4; Scale/3.00);deviceName=iPhone;model=iPhone 11 Pro;ostype=iOS;clientIdentifier=Overseas";
 };
 
 /**
@@ -194,56 +200,31 @@ niuCloudConnector.Client.prototype.createSessionToken = function(options) {
         return Promise.reject(this._error("Country code is missing.", funcName));
     }
 
-    return new Promise(function(resolve, reject) {
+    return got(niuCloudConnector.AccountBaseUrl + "/appv2/login", {
+        method: "POST",
+        json: options,
+        responseType: "json"
+    }).then(function(result) {
 
-        request({
-            method: "POST",
-            url: niuCloudConnector.AccountBaseUrl + "/appv2/login",
-            form: options,
-            json: true
-        }, function(error, response, body) {
+        if (200 !== result.statusCode) {
+            return Promise.reject(_this._error("Bad request.", funcName));
+        }
 
-            /* Check for any error */
-            if (null !== error) {
-                reject(_this._error(error, funcName));
-            } else if ("object" !== typeof response) {
-                reject(_this._error("Invalid response.", funcName));
-            } else if ("number" !== typeof response.statusCode) {
-                reject(_this._error("Status code is missing.", funcName));
-            } else if (200 != response.statusCode) {
-                reject(_this._error("Bad request.", funcName));
-            } else {
+        if (("number" === typeof result.body.status) &amp;&amp;
+            (0 !== result.body.status)) {
+            return Promise.reject(_this._error("Invalid login data.", funcName));
+        }
 
-                /* Response successful received.
-                 * Check body now.
-                 */
+        if (0 === result.body.data.token.length) {
+            return Promise.reject(_this._error("Token is empty in response.", funcName));
+        }
+        
+        _this._token = result.body.data.token;
 
-                if ("object" !== typeof body) {
-                    reject(_this._error("No body received.", funcName));
-                } else if (("number" === typeof body.status) &amp;&amp;
-                           (0 !== body.status)) {
-                    reject(_this._error("Invalid login data.", funcName));
-                } else if ("object" !== typeof body.data) {
-                    reject(_this._error("Data is missing in response.", funcName));
-                } else if ("string" !== typeof body.data.token) {
-                    reject(_this._error("Token is missing in response.", funcName));
-                } else if (0 === body.data.token.length) {
-                    reject(_this._error("Token is empty in response.", funcName));
-                } else {
-                    /* Successful response with valid content received. */
-
-                    _this._token = body.data.token;
-
-                    resolve({
-                        client: _this,
-                        result: body.data.token
-                    });
-                }
-            }
-
-            return;
+        return Promise.resolve({
+            client: _this,
+            result: result.body.data.token
         });
-
     });
 };
 
@@ -275,79 +256,101 @@ niuCloudConnector.Client.prototype.setSessionToken = function(options) {
 };
 
 /**
- * Make specific http/https request. Default is a GET request.
- * For a POST request, add postData to the options.
+ * Make a HTTP request.
+ * Note, the response will always be in JSON format.
  * 
  * @private
  * 
  * @param {Object}  options             - Options.
- * @param {Object}  [options.postData]  - If available, a POST request will be executed.
+ * @param {string}  options.method      - HTTP method ("GET", "POST", etc.).
+ * @param {string}  options.path        - The path is the relative request URI, which will be appended to the base URI.
+ * @param {Object}  [options.headers]   - HTTP request headers.
+ * @param {Object}  [options.data]      - HTTP body data.
  * 
  * @returns {Promise} Requested data.
  */
 niuCloudConnector.Client.prototype._makeRequest = function(options) {
     var funcName    = "_makeRequest()";
     var _this       = this;
-    var reqData     = null;
+    var reqOptions  = {
+        method: "",
+        headers: null,
+        responseType: "json"
+    };
     
     if ("object" !== typeof options) {
         return Promise.reject(this._error("Options is missing.", funcName));
+    }
+
+    if ("string" !== typeof options.method) {
+        return Promise.reject(this._error("HTTP method is missing.", funcName));
     }
 
     if ("string" !== typeof options.path) {
         return Promise.reject(this._error("Path is missing.", funcName));
     }
 
-    reqData = {
-        method: "GET",
-        url: niuCloudConnector.AppApiBaseUrl + options.path,
-        headers: {
-            "accept-language": "en-US",
-            "token": _this._token
-        },
-        json: true
-    };
+    reqOptions.method   = options.method;
+    reqOptions.path     = options.path;
 
-    if ("object" === typeof options.postData) {
-        reqData.method  = "POST";
-        reqData.form    = options.postData;
+    if ("object" === typeof options.headers) {
+        reqOptions.headers = options.headers;
     }
 
-    return new Promise(function(resolve, reject) {
+    if ("object" === typeof options.data) {
+        reqOptions.json    = options.data;
+    }
 
-        request(reqData, function(error, response, body) {
+    return got(niuCloudConnector.AppApiBaseUrl + options.path, reqOptions).then(function(result) {
+        var description = "";
 
-            /* Check for any error */
-            if (null !== error) {
-                reject(_this._error(error, funcName));
-            } else if ("object" !== typeof response) {
-                reject(_this._error("Unknown error.", funcName));
-            } else if ("number" !== typeof response.statusCode) {
-                reject(_this._error("Status code is missing.", funcName));
-            } else if (200 != response.statusCode) {
-                reject(_this._error("Bad request: " + response.statusCode, funcName));
-            } else {
+        if (200 !== result.statusCode) {
+            return Promise.reject(_this._error("Bad request.", funcName));
+        }
 
-                /* Response successful received.
-                 * Check body now.
-                 */
+        /* Any error?
+         * See com.niu.cloud.o.w.j.a()
+         */
+        if ((   0 !== result.body.status) &amp;&amp;
+            ( 200 !== result.body.status) &amp;&amp;
+            (1325 !== result.body.status) &amp;&amp;
+            (1327 !== result.body.status)) {
 
-                if ("object" !== typeof body) {
-                    reject(_this._error("No body received.", funcName));
-                } else if (("number" === typeof body.status) &amp;&amp;
-                           (0 !== body.status)) {
-                    reject(_this._error(body, funcName));
+            if ("string" === typeof result.body.desc) {
+
+                if (0 === description.length) {
+    
+                    if ("string" === typeof result.body.message) {
+    
+                        description = result.body.message;
+                    }
                 } else {
-                    resolve({
-                        client: _this,
-                        result: body
-                    });
+                    
+                    description = result.body.desc;
+                }
+            }
+    
+            if (0 === description.length) {
+    
+                if ("string" === typeof result.body.trace) {
+    
+                    description = result.body.trace;
+                } else if ("object" === typeof result.body.trace) {
+    
+                    if ("string" === typeof result.body.trace.message) {
+    
+                        description = result.body.trace.message;
+                    }
                 }
             }
 
-            return;
-        });
+            return Promise.reject(_this._error(description, funcName));
+        }
 
+        return Promise.resolve({
+            client: _this,
+            result: result.body.data
+        });
     });
 };
 
@@ -410,8 +413,13 @@ niuCloudConnector.Client.prototype.getVehicles = function() {
     }
 
     return this._makeRequest({
+        method: "POST",
         path: "/motoinfo/list",
-        postData: {}
+        headers: {
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
+        }
     });
 };
 
@@ -454,8 +462,14 @@ niuCloudConnector.Client.prototype.getVehiclePos = function(options) {
     }
 
     return this._makeRequest({
+        method: "POST",
         path: "/motoinfo/currentpos",
-        postData: {
+        headers: {
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
+        },
+        data: {
             sn: options.sn
         }
     });
@@ -498,8 +512,14 @@ niuCloudConnector.Client.prototype.getOverallTally = function(options) {
     }
 
     return this._makeRequest({
+        method: "POST",
         path: "/motoinfo/overallTally",
-        postData: {
+        headers: {
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
+        },
+        data: {
             sn: options.sn
         }
     });
@@ -561,11 +581,18 @@ niuCloudConnector.Client.prototype.getTrackDetail = function(options) {
     }
 
     return this._makeRequest({
-        path: "/motoinfo/track/detail",
-        postData: {
+        method: "POST",
+        path: "/v5/track/detail",
+        headers: {
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
+        },
+        data: {
             sn: options.sn,
             trackId: options.trackId,
-            date: options.trackDate
+            date: options.trackDate,
+            token: this._token
         }
     });
 };
@@ -633,7 +660,13 @@ niuCloudConnector.Client.prototype.getBatteryInfo = function(options) {
     }
 
     return this._makeRequest({
-        path: "/v3/motor_data/battery_info?sn=" + options.sn
+        method: "GET",
+        path: "/v3/motor_data/battery_info?sn=" + options.sn,
+        headers: {
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
+        }
     });
 };
 
@@ -689,7 +722,13 @@ niuCloudConnector.Client.prototype.getBatteryHealth = function(options) {
     }
 
     return this._makeRequest({
-        path: "/v3/motor_data/battery_info/health?sn=" + options.sn
+        method: "GET",
+        path: "/v3/motor_data/battery_info/health?sn=" + options.sn,
+        headers: {
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
+        }
     });
 };
 
@@ -756,7 +795,13 @@ niuCloudConnector.Client.prototype.getBatteryChart = function(options) {
     }
 
     return this._makeRequest({
-        path: "/v3/motor_data/battery_chart/?sn=" + options.sn + "&amp;bmsId=" + options.bmsId + "&amp;page=" + options.page + "&amp;page_size=" + options.pageSize + "&amp;pageLength=" + options.pageLength
+        method: "GET",
+        path: "/v3/motor_data/battery_chart/?sn=" + options.sn + "&amp;bmsId=" + options.bmsId + "&amp;page=" + options.page + "&amp;page_size=" + options.pageSize + "&amp;pageLength=" + options.pageLength,
+        headers: {
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
+        }
     });
 };
 
@@ -830,7 +875,13 @@ niuCloudConnector.Client.prototype.getMotorInfo = function(options) {
     }
 
     return this._makeRequest({
-        path: "/v3/motor_data/index_info?sn=" + options.sn
+        method: "GET",
+        path: "/v3/motor_data/index_info?sn=" + options.sn,
+        headers: {
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
+        }
     });
 };
 
@@ -901,11 +952,18 @@ niuCloudConnector.Client.prototype.getTracks = function(options) {
     }
 
     return this._makeRequest({
-        path: "/v3/motor_data/track",
-        postData: {
+        method: "POST",
+        path: "/v5/track/list/v2",
+        headers: {
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
+        },
+        data: {
             sn: options.sn,
-            index: options.index,
-            pagesize: options.pageSize
+            index: options.index.toString(),
+            pagesize: options.pageSize,
+            token: this._token
         }
     });
 };
@@ -958,8 +1016,14 @@ niuCloudConnector.Client.prototype.getFirmwareVersion = function(options) {
     }
 
     return this._makeRequest({
+        method: "POST",
         path: "/motorota/getfirmwareversion",
-        postData: {
+        headers: {
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
+        },
+        data: {
             sn: options.sn
         }
     });
@@ -1002,8 +1066,14 @@ niuCloudConnector.Client.prototype.getUpdateInfo = function(options) {
     }
 
     return this._makeRequest({
+        method: "POST",
         path: "/motorota/getupdateinfo",
-        postData: {
+        headers: {
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
+        },
+        data: {
             sn: options.sn
         }
     });
@@ -1018,13 +1088,13 @@ niuCloudConnector.Client.prototype.getUpdateInfo = function(options) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="niuCloudConnector.html">niuCloudConnector</a></li></ul><h3>Classes</h3><ul><li><a href="niuCloudConnector.Client.html">Client</a></li></ul><h3>Global</h3><ul><li><a href="global.html#request">request</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="niuCloudConnector.html">niuCloudConnector</a></li></ul><h3>Classes</h3><ul><li><a href="niuCloudConnector.Client.html">Client</a></li></ul><h3>Global</h3><ul><li><a href="global.html#got">got</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.1</a> on Tue Aug 20 2019 20:37:12 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.1</a> on Tue Mar 16 2021 00:13:51 GMT+0100 (GMT+01:00)
 </footer>
 
 <script> prettyPrint(); </script>
