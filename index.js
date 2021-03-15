@@ -51,6 +51,12 @@ niuCloudConnector.Client = function() {
     
     /** Session token */
     this._token = "";
+
+    /** Accepted language, used in HTTP request header. */
+    this._acceptedLanguage = "en-US";
+
+    /** User agent, used in HTTP request header. */
+    this._userAgent = "manager/4.6.2 (iPhone; iOS 14.4; Scale/3.00);deviceName=iPhone;model=iPhone 11 Pro;ostype=iOS;clientIdentifier=Overseas";
 };
 
 /**
@@ -382,8 +388,9 @@ niuCloudConnector.Client.prototype.getVehicles = function() {
         method: "POST",
         path: "/motoinfo/list",
         headers: {
-            "accept-language": "en-US",
-            "token": this._token
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
         }
     });
 };
@@ -430,8 +437,9 @@ niuCloudConnector.Client.prototype.getVehiclePos = function(options) {
         method: "POST",
         path: "/motoinfo/currentpos",
         headers: {
-            "accept-language": "en-US",
-            "token": this._token
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
         },
         data: {
             sn: options.sn
@@ -479,8 +487,9 @@ niuCloudConnector.Client.prototype.getOverallTally = function(options) {
         method: "POST",
         path: "/motoinfo/overallTally",
         headers: {
-            "accept-language": "en-US",
-            "token": this._token
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
         },
         data: {
             sn: options.sn
@@ -547,13 +556,15 @@ niuCloudConnector.Client.prototype.getTrackDetail = function(options) {
         method: "POST",
         path: "/v5/track/detail",
         headers: {
-            "accept-language": "en-US",
-            "token": this._token
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
         },
         data: {
             sn: options.sn,
             trackId: options.trackId,
-            date: options.trackDate
+            date: options.trackDate,
+            token: this._token
         }
     });
 };
@@ -624,8 +635,9 @@ niuCloudConnector.Client.prototype.getBatteryInfo = function(options) {
         method: "GET",
         path: "/v3/motor_data/battery_info?sn=" + options.sn,
         headers: {
-            "accept-language": "en-US",
-            "token": this._token
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
         }
     });
 };
@@ -685,8 +697,9 @@ niuCloudConnector.Client.prototype.getBatteryHealth = function(options) {
         method: "GET",
         path: "/v3/motor_data/battery_info/health?sn=" + options.sn,
         headers: {
-            "accept-language": "en-US",
-            "token": this._token
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
         }
     });
 };
@@ -757,8 +770,9 @@ niuCloudConnector.Client.prototype.getBatteryChart = function(options) {
         method: "GET",
         path: "/v3/motor_data/battery_chart/?sn=" + options.sn + "&bmsId=" + options.bmsId + "&page=" + options.page + "&page_size=" + options.pageSize + "&pageLength=" + options.pageLength,
         headers: {
-            "accept-language": "en-US",
-            "token": this._token
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
         }
     });
 };
@@ -836,8 +850,9 @@ niuCloudConnector.Client.prototype.getMotorInfo = function(options) {
         method: "GET",
         path: "/v3/motor_data/index_info?sn=" + options.sn,
         headers: {
-            "accept-language": "en-US",
-            "token": this._token
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
         }
     });
 };
@@ -912,11 +927,13 @@ niuCloudConnector.Client.prototype.getTracks = function(options) {
         method: "POST",
         path: "/v5/track/list/v2",
         headers: {
-            "accept-language": "en-US"
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
         },
         data: {
             sn: options.sn,
-            index: options.index,
+            index: options.index.toString(),
             pagesize: options.pageSize,
             token: this._token
         }
@@ -974,8 +991,9 @@ niuCloudConnector.Client.prototype.getFirmwareVersion = function(options) {
         method: "POST",
         path: "/motorota/getfirmwareversion",
         headers: {
-            "accept-language": "en-US",
-            "token": this._token
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
         },
         data: {
             sn: options.sn
@@ -1023,8 +1041,9 @@ niuCloudConnector.Client.prototype.getUpdateInfo = function(options) {
         method: "POST",
         path: "/motorota/getupdateinfo",
         headers: {
-            "accept-language": "en-US",
-            "token": this._token
+            "accept-language": this._acceptedLanguage,
+            "token": this._token,
+            "user-agent": this._userAgent
         },
         data: {
             sn: options.sn
