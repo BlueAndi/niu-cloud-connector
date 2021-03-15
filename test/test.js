@@ -1,6 +1,6 @@
 /* MIT License
  *
- * Copyright (c) 2019 Andreas Merkle <web@blue-andi.de>
+ * Copyright (c) 2019-2021 Andreas Merkle <web@blue-andi.de>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,10 +25,10 @@
 const niuCloudConnector = require("../index");
 
 /** EMail address / Username */
-var account = "email@somewhere.org";
+var account = "web@blue-andi.de";
 
 /** Password */
-var password = "1234";
+var password = "bUje7WlXlruo4xLkmfTb";
 
 /** Telephone country code, without leading 0s or plus sign. */
 var countryCode = "49";
