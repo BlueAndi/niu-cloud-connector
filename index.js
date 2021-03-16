@@ -47,7 +47,10 @@ niuCloudConnector.AppApiBaseUrl     = "https://app-api-fk.niu.com";
  * 
  * @class
  */
-niuCloudConnector.Client = function() {  
+niuCloudConnector.Client = function() {
+
+    /** Enable/Disable debug output */
+    this._isDebugMode = false;
     
     /** Session token */
     this._token = "";
@@ -134,6 +137,17 @@ niuCloudConnector.Client.prototype._error = function(errorInfo, funcName) {
     }
 
     return error;
+};
+
+/**
+ * Enable/Disable the debug mode.
+ * In the debug mode the whole HTTP response is printed to console.
+ * 
+ * @param {boolean} enableDebugMode - Enable/Disable debug mode.
+ * 
+ */
+niuCloudConnector.Client.prototype.enableDebugMode = function(enableDebugMode) {
+    this._isDebugMode = enableDebugMode;
 };
 
 /**
@@ -275,6 +289,12 @@ niuCloudConnector.Client.prototype._makeRequest = function(options) {
 
     return got(niuCloudConnector.AppApiBaseUrl + options.path, reqOptions).then(function(result) {
         var description = "";
+
+        if (true === _this._isDebugMode) {
+            console.log(result);
+            console.log("----------");
+            console.log(JSON.stringify(result.body, null, 2));
+        }
 
         if (200 !== result.statusCode) {
             return Promise.reject(_this._error("Bad request.", funcName));
@@ -587,7 +607,7 @@ niuCloudConnector.Client.prototype.getTrackDetail = function(options) {
  * @property {string}   chargedTimes        - Charging cycles
  * @property {number}   temperature         - Battery temperature in degree celsius
  * @property {string}   temperatureDesc     - Battery temperature status
- * @property {number}   energyConsumedTody  - Energey consumption of today
+ * @property {number}   energyConsumedTody  - Energy consumption of today
  * @property {string}   gradeBattery        - Battery grade points
  */
 
@@ -859,35 +879,28 @@ niuCloudConnector.Client.prototype.getMotorInfo = function(options) {
 
 /**
  * @typedef {Promise} Tracks
- * @property {niuCloudConnector.Client} client          - Client
- * @property {Object}   result                          - Received response
- * @property {Object[]} result.data                     - Response data
- * @property {string}   result.data.id                  - Identification number
- * @property {string}   result.data.trackId             - Track identification number
- * @property {number}   result.data.startTime           - Start time in unix timestamp epoch format (13 digits)
- * @property {number}   result.data.endTime             - Stop time in unix timestamp epoch format (13 digits)
- * @property {number}   result.data.distance            - Distance in m
- * @property {number}   result.data.avespeed            - Average speed in km/h
- * @property {number}   result.data.ridingtime          - Riding time in minutes
- * @property {string}   result.data.type                - Type
- * @property {string}   result.data.date                - Date in the format yyyymmdd
- * @property {Object}   result.data.startPoint          - Start point
- * @property {string}   result.data.startPoint.lng      - Longitude in decimal degree (WGS 84)
- * @property {string}   result.data.startPoint.lat      - Latitude in decimal degree (WGS 84)
- * @property {string}   result.data.startPoint.speed    - Speed
- * @property {string}   result.data.startPoint.battery  - Battery state of charge in percent
- * @property {string}   result.data.startPoint.mileage  - Mileage in m
- * @property {string}   result.data.startPoint.date     - Date in unix timestamp epoch format (13 digits)
- * @property {Object}   result.data.lastPoint           - Start point
- * @property {string}   result.data.lastPoint.lng       - Longitude in decimal degree (WGS 84)
- * @property {string}   result.data.lastPoint.lat       - Latitude in decimal degree (WGS 84)
- * @property {string}   result.data.lastPoint.speed     - Speed
- * @property {string}   result.data.lastPoint.battery   - Battery state of charge in percent
- * @property {string}   result.data.lastPoint.mileage   - Mileage in m
- * @property {string}   result.data.lastPoint.date      - Date in unix timestamp epoch format (13 digits)
- * @property {string}   result.desc                     - Response status description
- * @property {string}   result.trace                    - For debug purposes
- * @property {number}   result.status                   - Response status number
+ * @property {niuCloudConnector.Client} client              - Client
+ * @property {Object}   result                              - Received response
+ * @property {Object}   result.data                         - Response data
+ * @property {Object[]} result.data.items                   - Track items array
+ * @property {string}   result.data.items.id                - Identification number
+ * @property {string}   result.data.items.trackId           - Track identification number
+ * @property {number}   result.data.items.startTime         - Start time in unix timestamp epoch format (13 digits)
+ * @property {number}   result.data.items.endTime           - Stop time in unix timestamp epoch format (13 digits)
+ * @property {number}   result.data.items.distance          - Distance in m
+ * @property {number}   result.data.items.avespeed          - Average speed in km/h
+ * @property {number}   result.data.items.ridingtime        - Riding time in minutes
+ * @property {string}   result.data.items.type              - Type
+ * @property {string}   result.data.items.date              - Date in the format yyyymmdd
+ * @property {Object}   result.data.items.startPoint        - Start point
+ * @property {string}   result.data.items.startPoint.lng    - Longitude in decimal degree (WGS 84)
+ * @property {string}   result.data.items.startPoint.lat    - Latitude in decimal degree (WGS 84)
+ * @property {Object}   result.data.items.lastPoint         - Start point
+ * @property {string}   result.data.items.lastPoint.lng     - Longitude in decimal degree (WGS 84)
+ * @property {string}   result.data.items.lastPoint.lat     - Latitude in decimal degree (WGS 84)
+ * @property {string}   result.data.items.track_thumb       - URL to maps thumbnail
+ * @property {number}   result.data.items.power_consumption - Power consumption
+ * @property {number}   result.data.items.meet_count        - Meet count
  */
 
 /**

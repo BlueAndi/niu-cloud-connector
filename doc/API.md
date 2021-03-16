@@ -69,9 +69,11 @@ NIU cloud connector
 * [niuCloudConnector](#niuCloudConnector) : <code>object</code>
     * [.Client](#niuCloudConnector.Client)
         * [new niuCloudConnector.Client()](#new_niuCloudConnector.Client_new)
+        * [._isDebugMode](#niuCloudConnector.Client+_isDebugMode)
         * [._token](#niuCloudConnector.Client+_token)
         * [._acceptedLanguage](#niuCloudConnector.Client+_acceptedLanguage)
         * [._userAgent](#niuCloudConnector.Client+_userAgent)
+        * [.enableDebugMode(enableDebugMode)](#niuCloudConnector.Client+enableDebugMode)
         * [.createSessionToken(options)](#niuCloudConnector.Client+createSessionToken) ⇒ [<code>Token</code>](#Token)
         * [.setSessionToken(options)](#niuCloudConnector.Client+setSessionToken) ⇒ <code>Promise</code>
         * [.getVehicles()](#niuCloudConnector.Client+getVehicles) ⇒ [<code>Vehicles</code>](#Vehicles)
@@ -95,9 +97,11 @@ NIU cloud connector
 
 * [.Client](#niuCloudConnector.Client)
     * [new niuCloudConnector.Client()](#new_niuCloudConnector.Client_new)
+    * [._isDebugMode](#niuCloudConnector.Client+_isDebugMode)
     * [._token](#niuCloudConnector.Client+_token)
     * [._acceptedLanguage](#niuCloudConnector.Client+_acceptedLanguage)
     * [._userAgent](#niuCloudConnector.Client+_userAgent)
+    * [.enableDebugMode(enableDebugMode)](#niuCloudConnector.Client+enableDebugMode)
     * [.createSessionToken(options)](#niuCloudConnector.Client+createSessionToken) ⇒ [<code>Token</code>](#Token)
     * [.setSessionToken(options)](#niuCloudConnector.Client+setSessionToken) ⇒ <code>Promise</code>
     * [.getVehicles()](#niuCloudConnector.Client+getVehicles) ⇒ [<code>Vehicles</code>](#Vehicles)
@@ -117,6 +121,12 @@ NIU cloud connector
 #### new niuCloudConnector.Client()
 NIU cloud connector client.
 
+<a name="niuCloudConnector.Client+_isDebugMode"></a>
+
+#### client.\_isDebugMode
+Enable/Disable debug output
+
+**Kind**: instance property of [<code>Client</code>](#niuCloudConnector.Client)  
 <a name="niuCloudConnector.Client+_token"></a>
 
 #### client.\_token
@@ -135,6 +145,17 @@ Accepted language, used in HTTP request header.
 User agent, used in HTTP request header.
 
 **Kind**: instance property of [<code>Client</code>](#niuCloudConnector.Client)  
+<a name="niuCloudConnector.Client+enableDebugMode"></a>
+
+#### client.enableDebugMode(enableDebugMode)
+Enable/Disable the debug mode.In the debug mode the whole HTTP response is printed to console.
+
+**Kind**: instance method of [<code>Client</code>](#niuCloudConnector.Client)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| enableDebugMode | <code>boolean</code> | Enable/Disable debug mode. |
+
 <a name="niuCloudConnector.Client+createSessionToken"></a>
 
 #### client.createSessionToken(options) ⇒ [<code>Token</code>](#Token)
@@ -471,7 +492,7 @@ URL to the NIU app API.
 | chargedTimes | <code>string</code> | Charging cycles |
 | temperature | <code>number</code> | Battery temperature in degree celsius |
 | temperatureDesc | <code>string</code> | Battery temperature status |
-| energyConsumedTody | <code>number</code> | Energey consumption of today |
+| energyConsumedTody | <code>number</code> | Energy consumption of today |
 | gradeBattery | <code>string</code> | Battery grade points |
 
 <a name="BatteryInfo"></a>
@@ -629,33 +650,26 @@ URL to the NIU app API.
 | --- | --- | --- |
 | client | [<code>Client</code>](#niuCloudConnector.Client) | Client |
 | result | <code>Object</code> | Received response |
-| result.data | <code>[ &#x27;Array&#x27; ].&lt;Object&gt;</code> | Response data |
-| result.data.id | <code>string</code> | Identification number |
-| result.data.trackId | <code>string</code> | Track identification number |
-| result.data.startTime | <code>number</code> | Start time in unix timestamp epoch format (13 digits) |
-| result.data.endTime | <code>number</code> | Stop time in unix timestamp epoch format (13 digits) |
-| result.data.distance | <code>number</code> | Distance in m |
-| result.data.avespeed | <code>number</code> | Average speed in km/h |
-| result.data.ridingtime | <code>number</code> | Riding time in minutes |
-| result.data.type | <code>string</code> | Type |
-| result.data.date | <code>string</code> | Date in the format yyyymmdd |
-| result.data.startPoint | <code>Object</code> | Start point |
-| result.data.startPoint.lng | <code>string</code> | Longitude in decimal degree (WGS 84) |
-| result.data.startPoint.lat | <code>string</code> | Latitude in decimal degree (WGS 84) |
-| result.data.startPoint.speed | <code>string</code> | Speed |
-| result.data.startPoint.battery | <code>string</code> | Battery state of charge in percent |
-| result.data.startPoint.mileage | <code>string</code> | Mileage in m |
-| result.data.startPoint.date | <code>string</code> | Date in unix timestamp epoch format (13 digits) |
-| result.data.lastPoint | <code>Object</code> | Start point |
-| result.data.lastPoint.lng | <code>string</code> | Longitude in decimal degree (WGS 84) |
-| result.data.lastPoint.lat | <code>string</code> | Latitude in decimal degree (WGS 84) |
-| result.data.lastPoint.speed | <code>string</code> | Speed |
-| result.data.lastPoint.battery | <code>string</code> | Battery state of charge in percent |
-| result.data.lastPoint.mileage | <code>string</code> | Mileage in m |
-| result.data.lastPoint.date | <code>string</code> | Date in unix timestamp epoch format (13 digits) |
-| result.desc | <code>string</code> | Response status description |
-| result.trace | <code>string</code> | For debug purposes |
-| result.status | <code>number</code> | Response status number |
+| result.data | <code>Object</code> | Response data |
+| result.data.items | <code>[ &#x27;Array&#x27; ].&lt;Object&gt;</code> | Track items array |
+| result.data.items.id | <code>string</code> | Identification number |
+| result.data.items.trackId | <code>string</code> | Track identification number |
+| result.data.items.startTime | <code>number</code> | Start time in unix timestamp epoch format (13 digits) |
+| result.data.items.endTime | <code>number</code> | Stop time in unix timestamp epoch format (13 digits) |
+| result.data.items.distance | <code>number</code> | Distance in m |
+| result.data.items.avespeed | <code>number</code> | Average speed in km/h |
+| result.data.items.ridingtime | <code>number</code> | Riding time in minutes |
+| result.data.items.type | <code>string</code> | Type |
+| result.data.items.date | <code>string</code> | Date in the format yyyymmdd |
+| result.data.items.startPoint | <code>Object</code> | Start point |
+| result.data.items.startPoint.lng | <code>string</code> | Longitude in decimal degree (WGS 84) |
+| result.data.items.startPoint.lat | <code>string</code> | Latitude in decimal degree (WGS 84) |
+| result.data.items.lastPoint | <code>Object</code> | Start point |
+| result.data.items.lastPoint.lng | <code>string</code> | Longitude in decimal degree (WGS 84) |
+| result.data.items.lastPoint.lat | <code>string</code> | Latitude in decimal degree (WGS 84) |
+| result.data.items.track_thumb | <code>string</code> | URL to maps thumbnail |
+| result.data.items.power_consumption | <code>number</code> | Power consumption |
+| result.data.items.meet_count | <code>number</code> | Meet count |
 
 <a name="FirmwareVersion"></a>
 
