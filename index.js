@@ -58,8 +58,11 @@ niuCloudConnector.Client = function() {
     /** Accept language, used in HTTP request header. */
     this._acceptLanguage = "en-US";
 
+    /** The NIU app version, which the niu-cloud-connector is derrived from. */
+    this._niuAppVersion = "4.6.2";
+
     /** User agent, used in HTTP request header. */
-    this._userAgent = "manager/4.6.2 (iPhone; iOS 14.4; Scale/3.00);deviceName=iPhone;model=iPhone 11 Pro;ostype=iOS;clientIdentifier=Overseas";
+    this._userAgent = "manager/" + this._niuAppVersion + " (android; Unknown);brand=Unknown;model=Unknown;clientIdentifier=Overseas;lang=" + this._acceptLanguage;
 };
 
 /**
