@@ -25,10 +25,10 @@
 const niuCloudConnector = require("../index");
 
 /** EMail address / Username */
-var account = "web@blue-andi.de";
+var account = "";
 
 /** Password */
-var password = "bUje7WlXlruo4xLkmfTb";
+var password = "";
 
 /** Telephone country code, without leading 0s or plus sign. */
 var countryCode = "49";
