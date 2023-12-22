@@ -22,7 +22,7 @@
  */
 
 /** NIU cloud client, used to access the NIU cloud. */
-const niuCloudConnector = require("../index");
+import niuCloudConnector from "../index.js";
 
 /** EMail address / Username */
 var account = "";

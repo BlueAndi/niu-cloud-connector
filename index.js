@@ -22,15 +22,14 @@
  */
 
 /** Simplified http client */
-var got = require("got");
+import got from "got";
 
 /**
  * NIU cloud connector
  * @namespace
  */
-var niuCloudConnector = {};
-
-module.exports = niuCloudConnector;
+export const niuCloudConnector = {};
+export default niuCloudConnector;
 
 /**
  * URL to NIU login, used for retrieving an access token.
