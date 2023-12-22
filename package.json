@@ -1,6 +1,6 @@
 {
   "name": "niu-cloud-connector",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "description": "Javascript function API to access the NIU cloud.",
   "main": "index.js",
