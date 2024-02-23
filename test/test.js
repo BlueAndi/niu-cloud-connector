@@ -30,9 +30,6 @@ var account = "";
 /** Password */
 var password = "";
 
-/** Telephone country code, without leading 0s or plus sign. */
-var countryCode = "49";
-
 /** Client to access the NIU cloud */
 var client = new niuCloudConnector.Client();
 
@@ -43,8 +40,7 @@ console.log("Creating session token ...");
 
 client.createSessionToken({
     account: account,
-    password: password,
-    countryCode: countryCode
+    password: password
 }).then(function(result) {
 
     console.log("\tSession token created: " + result.result);

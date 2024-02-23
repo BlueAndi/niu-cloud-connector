@@ -12,6 +12,7 @@
   "author": "Andreas Merkle <web@blue-andi.de>",
   "license": "MIT",
   "dependencies": {
-    "got": "^13.0.0"
+    "got": "^13.0.0",
+    "md5": "^2.3.0"
   }
 }
