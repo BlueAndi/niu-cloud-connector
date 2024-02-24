@@ -284,8 +284,7 @@ niuCloudConnector.Client.prototype._makeRequest = function(options) {
         return Promise.reject(this._error("Path is missing.", funcName));
     }
 
-    reqOptions.method   = options.method;
-    reqOptions.path     = options.path;
+    reqOptions.method = options.method;
 
     if ("object" === typeof options.headers) {
         reqOptions.headers = options.headers;
