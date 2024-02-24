@@ -1,6 +1,6 @@
 /* MIT License
  *
- * Copyright (c) 2019 - 2023 Andreas Merkle <web@blue-andi.de>
+ * Copyright (c) 2019 - 2024 Andreas Merkle <web@blue-andi.de>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +22,15 @@
  */
 
 /** Simplified http client */
-var got = require("got");
+import got from "got";
+import md5 from "md5";
 
 /**
  * NIU cloud connector
  * @namespace
  */
-var niuCloudConnector = {};
-
-module.exports = niuCloudConnector;
+export const niuCloudConnector = {};
+export default niuCloudConnector;
 
 /**
  * URL to NIU login, used for retrieving an access token.
@@ -59,10 +59,13 @@ niuCloudConnector.Client = function() {
     this._acceptLanguage = "en-US";
 
     /** The NIU app version, which the niu-cloud-connector is derrived from. */
-    this._niuAppVersion = "4.6.2";
+    this._niuAppVersion = "4.10.4";
 
     /** User agent, used in HTTP request header. */
     this._userAgent = "manager/" + this._niuAppVersion + " (android; Unknown);brand=Unknown;model=Unknown;clientIdentifier=Overseas;lang=" + this._acceptLanguage;
+
+    /** APP id */
+    this._appId = "niu_ktdrr960";
 };
 
 /**
@@ -165,7 +168,6 @@ niuCloudConnector.Client.prototype.enableDebugMode = function(enableDebugMode) {
  * @param {Object}  options             - Options.
  * @param {string}  options.account     - EMail address or mobile phone number or username.
  * @param {string}  options.password    - Account password.
- * @param {string}  options.countryCode - Telephone country count without leading zeros or + sign, e.g. 49 instead of 0049 or +49.
  * 
  * @returns {Token} Session token.
  */
@@ -183,13 +185,16 @@ niuCloudConnector.Client.prototype.createSessionToken = function(options) {
 
     if ("string" !== typeof options.password) {
         return Promise.reject(this._error("Password is missing.", funcName));
+    } else {
+        /* Password must be sent as md5 hash. */
+        options.password = md5(options.password);
     }
 
-    if ("string" !== typeof options.countryCode) {
-        return Promise.reject(this._error("Country code is missing.", funcName));
-    }
+    options.grant_type = "password";
+    options.scope = "base";
+    options.app_id = this._appId;
 
-    return got(niuCloudConnector.AccountBaseUrl + "/appv2/login", {
+    return got(niuCloudConnector.AccountBaseUrl + "/v3/api/oauth2/token", {
         method: "POST",
         json: options,
         responseType: "json"
@@ -212,7 +217,7 @@ niuCloudConnector.Client.prototype.createSessionToken = function(options) {
 
         return Promise.resolve({
             client: _this,
-            result: result.body.data.token
+            result: result.body.data.token.access_token
         });
     });
 };
@@ -279,8 +284,7 @@ niuCloudConnector.Client.prototype._makeRequest = function(options) {
         return Promise.reject(this._error("Path is missing.", funcName));
     }
 
-    reqOptions.method   = options.method;
-    reqOptions.path     = options.path;
+    reqOptions.method = options.method;
 
     if ("object" === typeof options.headers) {
         reqOptions.headers = options.headers;

@@ -1,6 +1,6 @@
 /* MIT License
  *
- * Copyright (c) 2019 - 2023 Andreas Merkle <web@blue-andi.de>
+ * Copyright (c) 2019 - 2024 Andreas Merkle <web@blue-andi.de>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,16 +22,13 @@
  */
 
 /** NIU cloud client, used to access the NIU cloud. */
-const niuCloudConnector = require("../index");
+import niuCloudConnector from "../index.js";
 
 /** EMail address / Username */
 var account = "";
 
 /** Password */
 var password = "";
-
-/** Telephone country code, without leading 0s or plus sign. */
-var countryCode = "49";
 
 /** Client to access the NIU cloud */
 var client = new niuCloudConnector.Client();
@@ -43,8 +40,7 @@ console.log("Creating session token ...");
 
 client.createSessionToken({
     account: account,
-    password: password,
-    countryCode: countryCode
+    password: password
 }).then(function(result) {
 
     console.log("\tSession token created: " + result.result);
