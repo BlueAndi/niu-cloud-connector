@@ -213,7 +213,7 @@ niuCloudConnector.Client.prototype.createSessionToken = function(options) {
             return Promise.reject(_this._error("Token is empty in response.", funcName));
         }
         
-        _this._token = result.body.data.token;
+        _this._token = result.body.data.token.access_token;
 
         return Promise.resolve({
             client: _this,
