@@ -56,7 +56,7 @@ client.createSessionToken({
         index: 0
     });
 
-    vehicles = result.result.data;
+    vehicles = result.result;
 
     if (0 === vehicles.length) {
 
@@ -77,7 +77,7 @@ client.createSessionToken({
                 sn: vehicles[vehicleIndex].sn
             }).then(function(vehiclePosResult) {
 
-                console.log("\t\tCurrent position: latitude=" + vehiclePosResult.result.data.lat + " longitude=" + vehiclePosResult.result.data.lng);
+                console.log("\t\tCurrent position: latitude=" + vehiclePosResult.result.lat + " longitude=" + vehiclePosResult.result.lng);
                 return Promise.resolve({
                     client: vehiclePosResult.client,
                     index: vehicleResult.index
@@ -98,7 +98,7 @@ client.createSessionToken({
 
 }).then(function(result) {
 
-    var batteries = result.result.data.batteries;
+    var batteries = result.result.batteries;
 
     if ("object" === typeof batteries.compartmentA) {
         console.log("\tBattery " + batteries.compartmentA.bmsId + ": SOC " + batteries.compartmentA.batteryCharging + "%");
@@ -108,7 +108,7 @@ client.createSessionToken({
         console.log("\tBattery " + batteries.compartmentB.bmsId + ": SOC " + batteries.compartmentB.batteryCharging + "%");
     }
 
-    console.log("\tEstimated mileage: " + result.result.data.estimatedMileage);
+    console.log("\tEstimated mileage: " + result.result.estimatedMileage);
 
     console.log("Get battery health ...");
     return result.client.getBatteryHealth({
@@ -117,7 +117,7 @@ client.createSessionToken({
 
 }).then(function(result) {
 
-    var batteries = result.result.data.batteries;
+    var batteries = result.result.batteries;
 
     if ("object" === typeof batteries.compartmentA) {
         console.log("\tBattery " + batteries.compartmentA.bmsId + ": grade " + batteries.compartmentA.gradeBattery + "%");
@@ -134,7 +134,7 @@ client.createSessionToken({
 
 }).then(function(result) {
 
-    console.log("\tCurrent speed: " + result.result.data.nowSpeed);
+    console.log("\tCurrent speed: " + result.result.nowSpeed);
 
     console.log("Get overall tally ...");
     return result.client.getOverallTally({
@@ -143,7 +143,7 @@ client.createSessionToken({
 
 }).then(function(result) {
 
-    console.log("\tTotal mileage: " + result.result.data.totalMileage);
+    console.log("\tTotal mileage: " + result.result.totalMileage);
 
     console.log("Get firmware version ...");
     return result.client.getFirmwareVersion({
@@ -152,7 +152,7 @@ client.createSessionToken({
 
 }).then(function(result) {
 
-    console.log("Current firmware version: " + result.result.data.version);
+    console.log("Current firmware version: " + result.result.version);
 
     console.log("Get a track ...");
     return result.client.getTracks({
@@ -163,11 +163,11 @@ client.createSessionToken({
 
 }).then(function(result) {
 
-    if (0 === result.result.data.length) {
+    if (0 === result.result.items.length) {
         console.log("\tNo tracks available.");
     } else {
 
-        var track       = result.result.data[0];
+        var track       = result.result.items[0];
         var startTime   = new Date(track.startTime);
         var endTime     = new Date(track.endTime);
 
@@ -182,14 +182,14 @@ client.createSessionToken({
         return result.client.getTrackDetail({
             sn: vehicles[0].sn,
             trackId: track.trackId,
-            trackDate: track.date
+            trackDate: track.date.toString()
         }).then(function(result) {
 
             var index       = 0;
-            var trackItems  = result.result.data.trackItems;
-        
+            var trackItems  = result.result.trackItems;
+
             for(index = 0; index < trackItems.length; ++index) {
-        
+
                 console.log("\tItem #" + (index + 1));
                 console.log("\t\tLongitude: " + trackItems[index].lng);
                 console.log("\t\tLatitude: " + trackItems[index].lat);
