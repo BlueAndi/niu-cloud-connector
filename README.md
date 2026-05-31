@@ -1,4 +1,5 @@
 # niu-cloud-connector
+
 Javascript function API to access the NIU cloud.
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://choosealicense.com/licenses/mit/)
@@ -9,10 +10,10 @@ A project originated from an [article in the Elektroroller-Forum](https://www.el
 
 ## Installation
 
-```
-$ git clone https://github.com/BlueAndi/niu-cloud-connector.git
-$ cd niu-cloud-connector
-$ npm install
+```bash
+git clone https://github.com/BlueAndi/niu-cloud-connector.git
+cd niu-cloud-connector
+npm install
 ```
 
 ## API description
@@ -39,4 +40,5 @@ If you have further ideas or you found some bugs, great! Create a [issue](https:
 you are able and willing to fix it by yourself, clone the repository and create a pull request.
 
 ## License
+
 The whole source code is published under the [MIT license](http://choosealicense.com/licenses/mit/).
